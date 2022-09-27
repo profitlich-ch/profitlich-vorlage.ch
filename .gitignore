@@ -102,3 +102,12 @@ dist
 
 # TernJS port file
 .tern-port
+
+# JSON lock
+package-lock.json
+
+# Mac DS Store
+**/.DS_Store
+
+# Revisions Manifest
+rev-manifest.json

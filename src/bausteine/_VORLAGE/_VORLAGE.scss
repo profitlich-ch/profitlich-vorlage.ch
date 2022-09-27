@@ -1,0 +1,27 @@
+.BAUSTEIN {
+
+}
+
+
+@include mediaquery(smartphone) {
+
+    $layout: smartphone;
+
+    .BAUSTEIN {
+        
+   
+
+    }
+
+}
+
+
+@include mediaquery(desktop) {
+
+    $layout: desktop;
+
+    .BAUSTEIN {
+        
+    }
+
+}
