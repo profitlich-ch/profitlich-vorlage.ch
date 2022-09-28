@@ -33,6 +33,11 @@ Das gilt nur für Metanet
 - Projektkonfiguration aktualisieren: `php craft up`
 
 
+# Assets Synchronisierung
+
+Es braucht eine neue Version von rsync: `brew install rsync`. Danach das Terminal schliessen.
+
+    rsync -a 'ssh -p 2121' profitlich-ssh@profitlich.ch:/staging.profitlich.ch/web/assets/ web/assets/
 
 
 # Lese- und Recherchestoff
@@ -64,5 +69,8 @@ https://mattgrayisok.com/craft-cms-deployment-methods
 
 # Automatisierung
 
-https://craftcms.stackexchange.com/questions/1415/is-there-an-easy-way-to-download-the-assets-directory-to-a-local-install  
-rsync -au profitlich-ssh@profitlich.ch:2121/staging.profitlich.ch/web/assets/* web/assets/
+https://craftcms.stackexchange.com/questions/1415/is-there-an-easy-way-to-download-the-assets-directory-to-a-local-install
+
+https://github.com/nystudio107/craft-scripts
+
+    rsync -a -e 'ssh -p 2121' profitlich-ssh@profitlich.ch:/staging.profitlich.ch/web/assets/ web/assets/
