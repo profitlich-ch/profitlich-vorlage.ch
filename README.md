@@ -11,12 +11,27 @@ Quellsystem
 - Git push
 - mysql dump in Hauptverzeichnis: `mysqldump db > dump.sql`
 
-Zielsystem
+ddev Zielsystem 
 - Git pull
-- SQL dump in Hauptverzeichnis legen
+- `ddev ssh`
 - Datenbank überschreiben: `mysql db < dump.sql`
 - Update Craft dependencies `composer install --no-interaction`
-- Projektkonfiguration aktualisieren: `php craft up `
+- Projektkonfiguration aktualisieren: `php craft up`
+
+server Zielsystem 
+- Git pull 
+Das gilt nur für Metanet
+- Datenbank überschreiben: `mysql -h 127.0.0.1 -u dev_profitlich_craft -p dev_profitlich_craft < dump.sql`
+> mysql | -h 127.0.0.1 | -u dev_profitlich_craft | -p | dev_profitlich_craft | < | dump.sql  
+> Rufe mySQL auf  
+> Verbinde mit Host  
+> Benutze ein Passwort  
+> Datenbankname  
+> überschreibe von  
+> Datei, mit der überschrieben werden soll
+- Update Craft dependencies `composer install --no-interaction`
+- Projektkonfiguration aktualisieren: `php craft up`
+
 
 
 
