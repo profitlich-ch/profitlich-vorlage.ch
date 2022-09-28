@@ -117,9 +117,9 @@ package-lock.json
 
 # Inspiriert von https://github.com/nystudio107/craft-scripts/blob/master/example.gitignore
 # CRAFT ENVIRONMENT
-.env.php
-.env.sh
-.env
+# .env.php
+# .env.sh
+# .env
 
 # COMPOSER
 /vendor
