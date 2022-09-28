@@ -58,3 +58,11 @@ https://nodejs.dev/en/learn/nodejs-the-difference-between-development-and-produc
 npm install ohne devDependencies
 npm install --omit=dev
 https://stackoverflow.com/questions/9268259/how-do-you-prevent-install-of-devdependencies-npm-modules-for-node-js-package
+
+https://mattgrayisok.com/craft-cms-deployment-methods
+
+
+# Automatisierung
+
+https://craftcms.stackexchange.com/questions/1415/is-there-an-easy-way-to-download-the-assets-directory-to-a-local-install  
+rsync -au profitlich-ssh@profitlich.ch:2121/staging.profitlich.ch/web/assets/* web/assets/
