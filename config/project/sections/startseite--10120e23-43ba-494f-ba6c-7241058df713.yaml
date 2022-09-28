@@ -1,0 +1,24 @@
+defaultPlacement: end
+enableVersioning: true
+handle: startseite
+name: Startseite
+previewTargets:
+  -
+    __assoc__:
+      -
+        - label
+        - 'Primäre eintrag Seite'
+      -
+        - urlFormat
+        - '{url}'
+      -
+        - refresh
+        - '1'
+propagationMethod: all
+siteSettings:
+  c81f04dd-a4dc-4e6f-a97b-5ce6004b8cf8: # Profitlich DEV
+    enabledByDefault: true
+    hasUrls: true
+    template: startseite/_entry
+    uriFormat: __home__
+type: single

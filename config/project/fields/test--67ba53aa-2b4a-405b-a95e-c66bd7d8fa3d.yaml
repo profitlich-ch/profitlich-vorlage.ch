@@ -1,0 +1,19 @@
+columnSuffix: pvveslha
+contentColumnType: text
+fieldGroup: d6ebc0e2-f57d-43d9-b5ad-e53f1b9394a5 # Test
+handle: test
+instructions: null
+name: Test
+searchable: false
+settings:
+  byteLimit: null
+  charLimit: null
+  code: false
+  columnType: null
+  initialRows: 4
+  multiline: false
+  placeholder: null
+  uiMode: normal
+translationKeyFormat: null
+translationMethod: none
+type: craft\fields\PlainText

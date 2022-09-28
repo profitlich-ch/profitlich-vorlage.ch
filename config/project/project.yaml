@@ -1,15 +1,31 @@
-dateModified: 1664352498
+dateModified: 1664367896
 email:
   fromEmail: dev@profitlich.ch
   fromName: 'Profitlich DEV'
   transportType: craft\mail\transportadapters\Sendmail
 meta:
   __names__:
-    25d2e79d-a04c-4824-a49f-c3baa6642d8a: Common
-    c81f04dd-a4dc-4e6f-a97b-5ce6004b8cf8: 'Profitlich DEV'
-    e814380a-f915-44b8-92b3-a767fa94f64a: 'Profitlich DEV'
+    0e793c4c-3298-4c14-a50e-fe050eeaee18: Startseite # Startseite
+    25d2e79d-a04c-4824-a49f-c3baa6642d8a: Common # Common
+    67ba53aa-2b4a-405b-a95e-c66bd7d8fa3d: Test # Test
+    10120e23-43ba-494f-ba6c-7241058df713: Startseite # Startseite
+    c81f04dd-a4dc-4e6f-a97b-5ce6004b8cf8: 'Profitlich DEV' # Profitlich DEV
+    d6ebc0e2-f57d-43d9-b5ad-e53f1b9394a5: Test # Test
+    e814380a-f915-44b8-92b3-a767fa94f64a: 'Profitlich DEV' # Profitlich DEV
+plugins:
+  password-policy:
+    edition: standard
+    enabled: true
+    schemaVersion: 1.0.0
+    settings:
+      cases: true
+      maxLength: 160
+      minLength: 20
+      numbers: true
+      showStrengthIndicator: true
+      symbols: true
 system:
-  edition: solo
+  edition: pro
   live: true
   name: 'Profitlich DEV'
   schemaVersion: 4.0.0.9
