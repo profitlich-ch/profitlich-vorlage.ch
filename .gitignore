@@ -106,8 +106,34 @@ dist
 # JSON lock
 package-lock.json
 
+# Revisions Manifest
+rev-manifest.json
+
+# JSON lock
+package-lock.json
+
 # Mac DS Store
 **/.DS_Store
 
-# Revisions Manifest
-rev-manifest.json
+# Inspiriert von https://github.com/nystudio107/craft-scripts/blob/master/example.gitignore
+# CRAFT ENVIRONMENT
+.env.php
+.env.sh
+.env
+
+# COMPOSER
+/vendor
+
+/.idea
+
+# CRAFT STORAGE
+/craft/storage/*
+/storage/*
+
+# ASSETS
+/public/assets/*
+/web/assets/*
+
+# IMAGER TRANSFORMS
+/public/imager/*
+/web/imager/*
