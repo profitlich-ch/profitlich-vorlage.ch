@@ -1,0 +1,8 @@
+baseUrl: $PRIMARY_SITE_URL
+handle: default
+hasUrls: true
+language: de-CH
+name: 'Profitlich DEV'
+primary: true
+siteGroup: e814380a-f915-44b8-92b3-a767fa94f64a
+sortOrder: 1
