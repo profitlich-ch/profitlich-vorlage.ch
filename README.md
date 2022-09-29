@@ -40,7 +40,7 @@ Datei, mit der überschrieben werden soll
 
 # Assets Synchronisierung
 
-    rsync -a 'ssh -p 2121' profitlich-ssh@profitlich.ch:/staging.profitlich.ch/web/assets/ web/assets/
+    rsync -a -e 'ssh -p 2121' profitlich-ssh@profitlich.ch:/staging.profitlich.ch/web/assets/ web/assets/
 
 
 # Lese- und Recherchestoff
