@@ -1,21 +1,19 @@
-dateModified: 1664453603
+dateModified: 1664454655
 email:
   fromEmail: dev@profitlich.ch
   fromName: 'Profitlich DEV'
   transportType: craft\mail\transportadapters\Sendmail
 meta:
   __names__:
+    0a064e6b-5fcd-4a2b-acb7-b46630ad5244: Farbe # Farbe
     0e793c4c-3298-4c14-a50e-fe050eeaee18: Startseite # Startseite
     6b8cfffa-f693-418b-bedc-62d6d047943e: 'Filipa 2' # Filipa 2
-    7d99d92e-e3cc-44f7-97c6-a034cc21c660: Max # Max
     25d2e79d-a04c-4824-a49f-c3baa6642d8a: Common # Common
-    67ba53aa-2b4a-405b-a95e-c66bd7d8fa3d: Test # Test
     7689ffd6-2bc9-4ccb-9f0e-705955ea7777: Felix # Felix
     10120e23-43ba-494f-ba6c-7241058df713: Startseite # Startseite
     82491024-fe0a-4331-a632-7b4e1a03d628: 'Konflikt ;)' # Konflikt ;)
     c81f04dd-a4dc-4e6f-a97b-5ce6004b8cf8: 'Profitlich DEV' # Profitlich DEV
     d6ebc0e2-f57d-43d9-b5ad-e53f1b9394a5: Test # Test
-    e5499ced-d936-40c2-b045-d0875063944b: 'Reiner Feld' # Reiner Feld
     e814380a-f915-44b8-92b3-a767fa94f64a: 'Profitlich DEV' # Profitlich DEV
 plugins:
   password-policy:
