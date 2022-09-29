@@ -1,0 +1,19 @@
+columnSuffix: hgljosbd
+contentColumnType: text
+fieldGroup: 25d2e79d-a04c-4824-a49f-c3baa6642d8a # Common
+handle: filipa
+instructions: null
+name: Filipa
+searchable: false
+settings:
+  byteLimit: null
+  charLimit: null
+  code: false
+  columnType: null
+  initialRows: 4
+  multiline: false
+  placeholder: null
+  uiMode: normal
+translationKeyFormat: null
+translationMethod: none
+type: craft\fields\PlainText

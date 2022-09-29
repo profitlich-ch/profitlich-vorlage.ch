@@ -1,3 +1,22 @@
+# Projekt aufsetzen
+
+1. Github repository anlegen `domain.tld`
+2. Git repository clonen mit `git clone` [HTTPS URL]
+3. [Craft CMS installieren](https://craftcms.com/docs/4.x/installation.html) 
+4. .vscode. gulpfile.js, .gitignore
+5. .ddev/config.yaml kopieren und name ändern mit `domain.tld`
+6. `colima start`
+7. `ddev start`
+8. `ddev status`, um URL und Verbindung zu DB auszulesen
+9.  `ddev ssh`
+10.  `php craft setup`
+11. Daten aus Schritt ddev status verwenden. Site URL ist die ddev web URL.
+12. Site language üblicherweise de-CH
+13. Admin login `xxx-admin` mit xxx = Kundenkürzel
+14. Craft Pro aktivieren (Testversion)
+15. Plugins installieren: Password Policy
+
+
 # Craft Synchronisierung
 
 ## Voraussetzungen
@@ -45,10 +64,13 @@ Datei, mit der überschrieben werden soll
 
 # Lese- und Recherchestoff
 
-Deploy your site with git
+Branches  
+https://craftcms.stackexchange.com/questions/39133/multiple-developers-working-on-the-same-site-project-config-issues
+
+Deploy your site with git  
 https://gist.github.com/nichtich/5290675
 
-Git workflow
+Git workflow  
 https://gist.github.com/Nilpo/8ed5e44be00d6cf21f22
 
 Git repo auf dem Server mit --bare initialisieren, so dass keine Arbeitsdateien dort gespeichert werden.
@@ -75,3 +97,8 @@ https://mattgrayisok.com/craft-cms-deployment-methods
 https://craftcms.stackexchange.com/questions/1415/is-there-an-easy-way-to-download-the-assets-directory-to-a-local-install
 
 https://github.com/nystudio107/craft-scripts
+
+
+# Planung der Projektvorlage
+- ddev braucht nicht installiert zu werden, stattdessen ddev/config.yaml kopieren
+– env file kopieren nur eingeschränkt möglich: jedes Projekt hat eigenen Security Key und App ID
