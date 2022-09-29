@@ -1,0 +1,12 @@
+columnSuffix: ctrdgacg
+contentColumnType: string(7)
+fieldGroup: 25d2e79d-a04c-4824-a49f-c3baa6642d8a # Common
+handle: farbe
+instructions: null
+name: Farbe
+searchable: false
+settings:
+  defaultColor: null
+translationKeyFormat: null
+translationMethod: none
+type: craft\fields\Color

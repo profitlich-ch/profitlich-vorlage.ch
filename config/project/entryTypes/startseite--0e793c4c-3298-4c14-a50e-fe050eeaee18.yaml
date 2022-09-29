@@ -32,30 +32,6 @@ fieldLayouts:
             width: 100
           -
             elementCondition: null
-            fieldUid: 7d99d92e-e3cc-44f7-97c6-a034cc21c660 # Max
-            instructions: null
-            label: null
-            required: false
-            tip: null
-            type: craft\fieldlayoutelements\CustomField
-            uid: c36a0649-61ad-4e1d-9c9d-2ebcb0a9cd3c
-            userCondition: null
-            warning: null
-            width: 100
-          -
-            elementCondition: null
-            fieldUid: e5499ced-d936-40c2-b045-d0875063944b # Reiner Feld
-            instructions: null
-            label: null
-            required: false
-            tip: null
-            type: craft\fieldlayoutelements\CustomField
-            uid: b5f57872-d221-4d77-aa49-132885ba5094
-            userCondition: null
-            warning: null
-            width: 100
-          -
-            elementCondition: null
             fieldUid: 6b8cfffa-f693-418b-bedc-62d6d047943e # Filipa 2
             instructions: null
             label: null
@@ -80,18 +56,6 @@ fieldLayouts:
             width: 100
           -
             elementCondition: null
-            fieldUid: 67ba53aa-2b4a-405b-a95e-c66bd7d8fa3d # Test
-            instructions: null
-            label: null
-            required: false
-            tip: null
-            type: craft\fieldlayoutelements\CustomField
-            uid: 63a13a75-19be-487a-9b9f-50bc2608fa60
-            userCondition: null
-            warning: null
-            width: 100
-          -
-            elementCondition: null
             fieldUid: 82491024-fe0a-4331-a632-7b4e1a03d628 # Konflikt ;)
             instructions: null
             label: null
@@ -99,6 +63,18 @@ fieldLayouts:
             tip: null
             type: craft\fieldlayoutelements\CustomField
             uid: ed9bbc29-08ed-4b45-a43a-a51095449276
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            elementCondition: null
+            fieldUid: 0a064e6b-5fcd-4a2b-acb7-b46630ad5244 # Farbe
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 8e610b7c-7931-4225-a570-5057ec906e28
             userCondition: null
             warning: null
             width: 100
