@@ -43,6 +43,7 @@
 
 ### Server Zielsystem 
 - Git pull 
+– `ddev ssh`
 - Datenbank überschreiben (Metanet): `mysql -h 127.0.0.1 -u dev_profitlich_craft -p dev_profitlich_craft < dump.sql`
 - Update Craft dependencies `composer install --no-interaction`
 - Projektkonfiguration aktualisieren: `php craft up`
