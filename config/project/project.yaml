@@ -1,4 +1,4 @@
-dateModified: 1664447968
+dateModified: 1664452761
 email:
   fromEmail: dev@profitlich.ch
   fromName: 'Profitlich DEV'
@@ -14,6 +14,7 @@ meta:
     10120e23-43ba-494f-ba6c-7241058df713: Startseite # Startseite
     c81f04dd-a4dc-4e6f-a97b-5ce6004b8cf8: 'Profitlich DEV' # Profitlich DEV
     d6ebc0e2-f57d-43d9-b5ad-e53f1b9394a5: Test # Test
+    e5499ced-d936-40c2-b045-d0875063944b: 'Reiner Feld' # Reiner Feld
     e814380a-f915-44b8-92b3-a767fa94f64a: 'Profitlich DEV' # Profitlich DEV
 plugins:
   password-policy:
