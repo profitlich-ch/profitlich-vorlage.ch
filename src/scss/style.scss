@@ -1,3 +1,21 @@
-body {
-    background-color: midnightblue;
-}
+// Einstellungen
+@import "einstellungen";
+
+// Funktionen
+@import "funktionen/funktionen";
+
+// Breakpoints, Variablen, Mixins
+@import "grundlagen";
+
+// Schriften
+@import "fonts";
+
+// Bausteine
+@import "../bausteine/**/*.scss";
+
+// Macros
+@import "../macros/**/*.scss";
+
+// Sonstiges
+@import "seite";
+@import "main";

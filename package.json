@@ -9,10 +9,12 @@
     "author": "Moritz Profitlich",
     "license": "ISC",
     "devDependencies": {
+        "@babel/core": "^7.19.3",
         "autoprefixer": "^10.4.8",
         "browser-sync": "^2.27.10",
         "cssnano": "^5.1.12",
         "gulp": "^4.0.2",
+        "gulp-babel": "^8.0.0",
         "gulp-clean-css": "^4.3.0",
         "gulp-concat": "^2.6.1",
         "gulp-extract-media-queries": "^1.1.0",
@@ -41,10 +43,12 @@
         "rename": "^1.0.4",
         "rev-del": "^2.0.0",
         "sass": "^1.54.3",
-        "vinyl-ftp": "^0.6.1"
+        "vinyl-ftp": "^0.6.1",
+        "webpack-stream": "^7.0.0"
     },
     "dependencies": {
         "jquery": "^3.6.1",
+        "lazysizes": "^5.3.2",
         "svgo": "^2.8.0"
     }
 }

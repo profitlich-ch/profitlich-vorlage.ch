@@ -1,17 +1,28 @@
-dateModified: 1664454655
+dateModified: 1664877101
 email:
   fromEmail: dev@profitlich.ch
   fromName: 'Profitlich DEV'
   transportType: craft\mail\transportadapters\Sendmail
+fs:
+  lokal:
+    hasUrls: true
+    name: Lokal
+    settings:
+      path: '@assetBasePath'
+    type: craft\fs\Local
+    url: '@assetBaseUrl'
 meta:
   __names__:
     0a064e6b-5fcd-4a2b-acb7-b46630ad5244: Farbe # Farbe
     0e793c4c-3298-4c14-a50e-fe050eeaee18: Startseite # Startseite
     6b8cfffa-f693-418b-bedc-62d6d047943e: 'Filipa 2' # Filipa 2
     25d2e79d-a04c-4824-a49f-c3baa6642d8a: Common # Common
-    33e4e2e0-ac84-49fd-ad87-186f3ea0666b: 'Konflikt 2' # Konflikt 2.0 
+    33e4e2e0-ac84-49fd-ad87-186f3ea0666b: 'Konflikt 2' # Konflikt 2
+    44fec1ae-cc09-42b5-b6a8-1c301d066c04: Projektbilder # Projektbilder
+    396abe4e-d4af-4c68-a2fb-7a3bce13f340: Bildbeschreibung # Bildbeschreibung
     7689ffd6-2bc9-4ccb-9f0e-705955ea7777: Felix # Felix
     10120e23-43ba-494f-ba6c-7241058df713: Startseite # Startseite
+    12994855-fd13-4d38-8ad9-156bb1960e74: Projektbilder # Projektbilder
     82491024-fe0a-4331-a632-7b4e1a03d628: 'Konflikt ;)' # Konflikt ;)
     c81f04dd-a4dc-4e6f-a97b-5ce6004b8cf8: 'Profitlich DEV' # Profitlich DEV
     d6ebc0e2-f57d-43d9-b5ad-e53f1b9394a5: Test # Test

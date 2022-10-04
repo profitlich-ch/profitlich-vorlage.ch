@@ -1,0 +1,55 @@
+fieldLayouts:
+  413aa4a6-e2a6-4c94-b2e0-08be3e37fc65:
+    tabs:
+      -
+        elementCondition: null
+        elements:
+          -
+            autocapitalize: true
+            autocomplete: false
+            autocorrect: true
+            class: null
+            disabled: false
+            elementCondition: null
+            id: null
+            instructions: null
+            label: null
+            max: null
+            min: null
+            name: null
+            orientation: null
+            placeholder: null
+            readonly: false
+            requirable: false
+            size: null
+            step: null
+            tip: null
+            title: null
+            type: craft\fieldlayoutelements\assets\AssetTitleField
+            uid: 2124b4b0-5b72-4089-a532-43c097daaf1d
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            elementCondition: null
+            fieldUid: 396abe4e-d4af-4c68-a2fb-7a3bce13f340 # Bildbeschreibung
+            instructions: null
+            label: null
+            required: true
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: e1f9bdf7-3e08-4419-8e6f-4bb6c8eebfdd
+            userCondition: null
+            warning: null
+            width: 100
+        name: Content
+        uid: 6b9c9049-f380-4f5d-8db8-2e6fa1a74f1c
+        userCondition: null
+fs: lokal
+handle: projektbilder
+name: Projektbilder
+sortOrder: 2
+titleTranslationKeyFormat: null
+titleTranslationMethod: site
+transformFs: ''
+transformSubpath: ''

@@ -24,8 +24,6 @@
 - ddev/config.yaml ist im Git
 - Aktuelle Version von rsync: `brew install rsync`
 
-
-
 ## Schritte
 
 ### Quellsystem
@@ -56,6 +54,18 @@ Benutze ein Passwort
 Datenbankname  
 überschreibe von  
 Datei, mit der überschrieben werden soll
+
+
+# Git Vorgehen
+- Jeder entwickelt in einem eigenen branch dev-name
+- dev-name pushen
+- pull request von dev-name nach dev
+- Konflikt: dateModified config/project/config.yaml auf das neuere Datum (höhere Zahl)
+- Konflikt: fields, entries etc. absprechen, was bleibt und gelöscht wird
+- Merge
+- `checkout dev`, `git pull dev`
+- `checkout dev-name`, `git pull origin dev` (origin dev, weil sonst dev-name gepullt wird)
+- Weiterarbeiten an dev-name
 
 
 # Assets Synchronisierung

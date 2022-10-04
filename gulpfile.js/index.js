@@ -4,6 +4,7 @@ const { src, dest, watch, series, parallel, gulp } = require('gulp');
 const { readFileSync } = require('fs');
 
 const autoprefixer = require('autoprefixer');
+const babel        = require('gulp-babel');
 const browsersync  = require('browser-sync').create();
 const cleanCSS     = require('gulp-clean-css');
 const concat       = require('gulp-concat');
@@ -26,6 +27,7 @@ const sourcemaps   = require('gulp-sourcemaps');
 const svgo         = require('gulp-svgo');
 const svgSprite    = require('gulp-svg-sprite');
 const terser       = require('gulp-terser');
+const webpack      = require('webpack-stream');
 
 
 // lokal oder dev oder live
@@ -57,75 +59,66 @@ const dateien = {
 
     scss: {
         src: (modus == 'dev' || modus == 'lokal') ? 'src/scss/**/*.scss' : ['src/scss/**/*.scss', '!src/scss/dev/**.*'],
-        dest: 'dist/web/css',
+        dest: 'web/css',
     },
     
     js: {
-        src: (modus == 'dev' || modus == 'lokal') ? 'src/js/**/*.js' : ['src/js/**/*.js', '!src/js/dev/**.*'],
-        dest: 'dist/web/js',
+        // src: (modus == 'dev' || modus == 'lokal') ? 'src/js/**/*.js' : ['src/js/**/*.js', '!src/js/dev/**.*'],
+        src: 'src/js/javascript.js',
+        dest: 'web/js',
     },
     
     jsBausteine: {
         src: 'src/bausteine/**/*.js',
-        dest: 'dist/web/bausteine',
+        dest: 'web/bausteine',
     },
     
     // https://stackoverflow.com/questions/28876469/multiple-file-extensions-within-the-same-directory-using-gulp
     templatesTwig: {
         src: 'src/templates/**/*.twig',
-        dest: 'dist/templates',
+        dest: 'templates',
     },
 
     bausteineTwig: {
         src: 'src/bausteine/**/*.twig',
-        dest: 'dist/templates/bausteine',
+        dest: 'templates/_bausteine',
     },
 
     bausteineAssets: {
         src: 'src/bausteine/**/*.+(svg|jpg|jpeg|gif|png|html)',
-        dest: 'dist/web/bausteine',
+        dest: 'templates/_bausteine',
     },
 
     // http://glivera-team.github.io/svg/2019/03/15/svg-sprites-2.en.html
     sprites: {
         src: 'src/bausteine/**/_*.svg',
-        dest: 'dist/web/sprites',
+        dest: 'web/sprites',
     },
-    
-    html: {
-        src: 'src/html/**/*.html',
-        dest: 'dist/web',
-    },
-    
-    utilities: {
-        src: 'src/utilities/**/*.*',
-        dest: 'dist/web/utilities',
-    },
-    
-    emailTemplates: {
-        src: 'src/email-templates/**/*.twig',
-        dest: 'dist/web/email-templates',
+
+    macros: {
+        src: 'src/macros/**/*.*',
+        dest: 'web/templates/macros',
     },
     
     medien: {
         src: 'src/medien/**/*.*',
-        dest: 'dist/web/medien',
+        dest: 'web/medien',
     },
     
     mockup: {
         src: 'src/mockup/**/*.*',
-        dest: 'dist/web/mockup',
+        dest: 'web/mockup',
     },
     
     fonts: {
         src: 'src/fonts/**/*.*',
-        dest: 'dist/web/fonts',
+        dest: 'web/fonts',
     },
     
     favicon: {
         src: 'src/favicon/favicon.svg',
         html: 'src/favicon/*.html',
-        dest: 'dist/web/favicon',
+        dest: 'web/favicon',
         dataFile: 'src/favicon/faviconData.json',
     },
     
@@ -180,7 +173,13 @@ function jsTask() {
 
     return src(dateien.js.src)
 
-    .pipe(concat('javascript.js'))
+    // .pipe(concat('domscript.js'))
+
+    .pipe(
+        webpack({
+            
+        })
+    )
 
     .pipe(dest
         (dateien.js.dest)
@@ -234,7 +233,7 @@ function bausteineTwigTask() {
 
     return src(dateien.bausteineTwig.src)
 
-    .pipe(flatten())
+    // .pipe(flatten())
 
     .pipe(dest
         (dateien.bausteineTwig.dest)
@@ -295,43 +294,13 @@ function spritesTask() {
 
 }
 
-// HTML kopieren
-function htmlTask() {
-
-    if (modus =='lokal') {
-    
-        return src(dateien.html.src)
-
-        .pipe(dest
-            (dateien.html.dest)
-        );
-
-    } else {
-
-        return src(dateien.html.src)
-
-    }
-    
-}
-
-// E-Mail Templates kopieren
-function emailTemplatesTask() {
-
-    return src(dateien.emailTemplates.src)
-
-    .pipe(dest
-        (dateien.emailTemplates.dest)
-    );
-
-}
-
-// Utilities kopieren
+// Macros kopieren
 function utilitiesTask() {
 
-    return src(dateien.utilities.src)
+    return src(dateien.macros.src)
 
     .pipe(dest
-        (dateien.utilities.dest)
+        (dateien.macros.dest)
     );
 
 }
@@ -367,35 +336,6 @@ function fontsTask() {
             (dateien.fonts.dest)
         );
 }
-
-
-// Browsersync
-// https://coder-coder.com/quick-guide-to-browsersync-gulp-4/
-function browsersyncServe(callback){
-
-    if (modus =='lokal') {
-
-        browsersync.init({
-            server: {
-                baseDir: './dist/web/',
-            }    ,
-            notify: false
-        });
-        callback();
-        
-    } else {
-
-        callback();
-
-    }
-    
-}
-
-function browsersyncReload(callback){
-    browsersync.reload();
-    callback();
-}
-
 
 // FTP
 // https://medium.com/sliit-foss/automate-a-ftp-upload-with-gulp-js-4fde363cf9e8
@@ -458,22 +398,26 @@ function revisionierenTask() {
     
     if (modus !='lokal') {
         
-        return src('dist/**/*.{css,js,svg,jpg,png,eot,ttf,otf,woff,woff2}')
+        return src('web/**/*.{css,js,svg,jpg,png,eot,ttf,otf,woff,woff2}')
 
         // Hash anfügen mit Gulp Rev
         .pipe(rev())
         // Dateien(en) schreiben
-        .pipe(dest('dist'))
+        .pipe(dest('web'))
 
         .pipe(rev.manifest({
             merge: true
         }))
+
+        // Alte gehashte Dateien löschen
+        // .pipe(revdel())
+
         .pipe(replace('web/', ''))
-        .pipe(dest('dist'))
+        .pipe(dest('web'))
         
     } else {
 
-        return src('/dist/**/*.*')
+        return src('/web/**/*.*')
 
     }
 }
@@ -484,9 +428,9 @@ function revschreibenTask() {
     
     if (modus !='lokal') {
         
-        const manifest = readFileSync('dist/rev-manifest.json');
+        const manifest = readFileSync('web/rev-manifest.json');
 
-        return src('dist/**/*.{html,twig,css,js}')
+        return src('dist/**/*.{twig,css,js}')
         .pipe(revrewrite({ manifest }))
         .pipe(dest('dist'));
     
@@ -524,12 +468,11 @@ function watchTask() {
         series(
             aufraeumenTask,
             parallel(
-                templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, htmlTask, utilitiesTask, emailTemplatesTask, scssTask, jsTask, medienTask, mockupTask, fontsTask, spritesTask
+                templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, utilitiesTask, scssTask, jsTask, medienTask, mockupTask, fontsTask, spritesTask
             ),
             injizierenTask,
             revisionierenTask,
             revschreibenTask,
-            browsersyncReload,
             uploadTask,
         )
     );
@@ -540,14 +483,13 @@ exports.default = series (
     series(
         aufraeumenTask,
         parallel(
-            templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, htmlTask, utilitiesTask, emailTemplatesTask, scssTask, jsTask, medienTask, mockupTask, fontsTask, spritesTask
+            templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, utilitiesTask, scssTask, jsTask, medienTask, mockupTask, fontsTask, spritesTask
         ),
         injizierenTask,
         revisionierenTask,
         revschreibenTask,
         uploadTask,
     ),
-    browsersyncServe,
     watchTask,
 );
 

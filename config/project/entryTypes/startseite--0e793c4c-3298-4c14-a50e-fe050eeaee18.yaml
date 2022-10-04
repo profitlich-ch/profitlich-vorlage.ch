@@ -80,13 +80,25 @@ fieldLayouts:
             width: 100
           -
             elementCondition: null
-            fieldUid: 33e4e2e0-ac84-49fd-ad87-186f3ea0666b # Konflikt 2.0 
+            fieldUid: 33e4e2e0-ac84-49fd-ad87-186f3ea0666b # Konflikt 2
             instructions: null
             label: null
             required: false
             tip: null
             type: craft\fieldlayoutelements\CustomField
             uid: aab27a7a-6385-497b-9c31-d79be08791f3
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            elementCondition: null
+            fieldUid: 12994855-fd13-4d38-8ad9-156bb1960e74 # Projektbilder
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 2fef81bc-44ba-4070-967c-51790791d3b6
             userCondition: null
             warning: null
             width: 100
