@@ -1,0 +1,168 @@
+$devBausteinListeBreite: 0;
+@if ($modus == 'dev') {
+    $devBausteinListeBreite: 200px;
+}
+
+
+$breakpoints: (
+    // smartphoneBis:   map-get($layouts, tabletHoch) - 1px,
+    smartphoneBis:   799px,
+    tabletHochAb:    map-get($layouts, tabletHoch),
+    tabletHochBis:   map-get($layouts, tabletQuer) - 1px,
+    tabletQuerAb:    map-get($layouts, tabletQuer),
+    tabletQuerBis:   map-get($layouts, desktop) - 1px,
+    // desktopAb:       map-get($layouts, desktop),
+    desktopAb:       800px,
+    desktopBis:      map-get($layouts, gross) - 1px,
+    gross:           map-get($layouts, gross),
+);
+
+$mediaqueries: (
+	'smartphone':    (max-width: map-get($breakpoints, smartphoneBis)),
+	'tablet':        (min-width: map-get($breakpoints, tabletHochAb), max-width: map-get($breakpoints, tabletQuerBis)),
+	'tabletAb':      (min-width: map-get($breakpoints, tabletHochAb)),
+	'tabletHochAb':  (max-width: map-get($breakpoints, tabletHochAb)),
+	'tabletHoch':    (min-width: map-get($breakpoints, tabletHochAb), max-width: map-get($breakpoints, tabletHochBis)),
+	'tabletHochBis': (max-width: map-get($breakpoints, tabletHochBis)),
+	'tabletQuerAb':  (max-width: map-get($breakpoints, tabletQuerAb)),
+	'tabletQuer':    (min-width: map-get($breakpoints, tabletQuerAb), max-width: map-get($breakpoints, tabletQuerBis)),
+	'tabletQuerBis': (max-width: map-get($breakpoints, tabletQuerBis)),
+	'desktop':       (min-width: map-get($breakpoints, desktopAb)),
+	'desktopAb':     (min-width: map-get($breakpoints, desktopAb)),
+);
+
+
+// Versalien
+@mixin versalien {
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+}
+
+
+// Bilder
+.bild {
+    width: 100%;
+}
+
+
+
+
+// Schriftart
+@mixin schriftart($layout, $schriftgroesse, $zeilenabstand, $fette: false) {
+
+    font-size: groesse($layout, $schriftgroesse);
+    line-height: groesse($layout, $zeilenabstand);
+
+    @if ($fette != 'false') {
+        font-weight: $fette;
+    }
+
+}
+
+
+// Spalten
+// Berechnet die Breite (als Anteil von 100)
+// Standarmässig geht die Funktion davon aus, dass der gegebene Raum keine Spaltenabstände seitlich enthält;
+// mit der Variable $vonZusatzpaltenabstaende können welche angegeben werden.
+@function spalten($layout, $spalten, $vonSpalten, $vonZusatzpaltenabstaende:0, $zusatzspaltenabstaende:0, $invers:1) {
+    $spaltenabstand: groesse($layout, map-get($spaltenabstaende, $layout) );
+
+    // Verfügbarer Raum
+    // minus Spaltenabstände innerhalb des Raumes
+    // gleich Raum für Inhalte
+    // geteilt durch Anzahl Spalten im Raum
+    // gleich Breite jeder Spalte
+    // mal Anzahl gewünschter Spalten
+    // gleich Breite der gewünschten Spalten
+    // plus Spaltenabstände zwischen den gewünschten Spalten
+    // gleich Gesamtbreite
+    // plus Zusatzspaltenabstand
+    @return calc(
+        (
+            (
+                // Raum
+                (100%)
+                // Alle Spaltenabstände des Raumes
+                - $spaltenabstand * ($vonSpalten + $vonZusatzpaltenabstaende - 1)
+            )
+            // Spaltenahl des Raumes
+            / $vonSpalten
+            // gewünschte Spalten
+            * $spalten
+            // Spaltenabstände zwischen den gewünschten Spalten
+            + $spaltenabstand * ($spalten - 1 + $zusatzspaltenabstaende)
+        ) * $invers
+    );
+}
+
+
+
+// Grösse
+// In Pixel oder vw umrechnen
+@function groesse($layout, $zahl) {
+    $zahl: strip-unit($zahl);
+    $breite: false;
+    $korrekturfaktor: 1;
+    $breite: strip-unit( map-get($layouts, $layout) );
+
+    @if $layout == smartphone or $layout == gross {
+        @return $zahl * 1px;
+    } @else {
+        $vw: decimal-round( calc($zahl / strip-unit($breite)) * 100, 2) * 1vw;
+        @return $vw;
+    }
+
+}
+
+
+// Abstand
+@mixin abstand($layout, $abstand, $position, $top: 0, $right: 0, $bottom: 0, $left: 0) {
+
+    // @include abstand($layout, padding/margin, alle/top/right/bottom/left, 0, 0, 0, 0) 
+
+    $einheit: false;
+
+    @if $layout == smartphone or $layout == gross {
+        $top: $top + px;
+        $right: $right + px;
+        $bottom: $bottom + px;
+        $left: $left + px;
+    } @else {
+
+        @if type-of($top) == 'number'{
+            $top: groesse($layout, $top);
+        } 
+        @if type-of($right) == 'number'{
+            $right: groesse($layout, $right);
+        } 
+        @if type-of($bottom) == 'number'{
+            $bottom: groesse($layout, $bottom);
+        } 
+        @if type-of($left) == 'number'{
+            $left: groesse($layout, $left);
+        } 
+    }
+    
+    @if $position == alle {
+        #{$abstand}: $top $right $bottom $left;
+    }
+    @if $position == top {
+        #{$abstand}-top: $top;
+    }
+    @if $position == right {
+        #{$abstand}-right: $top;
+    }
+    @if $position == bottom {
+        #{$abstand}-bottom: $top;
+    }
+    @if $position == left {
+        #{$abstand}-left: $top;
+    }
+}
+
+
+// Seitenbreite
+@mixin seitenbreite {
+    max-width: $maximalbreite;
+    margin: 0 auto;
+}

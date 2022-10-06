@@ -1,0 +1,22 @@
+.main {
+    position: relative;
+}
+
+
+@include mediaquery(smartphone) {
+
+    $layout: smartphone;
+
+    .main {
+        @include abstand($layout, padding, alle, 90, 0, 0, 0);
+    }
+}
+
+@include mediaquery(desktop) {
+    
+    $layout: desktop;
+
+    .main {
+        @include abstand($layout, padding, alle, 0, 0, 0, 0);
+    }
+}

@@ -1,0 +1,37 @@
+// Zusammenlegen aller Meda Queries in eine
+// https://www.sitepoint.com/sass-mixin-media-merging
+
+@mixin mediaquery($mediaquery) {
+    // Hole die map $mediaquery aus der map $mediaqueries
+    $queries: map-get($mediaqueries, $mediaquery);
+
+    // Wenn es keine $mediaquery in der map gibt, gebe einen Fehler aus
+    @if not $queries {
+        @error "No value could be retrieved from `#{$mediaquery}`. "
+        + "Please make sure it is defined in `$breakpoints` map.";
+    }
+
+    // Include the media mixin with $queries
+    @include media($queries) {
+        @content;
+    }
+}
+
+@mixin media($queries) {
+    // Erst wenn alle mediaqueries geschachtelt geschrieben sind,
+    // wird der @content ausgegeben
+    @if length($queries) == 0 {
+        @content;
+    } @else {
+        $first-key: nth(map-keys($queries), 1);
+
+        // Schreibt nur die mediaquery, nicht den Inhalt
+        @media ($first-key: map-get($queries, $first-key)) {
+            $queries: map-remove($queries, $first-key);
+
+            @include media($queries) {
+                @content;
+            }
+        }
+    }
+}
