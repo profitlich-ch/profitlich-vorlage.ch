@@ -28,9 +28,9 @@
 {% endif %}
 
 {% if bildverhaeltnis == true %}
-    {% set paddingBottom = bildverhaeltnis * 100 ~ "%" %}
+    {% set paddingBottom = 1 / bildverhaeltnis * 100 ~ "%" %}
 {% else %}
-    {% set paddingBottom = (bild.getHeight() / bild.getWidth() * 100) | round(3, 'floor') ~ "%" %}
+    {% set paddingBottom = bild.getHeight() / bild.getWidth() * 100 | round(2) ~ "%" %}
 {% endif %}
 
 {% switch fokuspunkt %}
@@ -64,7 +64,7 @@
 
 {% set attribute = {
     class: [
-        'bild-verhaeltnis'
+        class ~ '-bild' ~ ' macro-bild'
     ],
     style: {
         'background-color': hintergrundfarbe,
@@ -73,50 +73,36 @@
 } %}
 
 <div {{attr(attribute)}}>
-    <picture>
+    <picture class="macro-bild__picture">
         {% if bildverhaeltnis == true %}
             {% do bild.setTransform({ width: 100, height: 100 * bildverhaeltnis }) %}
-            {{ tag('source', {
-                format: 'webp',
-                mode: 'crop',
-                type: 'image/webp',
-                srcset: bild.getSrcset(['100w', '200w', '400w', '600w', '800w', '1000w', '1200w', '1400w', '1600w', '1800w', '2000w', '2200w', '2400w', '2600w', '2800w', '3000w', '3200w', '3400w', '3600w', '3800w', '4000w', '4200w', '4400w', '4600w', '4800w', '5000w'])
-            }) }}
-            {{ tag('source', {
-                format: 'jpg',
-                mode: 'crop',
-                type: 'image/jpeg',
-                srcset: bild.getSrcset(['100w', '200w', '400w', '600w', '800w', '1000w', '1200w', '1400w', '1600w', '1800w', '2000w', '2200w', '2400w', '2600w', '2800w', '3000w', '3200w', '3400w', '3600w', '3800w', '4000w', '4200w', '4400w', '4600w', '4800w', '5000w'])
-            }) }}
         {% else %}
             {% do bild.setTransform({ width: 100, height: bild.width * bildverhaeltnis }) %}
-            {{ tag('source', {
-                format: 'webp',
-                mode: 'fit',
-                type: 'image/webp',
-                srcset: bild.getSrcset(['100w', '200w', '400w', '600w', '800w', '1000w', '1200w', '1400w', '1600w', '1800w', '2000w', '2200w', '2400w', '2600w', '2800w', '3000w', '3200w', '3400w', '3600w', '3800w', '4000w', '4200w', '4400w', '4600w', '4800w', '5000w'])
-            }) }}
-            {{ tag('source', {
-                format: 'jpg',
-                mode: 'fit',
-                type: 'image/jpeg',
-                srcset: bild.getSrcset(['100w', '200w', '400w', '600w', '800w', '1000w', '1200w', '1400w', '1600w', '1800w', '2000w', '2200w', '2400w', '2600w', '2800w', '3000w', '3200w', '3400w', '3600w', '3800w', '4000w', '4200w', '4400w', '4600w', '4800w', '5000w'])
-            }) }}
         {% endif %}
+        {{ tag('source', {
+            format: 'webp',
+            mode: 'fit',
+            type: 'image/webp',
+            srcset: bild.getSrcset(['100w', '200w', '400w', '600w', '800w', '1000w', '1200w', '1400w', '1600w', '1800w', '2000w', '2200w', '2400w', '2600w', '2800w', '3000w', '3200w', '3400w', '3600w', '3800w', '4000w', '4200w', '4400w', '4600w', '4800w', '5000w'])
+        }) }}
+        {{ tag('source', {
+            format: 'jpg',
+            mode: 'fit',
+            type: 'image/jpeg',
+            srcset: bild.getSrcset(['100w', '200w', '400w', '600w', '800w', '1000w', '1200w', '1400w', '1600w', '1800w', '2000w', '2200w', '2400w', '2600w', '2800w', '3000w', '3200w', '3400w', '3600w', '3800w', '4000w', '4200w', '4400w', '4600w', '4800w', '5000w'])
+        }) }}
 
-        {% do bild.setTransform({ width: 300, height: 300 * bildverhaeltnis }) %}
+        {% do bild.setTransform({ width: 300, height: 300 }) %}
         {{ tag('img', {
             src: bild.url,
             width: bild.width,
             height: bild.height,
             alt: bildbeschreibung,
-            class: class ~ '__img ' ~ lazyloadVariable,
+            class: class ~ '-img macro-bild__img' ~ lazyloadVariable,
             'background-color': hintergrundfarbe,
             'object-position': cssObjectPosition,
             data: {
-                sizes: sizesAuto,
-                height: bild.getHeight(),
-                width: bild.getWidth()
+                sizes: sizesAuto
             }
         }) }}
     </picture>

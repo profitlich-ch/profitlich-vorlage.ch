@@ -4,7 +4,8 @@ window.$ = $;
 window.jQuery = $;
 
 import 'lazysizes';
+// import 'devLayouttools';
 
-$(document).ready(function () {
+$(function() {
     console.log('Jippieh!');
 });

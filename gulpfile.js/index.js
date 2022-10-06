@@ -96,8 +96,8 @@ const dateien = {
     },
 
     macros: {
-        src: 'src/macros/**/*.*',
-        dest: 'web/templates/macros',
+        src: 'src/macros/**/*.twig',
+        dest: 'templates/macros',
     },
     
     medien: {
@@ -295,7 +295,7 @@ function spritesTask() {
 }
 
 // Macros kopieren
-function utilitiesTask() {
+function macrosTask() {
 
     return src(dateien.macros.src)
 
@@ -468,7 +468,7 @@ function watchTask() {
         series(
             aufraeumenTask,
             parallel(
-                templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, utilitiesTask, scssTask, jsTask, medienTask, mockupTask, fontsTask, spritesTask
+                templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosTask, scssTask, jsTask, medienTask, mockupTask, fontsTask, spritesTask
             ),
             injizierenTask,
             revisionierenTask,
@@ -483,7 +483,7 @@ exports.default = series (
     series(
         aufraeumenTask,
         parallel(
-            templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, utilitiesTask, scssTask, jsTask, medienTask, mockupTask, fontsTask, spritesTask
+            templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosTask, scssTask, jsTask, medienTask, mockupTask, fontsTask, spritesTask
         ),
         injizierenTask,
         revisionierenTask,
