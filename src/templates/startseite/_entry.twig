@@ -11,7 +11,7 @@
 {% for bild in entry.projektbilder %}
     <div class="projekt__bild">
         {# <img src="{{ bild.url }}"> #}
-        {{ macroBild.bild(bild, 'bild', 'Text der bildbeschreibung') }}
+        {{ macroBild.bild(bild, 'bild', 'Text der bildbeschreibung', '4:3') }}
     </div>
 {% endfor %}
 
