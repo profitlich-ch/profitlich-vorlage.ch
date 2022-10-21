@@ -3,8 +3,9 @@
     class,
     bildbeschreibung,
     seitenverhaeltnis = false,
-    hintergrundfarbe = false,
     fokuspunkt = 5,
+    objectFit = false,
+    hintergrundfarbe = false,
     lazyload = true,
     paddingTrick = true,
     preload = false
@@ -107,20 +108,23 @@
 
         {% if seitenverhaeltnis == true %}
             {% do bild.setTransform({
-                width: 300,
-                height: 300 * hoehe,
+                width: 100,
+                height: 100 * hoehe,
                 mode: 'crop',
                 quality: 50
             }) %}
         {% else %}
             {% do bild.setTransform({
                 width: 100,
-                height: 100 * hoehe,
                 quality: 50
             }) %}
         {% endif %}
+        {% do bild.setTransform({
+            width: 100,
+            quality: 30
+        }) %}
         {{ tag('img', {
-            src: bild.url,
+            src: dataUrl(bild),
             width: bild.width,
             height: bild.height,
             alt: bildbeschreibung,

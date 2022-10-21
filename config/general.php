@@ -28,4 +28,10 @@ return GeneralConfig::create()
         '@assetBaseUrl' => craft\helpers\App::env('ASSETS_BASE_URL'),
         '@assetBasePath' => craft\helpers\App::env('ASSETS_BASE_PATH'),
     ])
+
+    // Slugs ohne Umlaute
+    ->limitAutoSlugsToAscii(true)
+    
+    // Loginadresse des Redaktionssystems
+    ->cpTrigger('redaktion')
 ;
