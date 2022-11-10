@@ -27,10 +27,11 @@
 ## Schritte
 
 ### Quellsystem
-- Werkzeuge › Projektkonfiguration › YAML-Änderungen anwenden
-- Alte dump.sql löschen
-- Git push
+- (Werkzeuge › Projektkonfiguration › YAML-Änderungen anwenden)
+- `ddev ssh`
 - mysql dump in Hauptverzeichnis: `mysqldump db > dump.sql`
+- `exit`
+- git push
 
 ### ddev Zielsystem 
 - Git pull
