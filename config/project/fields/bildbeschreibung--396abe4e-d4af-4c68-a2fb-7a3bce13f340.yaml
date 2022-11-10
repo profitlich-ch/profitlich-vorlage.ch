@@ -1,9 +1,9 @@
-columnSuffix: pvveslha
+columnSuffix: dukgymih
 contentColumnType: text
-fieldGroup: d6ebc0e2-f57d-43d9-b5ad-e53f1b9394a5 # Test
-handle: test
+fieldGroup: 25d2e79d-a04c-4824-a49f-c3baa6642d8a # Common
+handle: bildbeschreibung
 instructions: null
-name: Test
+name: Bildbeschreibung
 searchable: false
 settings:
   byteLimit: null

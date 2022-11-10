@@ -3,6 +3,9 @@ import $ from 'jquery';
 window.$ = $;
 window.jQuery = $;
 
-$(document).ready(function () {
+import 'lazysizes';
+// import 'devLayouttools';
+
+$(function() {
     console.log('Jippieh!');
 });

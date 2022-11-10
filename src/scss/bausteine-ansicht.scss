@@ -1,0 +1,176 @@
+// Einstellungen
+@import "einstellungen";
+
+// Funktionen
+@import "funktionen/funktionen";
+
+// Breakpoints, Variablen, Mixins
+@import "grundlagen";
+
+// Schriften
+@import "fonts";
+
+// Bausteine
+@import "../bausteine/**/*.scss";
+
+// Sonstiges
+@import "seite";
+@import "main";
+
+
+.bausteine {
+
+    $layout: smartphone;
+
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    min-height: 100vh;
+    
+
+    &__darstellung-container {
+        flex: 1;        
+    }
+    
+    &__darstellung {
+
+        // overflow: hidden;
+
+        &.ohne-padding {
+
+            padding: 0;
+
+        }
+
+
+        &__baustein {
+                
+            position: relative;
+    
+            &:first-child:before {
+                content: "";
+            }
+            
+        }
+
+    }
+
+    
+    &__liste {
+        
+        padding: 5px;
+        background-color: white;
+        
+        &__baustein {
+            
+            @include schriftart($layout, 16, 18);
+            background-color: white;
+            border-radius: 4px;
+            margin-bottom: 2px;
+            padding: 6px 5px;
+
+            &:hover {
+                background-color: map-get($farben, braun-1);
+                cursor: pointer;
+                color: white;
+            }
+
+            
+        }
+
+        &__schalter {
+            display: flex;
+            flex-wrap: wrap;
+
+            .bausteine__liste__baustein {
+                margin-right: 2px
+            }
+
+        }
+
+        &__dokumentation {
+
+            
+             
+        }
+        
+        &__text {
+            
+            @include schriftart($layout, 16, 18);
+            margin: 0;
+            padding-top: 16px;
+            
+            &:first-of-type {
+                padding-top: 0;
+            }
+
+        }
+        
+        &__untertitel {
+            
+            @include schriftart($layout, 16, 18);
+            margin: 0;
+            margin: 10px 0 0 0;
+            
+            &:first-of-type {
+                margin-top: 0;
+            }
+
+        }
+        
+        &__titel {
+    
+            @include schriftart($layout, 22, 24, 600);
+            margin: 20px 0 10px 0;
+    
+        }
+
+        &__zwischenspeicher {
+
+            height: 0;
+            width: 0;
+            opacity: 0;
+
+        }
+
+    }
+
+
+
+    // Slideout
+    // https://slideout.js.org/
+    &__liste {
+
+        bottom: 0;
+        display: none;
+        min-height: 100vh;
+        overflow-y: scroll;
+        position: fixed;
+        top: 0;
+        width: 300px;
+        -webkit-overflow-scrolling: touch;
+
+        left: 0;
+
+    }
+
+    &__darstellung-container {
+        
+        background-color: map-get($farben, hintergrund);
+        position: relative;
+        min-height: 100vh;
+        will-change: transform;
+
+    }
+
+}
+
+.slideout-open,
+.slideout-open body,
+.slideout-open .slideout-panel {
+    overflow: hidden;
+}
+
+.slideout-open .slideout-menu {
+    display: block;
+}
