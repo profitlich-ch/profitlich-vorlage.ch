@@ -13,6 +13,7 @@ assignees: ''
 
 # Backend
 – [ ] Pflichtfelder sind gesetzt
+- [ ] Alle Asset Field Layouts haben ein Feld für einen Alt-Tags
 
 # Code Qualität
 – [ ] HTML Validierung ist durchgeführt
