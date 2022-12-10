@@ -1,4 +1,4 @@
-dateModified: 1664877101
+dateModified: 1667910818
 email:
   fromEmail: dev@profitlich.ch
   fromName: 'Profitlich DEV'
@@ -28,6 +28,10 @@ meta:
     d6ebc0e2-f57d-43d9-b5ad-e53f1b9394a5: Test # Test
     e814380a-f915-44b8-92b3-a767fa94f64a: 'Profitlich DEV' # Profitlich DEV
 plugins:
+  async-queue:
+    edition: standard
+    enabled: true
+    schemaVersion: 1.0.0
   password-policy:
     edition: standard
     enabled: true

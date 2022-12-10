@@ -1,0 +1,44 @@
+{
+    "modus": "dev",
+
+    "layouts": {
+        "smartphone":  "421px",
+        "tabletHoch":  "768px",
+        "tabletQuer": "1024px",
+        "tablet":     "1024px",
+        "desktop":    "2195px",
+        "gross":      "1800px"
+    },
+
+    "maximalbreite": "1699px",
+
+
+    "farben": {
+        "braun": "#7E6F62"
+    },
+
+    "seitenraender": {
+        "smartphone": {
+            "top": 90,
+            "right": 40,
+            "bottom": 0,
+            "left": 40
+        },
+        "desktop": {
+            "top": 0,
+            "right": 310,
+            "bottom": 0,
+            "left": 0
+        }
+    },
+
+    "spalten": {
+        "smartphone": 5,
+        "desktop": 10
+    },
+
+    "spaltenabstaende": {
+        "smartphone": "10px",
+        "desktop": "16px"
+    }
+}

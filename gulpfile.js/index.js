@@ -1,10 +1,15 @@
-const path = require('path');
+// lokal oder dev oder live
+// lokal nutzt Browsersync
+// dev lädt auf den Entwicklungsserver
+// live lädt auf den Live Server, lässt alle dev Inhalte weg (JS, CSS) und komprimiert JS
+const modus = 'lokal';
 
+const path = require('path');
 const { src, dest, watch, series, parallel, gulp } = require('gulp');
 const { readFileSync } = require('fs');
 
 const autoprefixer = require('autoprefixer');
-const babel        = require('gulp-babel');
+// const babel        = require('gulp-babel');
 const browsersync  = require('browser-sync').create();
 const cleanCSS     = require('gulp-clean-css');
 const concat       = require('gulp-concat');
@@ -12,11 +17,11 @@ const del          = require('del');
 const flatten      = require('gulp-flatten');
 const ftp          = require('vinyl-ftp');
 const gulpif       = require('gulp-if');
+const sassImportJson = require('gulp-sass-import-json');
 const injectCSS    = require('gulp-inject-css');
 const postcss	   = require('gulp-postcss');
 const postcssObjectFitImages = require('postcss-object-fit-images');
 const postcssEasingGradients = require('postcss-easing-gradients');
-const realFavicon  = require ('gulp-real-favicon');
 const rename       = require('gulp-rename');
 const replace      = require('gulp-replace');
 const rev          = require('gulp-rev');
@@ -28,14 +33,6 @@ const svgo         = require('gulp-svgo');
 const svgSprite    = require('gulp-svg-sprite');
 const terser       = require('gulp-terser');
 const webpack      = require('webpack-stream');
-
-
-// lokal oder dev oder live
-// lokal nutzt Browsersync
-// dev lädt auf den Entwicklungsserver
-// live lädt auf den Live Server, lässt alle dev Inhalte weg (JS, CSS) und komprimiert JS
-const modus = 'lokal';
-
 
 var ftpVerbindungDev = ftp.create({
     host: "",
@@ -53,6 +50,7 @@ var ftpVerbindungLive = ftp.create({
 
 // Dateipfade
 const dateien = { 
+    styleCss: 'src/scss/style.scss',
     src: {
         src: 'src/**/*.*',
     },
@@ -129,10 +127,23 @@ const dateien = {
     },
 }
 
+// JSON Variablen importieren
+function importJsonTask() {
+    return src(dateien.styleCss)
+    .pipe(sassImportJson({
+        isSсss: true
+    }))
+    .pipe(sass())
+}
+
 // SCSS kompilieren
 function scssTask() {
 
     return src(dateien.scss.src)
+
+    .pipe(sassImportJson({
+        isSсss: true
+    }))
 
     // Globs lesen (wildcard)
     .pipe(sassGlob())
@@ -173,23 +184,13 @@ function jsTask() {
 
     return src(dateien.js.src)
 
-    // .pipe(concat('domscript.js'))
-
     .pipe(
-        webpack({
-            
-        })
+        webpack( require('../webpack.config.js') )
     )
 
     .pipe(dest
         (dateien.js.dest)
     )
-
-    // Datei in min umbenennen
-    .pipe(rename('javascript.min.js'))
-
-    // Komprimieren mit Terser wenn im live modus
-    .pipe(gulpif( modus != 'dev' && modus != 'lokal', terser() ))
 
     // Dateien(en) schreiben
     .pipe(dest
@@ -386,7 +387,10 @@ function uploadTask() {
 
     } else {
 
-        return src( dateien.upload.src, { base: 'dist', buffer: false } )
+        return src( dateien.upload.src, {
+            base: 'dist',
+            buffer: false
+        } )
 
     }
 
@@ -467,6 +471,7 @@ function watchTask() {
         [dateien.src.src],
         series(
             aufraeumenTask,
+            // importJsonTask,
             parallel(
                 templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosTask, scssTask, jsTask, medienTask, mockupTask, fontsTask, spritesTask
             ),
@@ -482,6 +487,7 @@ function watchTask() {
 exports.default = series (
     series(
         aufraeumenTask,
+        // importJsonTask,
         parallel(
             templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosTask, scssTask, jsTask, medienTask, mockupTask, fontsTask, spritesTask
         ),
@@ -492,124 +498,3 @@ exports.default = series (
     ),
     watchTask,
 );
-
-
-// Generate the icons. This task takes a few seconds to complete.
-// You should run it at least once to create the icons. Then,
-// you should run it whenever RealFaviconGenerator updates its
-// package (see the check-for-favicon-update task below).
-function generateFavicon(done) {
-	realFavicon.generateFavicon({
-		masterPicture: dateien.favicon.src,
-		dest: dateien.favicon.dest,
-		iconsPath: '/',
-		design: {
-			ios: {
-				masterPicture: {
-					type: 'inline',
-					content: 'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGlkPSJhIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzNSAzNSI+PGRlZnM+PHN0eWxlPi5ke2ZpbGw6IzliNjQ1YTt9PC9zdHlsZT48L2RlZnM+PGcgaWQ9ImIiPjxyZWN0IGNsYXNzPSJkIiB4PSIxNi45OSIgd2lkdGg9IjEuMDIiIGhlaWdodD0iMzUiLz48L2c+PGcgaWQ9ImMiPjxyZWN0IGNsYXNzPSJkIiB5PSIxNi45OSIgd2lkdGg9IjM1IiBoZWlnaHQ9IjEuMDIiLz48L2c+PC9zdmc+'
-				},
-				pictureAspect: 'backgroundAndMargin',
-				backgroundColor: '#ffffff',
-				margin: '14%',
-				assets: {
-					ios6AndPriorIcons: false,
-					ios7AndLaterIcons: false,
-					precomposedIcons: false,
-					declareOnlyDefaultIcon: true
-				},
-				appName: 'Appname'
-			},
-			desktopBrowser: {
-				design: 'background',
-				backgroundColor: '#34f063',
-				backgroundRadius: 0.5,
-				imageScale: 0.8
-			},
-			windows: {
-				masterPicture: {
-					type: 'inline',
-					content: 'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGlkPSJhIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzOCAzOCI+PGRlZnM+PHN0eWxlPi5ie2ZpbGw6IzliNjQ1YTt9PC9zdHlsZT48L2RlZnM+PHBhdGggY2xhc3M9ImIiIGQ9Ik0xOSwzOEM4LjUyLDM4LDAsMjkuNDgsMCwxOVM4LjUyLDAsMTksMHMxOSw4LjUyLDE5LDE5LTguNTIsMTktMTksMTlaTTE5LDEuM0M5LjI0LDEuMywxLjMsOS4yNCwxLjMsMTlzNy45NCwxNy43LDE3LjcsMTcuNywxNy43LTcuOTQsMTcuNy0xNy43UzI4Ljc2LDEuMywxOSwxLjNaIi8+PHBvbHlnb24gY2xhc3M9ImIiIHBvaW50cz0iMjQuODQgMTguODcgMTkuNDggMjQuMjMgMTkuNDggMTAuNTkgMTguMTggMTAuNTkgMTguMTggMjQuMjQgMTIuODIgMTguODcgMTEuOSAxOS43OSAxOC44MyAyNi43MiAyNS43NiAxOS43OSAyNC44NCAxOC44NyIvPjwvc3ZnPg=='
-				},
-				pictureAspect: 'noChange',
-				backgroundColor: '#a030a0',
-				onConflict: 'override',
-				assets: {
-					windows80Ie10Tile: false,
-					windows10Ie11EdgeTiles: {
-						small: false,
-						medium: true,
-						big: false,
-						rectangle: false
-					}
-				},
-				appName: 'Appname'
-			},
-			androidChrome: {
-				masterPicture: {
-					type: 'inline',
-					content: 'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGlkPSJhIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzOCAzOCI+PGRlZnM+PHN0eWxlPi5ie2ZpbGw6IzliNjQ1YTt9PC9zdHlsZT48L2RlZnM+PHBhdGggY2xhc3M9ImIiIGQ9Ik0xOSwzOEM4LjUyLDM4LDAsMjkuNDgsMCwxOVM4LjUyLDAsMTksMHMxOSw4LjUyLDE5LDE5LTguNTIsMTktMTksMTlaTTE5LDEuM0M5LjI0LDEuMywxLjMsOS4yNCwxLjMsMTlzNy45NCwxNy43LDE3LjcsMTcuNywxNy43LTcuOTQsMTcuNy0xNy43UzI4Ljc2LDEuMywxOSwxLjNaIi8+PHBvbHlnb24gY2xhc3M9ImIiIHBvaW50cz0iMjQuODQgMTguODcgMTkuNDggMjQuMjMgMTkuNDggMTAuNTkgMTguMTggMTAuNTkgMTguMTggMjQuMjQgMTIuODIgMTguODcgMTEuOSAxOS43OSAxOC44MyAyNi43MiAyNS43NiAxOS43OSAyNC44NCAxOC44NyIvPjwvc3ZnPg=='
-				},
-				pictureAspect: 'backgroundAndMargin',
-				margin: '17%',
-				backgroundColor: '#4567f3',
-				themeColor: '#4567f3',
-				manifest: {
-					name: 'Appname',
-					display: 'standalone',
-					orientation: 'notSet',
-					onConflict: 'override',
-					declared: true
-				},
-				assets: {
-					legacyIcon: false,
-					lowResolutionIcons: false
-				}
-			},
-			safariPinnedTab: {
-				masterPicture: {
-					type: 'inline',
-					content: 'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGlkPSJhIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzOCAzOCI+PGRlZnM+PHN0eWxlPi5ie2ZpbGw6IzliNjQ1YTt9PC9zdHlsZT48L2RlZnM+PHBhdGggY2xhc3M9ImIiIGQ9Ik0xOSwzOEM4LjUyLDM4LDAsMjkuNDgsMCwxOVM4LjUyLDAsMTksMHMxOSw4LjUyLDE5LDE5LTguNTIsMTktMTksMTlaTTE5LDEuM0M5LjI0LDEuMywxLjMsOS4yNCwxLjMsMTlzNy45NCwxNy43LDE3LjcsMTcuNywxNy43LTcuOTQsMTcuNy0xNy43UzI4Ljc2LDEuMywxOSwxLjNaIi8+PHBvbHlnb24gY2xhc3M9ImIiIHBvaW50cz0iMjQuODQgMTguODcgMTkuNDggMjQuMjMgMTkuNDggMTAuNTkgMTguMTggMTAuNTkgMTguMTggMjQuMjQgMTIuODIgMTguODcgMTEuOSAxOS43OSAxOC44MyAyNi43MiAyNS43NiAxOS43OSAyNC44NCAxOC44NyIvPjwvc3ZnPg=='
-				},
-				pictureAspect: 'silhouette',
-				themeColor: '#ff00a0'
-			}
-		},
-		settings: {
-			scalingAlgorithm: 'Mitchell',
-			errorOnImageTooSmall: false,
-			readmeFile: false,
-			htmlCodeFile: false,
-			usePathAsIs: false
-		},
-		markupFile: dateien.favicon.dataFile
-	}, function() {
-		done();
-	});
-}
-
-// Inject the favicon markups in your HTML pages. You should run
-// this task whenever you modify a page. You can keep this task
-// as is or refactor your existing HTML pipeline.
-function injectFaviconMarkups() {
-	return src(['src/html/favicon.html'])
-		.pipe(realFavicon.injectFaviconMarkups(JSON.parse(readFileSync(dateien.favicon.dataFile)).favicon.html_code))
-		.pipe(dest('src/favicon'));
-}
-
-// Check for updates on RealFaviconGenerator (think: Apple has just
-// released a new Touch icon along with the latest version of iOS).
-// Run this task from time to time. Ideally, make it part of your
-// continuous integration system.
-function checkForFaviconUpdate(done) {
-	var currentVersion = JSON.parse(readFileSync.readFileSync(dateien.favicon.dataFile)).version;
-	realFavicon.checkForUpdates(currentVersion, function(err) {
-		if (err) {
-			throw err;
-		}
-	});
-}
-
-exports.generateFavicon = generateFavicon;
-exports.injectFaviconMarkups = injectFaviconMarkups;
-exports.checkForFaviconUpdate = checkForFaviconUpdate;
