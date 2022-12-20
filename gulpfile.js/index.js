@@ -103,6 +103,11 @@ const dateien = {
         dest: 'web/medien',
     },
     
+    medienBackup: {
+        src: 'src/medien/**/*.*',
+        dest: 'backup/src/medien',
+    },
+
     mockup: {
         src: 'src/mockup/**/*.*',
         dest: 'web/mockup',
@@ -163,15 +168,15 @@ function scssTask() {
         postcssObjectFitImages(),
         postcssEasingGradients()
     ]))
-    
-    // Sourcemaps schreiben
-    .pipe(sourcemaps.write('.'))
 
     // Komprimieren mit Clean CSS
     .pipe(cleanCSS({
         mergeMediaQueries: true
     }))
     
+    // Sourcemaps schreiben
+    .pipe(sourcemaps.write('.'))
+        
     // Dateien(en) schreiben
     .pipe(dest
         (dateien.scss.dest)
@@ -188,9 +193,15 @@ function jsTask() {
         webpack( require('../webpack.config.js') )
     )
 
+    // Sourcemaps initialisieren
+    .pipe(sourcemaps.init())
+
     .pipe(dest
         (dateien.js.dest)
     )
+
+    // Sourcemaps schreiben
+    .pipe(sourcemaps.write('.'))
 
     // Dateien(en) schreiben
     .pipe(dest
@@ -313,6 +324,20 @@ function medienTask() {
 
     .pipe(dest
         (dateien.medien.dest)
+    );
+
+}
+
+// # Back
+// Medien Backup
+function medienBackupTask() {
+
+    del('backup/src');
+
+    return src(dateien.medienBackup.src)
+
+    .pipe(dest
+        (dateien.medienBackup.dest)
     );
 
 }
@@ -497,4 +522,9 @@ exports.default = series (
         uploadTask,
     ),
     watchTask,
+);
+
+// Medienbackuptask anlegen
+exports.backup = series (
+    medienBackupTask
 );
