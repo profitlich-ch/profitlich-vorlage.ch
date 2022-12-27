@@ -1,0 +1,12 @@
+columnSuffix: xkaolmlp
+contentColumnType: string(7)
+fieldGroup: d6ebc0e2-f57d-43d9-b5ad-e53f1b9394a5 # Test
+handle: moritz
+instructions: null
+name: Moritz
+searchable: false
+settings:
+  defaultColor: '#337ec4'
+translationKeyFormat: null
+translationMethod: none
+type: craft\fields\Color

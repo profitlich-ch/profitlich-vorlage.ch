@@ -27,10 +27,11 @@
 ## Schritte
 
 ### Quellsystem
-- Werkzeuge › Projektkonfiguration › YAML-Änderungen anwenden
-- Alte dump.sql löschen
-- Git push
+- (Werkzeuge › Projektkonfiguration › YAML-Änderungen anwenden)
+- `ddev ssh`
 - mysql dump in Hauptverzeichnis: `mysqldump db > dump.sql`
+- `exit`
+- git push
 
 ### ddev Zielsystem 
 - Git pull
@@ -70,7 +71,7 @@ Datei, mit der überschrieben werden soll
 
 # Assets Synchronisierung
 
-    rsync -a 'ssh -p 2121' profitlich-ssh@profitlich.ch:/staging.profitlich.ch/web/assets/ web/assets/
+    rsync -a -e 'ssh -p 2121' profitlich-ssh@profitlich.ch:/staging.profitlich.ch/web/assets/ web/assets/
 
 
 # Lese- und Recherchestoff
