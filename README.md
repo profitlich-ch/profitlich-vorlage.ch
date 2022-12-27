@@ -155,6 +155,11 @@ Datei, mit der überschrieben werden soll
 - Weiterarbeiten an dev-name
 
 
+# Assets Synchronisierung
+
+    rsync -a -e 'ssh -p 2121' profitlich-ssh@profitlich.ch:/staging.profitlich.ch/web/assets/ web/assets/
+
+
 # Lese- und Recherchestoff
 
 Branches  
