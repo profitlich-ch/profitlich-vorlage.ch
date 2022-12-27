@@ -115,11 +115,35 @@ package-lock.json
 # Mac DS Store
 **/.DS_Store
 
+# Inspiriert von https://github.com/nystudio107/craft-scripts/blob/master/example.gitignore
 # CRAFT ENVIRONMENT
-.env
+# .env.php
+# .env.sh
+# .env
 
 # COMPOSER
 /vendor
 
+/.idea
+
+# CRAFT STORAGE
+/craft/storage/
+/storage/
+
 # ASSETS
-/web/assets/*
+/public/assets/
+/web/assets/
+
+# IMAGER TRANSFORMS
+/public/imager/
+/web/imager/
+
+# MEDIEN 
+/src/medien/
+/web/medien/
+
+# Von Gulp bereitgestellte Dateien
+/web/css/
+/web/js/
+/web/bausteine/
+/templates/
