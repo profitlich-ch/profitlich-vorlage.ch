@@ -1,5 +1,4 @@
-
-dateModified: 1664445224
+dateModified: 1667910818
 email:
   fromEmail: dev@profitlich.ch
   fromName: 'Profitlich DEV'
@@ -30,6 +29,10 @@ meta:
     e814380a-f915-44b8-92b3-a767fa94f64a: 'Profitlich DEV' # Profitlich DEV
     f622f802-6df6-4748-865c-f528e73121bf: Moritz # Moritz
 plugins:
+  async-queue:
+    edition: standard
+    enabled: true
+    schemaVersion: 1.0.0
   password-policy:
     edition: standard
     enabled: true

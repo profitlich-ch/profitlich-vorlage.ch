@@ -1,11 +1,3 @@
-// js/config/jqueryLoad.js
-import $ from 'jquery';
-window.$ = $;
-window.jQuery = $;
-
+// import einstellungen from './einstellungen.json' assert {type: 'json'};
 import 'lazysizes';
-// import 'devLayouttools';
-
-$(function() {
-    console.log('Jippieh!');
-});
+import 'dev-layouttools';
