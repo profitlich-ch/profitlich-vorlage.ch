@@ -116,7 +116,7 @@ package-lock.json
 **/.DS_Store
 
 # CRAFT ENVIRONMENT
-# .env
+.env
 
 # COMPOSER
 /vendor
