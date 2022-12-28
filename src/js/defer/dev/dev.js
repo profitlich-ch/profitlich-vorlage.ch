@@ -12,7 +12,6 @@ document.addEventListener('keydown', (event) => {
     // 16 Shift
     // 17 Ctrl links
     // 68 D
-    console.log(event.key);
     if (event.key === 'Control') {
         var devStatus = body.getAttribute('data-dev') == 'false' ? 'true' : 'false';
         document.body.setAttribute('data-dev', devStatus);

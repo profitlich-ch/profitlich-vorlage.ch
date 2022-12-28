@@ -27,14 +27,6 @@ const svgo         = require('gulp-svgo');
 const svgSprite    = require('gulp-svg-sprite');
 const terser       = require('gulp-terser');
 
-var ftpVerbindungDevelopment = ftp.create({
-    host: "",
-    user: "",
-    pass: "",
-    parallel: 1
-});
-
-var ftpVerbindungStaging = ftp.create({
 var ftpVerbindungStaging = ftp.create({
     host: "",
     user: "",
@@ -42,7 +34,6 @@ var ftpVerbindungStaging = ftp.create({
     parallel: 1
 });
 
-var ftpVerbindungProduction = ftp.create({
 var ftpVerbindungProduction = ftp.create({
     host: "",
     user: "",
@@ -327,21 +318,18 @@ function fontsTask() {
 // https://www.riklewis.com/2019/09/saving-time-with-ftp-in-gulp/
 function uploadTask() {
     
-    if (modus == 'staging') {
-        return src( dateien.upload.src, { base: 'dist', buffer: false } )
+    if (modus =='dev') {
+        return src( dateien.upload.src, { base: '/', buffer: false } )
     
         .pipe(ftpVerbindungStaging.newer
             (dateien.upload.destStaging)
-        .pipe(ftpVerbindungDevelopment.newer
-            (dateien.upload.destDev)
         ) 
-        .pipe(ftpVerbindungDevelopment.dest
-            (dateien.upload.destDev)
+        .pipe(ftpVerbindungStaging.dest
+            (dateien.upload.destStaging)
         )
     }
-    
     if (modus =='production') {
-        return src( dateien.upload.src, { base: 'dist', buffer: false } )
+        return src( dateien.upload.src, { base: '/', buffer: false } )
     
         .pipe(ftpVerbindungProduction.newer
             (dateien.upload.destProduction)
@@ -350,10 +338,7 @@ function uploadTask() {
             (dateien.upload.destProduction)
         )
     } else {
-        return src( dateien.upload.src, {
-            base: 'dist',
-            buffer: false
-        } )
+        return src( dateien.upload.src, { base: '/', buffer: false } )
     }
 };
 
