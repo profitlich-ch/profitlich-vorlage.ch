@@ -1,20 +1,25 @@
+{# {{ macroBild.bild(bild, 'bild', 'Text der ‹bildbeschreibung›', '4:3') }} #}
+
 {% macro bild (
     bild,
     class,
     bildbeschreibung,
-    bildverhaeltnis = false,
-    lazyload = true,
-    paddingTrick = true,
-    preload = false,
+    seitenverhaeltnis = false,
+    objectFit = false,
+    fokuspunkt = 5,
     hintergrundfarbe = false,
-    fokuspunkt = 5
+    lazyload = true,
+    preload = false
 ) %}
 
 {% if bild is not defined %}
-    Utility bild: Kein Bild (bild) angegeben.
+    Macro bild: Kein Bild (bild) angegeben.
 {% endif %}
 {% if class is not defined %}
-    Utility bild: Keine Klasse (class) angegeben.
+    Macro bild: Keine Klasse (class) angegeben.
+{% endif %}
+{% if bildbeschreibung is not defined %}
+    Macro bild: Keine Bildbeschreibung (bildbeschreibung) angegeben.
 {% endif %}
 
 {% if lazyload == true %}
@@ -27,10 +32,13 @@
     {% set sizesAuto = false %}
 {% endif %}
 
-{% if bildverhaeltnis == true %}
-    {% set paddingBottom = 1 / bildverhaeltnis * 100 ~ "%" %}
+{% if seitenverhaeltnis == false %}
+    {% set hoehe = (bild.getHeight() / bild.getWidth()) | round(2) %}
+    {% set paddingBottom = (bild.getHeight() / bild.getWidth() * 100) | round(2) ~ "%" %}
 {% else %}
-    {% set paddingBottom = bild.getHeight() / bild.getWidth() * 100 | round(2) ~ "%" %}
+    {% set seitenverhaeltnisArray = seitenverhaeltnis|split(':') %}
+    {% set hoehe = (seitenverhaeltnisArray[1] / seitenverhaeltnisArray[0]) | round(2) %}
+    {% set paddingBottom = (seitenverhaeltnisArray[1] / seitenverhaeltnisArray[0] * 100) | round(2) ~ "%" %}
 {% endif %}
 
 {% switch fokuspunkt %}
@@ -55,56 +63,76 @@
 {% endswitch %}
         
 {# mit/ohne preload #}
-{# mit/ohne padding-bottom-Trick #}
-    {# object-fit #}
-{# Preload #}
     
-{# Fallunterscheidung preload, kein Padding-bottom-Trick, Standard weggelassen #}
-{# Später aus xsl holen und umprogrammieren #}
+{% set style = [
+    hintergrundfarbe ? "background-color:" ~ hintergrundfarbe : "background-color: #E3E2E0",
+    objectFit ? "height: 100%": "padding-bottom:" ~ paddingBottom,
+] %}
 
-{% set attribute = {
-    class: [
-        class ~ '-bild' ~ ' macro-bild'
-    ],
-    style: {
-        'background-color': hintergrundfarbe,
-        'padding-bottom': paddingBottom
-    }
-} %}
-
-<div {{attr(attribute)}}>
-    <picture class="macro-bild__picture">
-        {% if bildverhaeltnis == true %}
-            {% do bild.setTransform({ width: 100, height: 100 * bildverhaeltnis }) %}
+<div class="{{ class ~ '-bild' ~ ' macro-bild' }}" style="{{ style | join(';') }}">
+    <picture class="macro-bild__picture" data-hoehe="{{ hoehe }}">
+        {% if seitenverhaeltnis %}
+            {% do bild.setTransform({
+                width: 100,
+                height: (100 * hoehe) | round(0),
+                mode: 'crop',
+                quality: 75
+            }) %}
         {% else %}
-            {% do bild.setTransform({ width: 100, height: bild.width * bildverhaeltnis }) %}
+            {% do bild.setTransform({
+                width: 100,
+                height: (100 / bild.width * bild.height) | round(0),
+                quality: 75
+            }) %}
         {% endif %}
         {{ tag('source', {
             format: 'webp',
-            mode: 'fit',
             type: 'image/webp',
             srcset: bild.getSrcset(['100w', '200w', '400w', '600w', '800w', '1000w', '1200w', '1400w', '1600w', '1800w', '2000w', '2200w', '2400w', '2600w', '2800w', '3000w', '3200w', '3400w', '3600w', '3800w', '4000w', '4200w', '4400w', '4600w', '4800w', '5000w'])
         }) }}
         {{ tag('source', {
             format: 'jpg',
-            mode: 'fit',
             type: 'image/jpeg',
             srcset: bild.getSrcset(['100w', '200w', '400w', '600w', '800w', '1000w', '1200w', '1400w', '1600w', '1800w', '2000w', '2200w', '2400w', '2600w', '2800w', '3000w', '3200w', '3400w', '3600w', '3800w', '4000w', '4200w', '4400w', '4600w', '4800w', '5000w'])
         }) }}
 
-        {% do bild.setTransform({ width: 300, height: 300 }) %}
-        {{ tag('img', {
+        {% if seitenverhaeltnis %}
+            {% do bild.setTransform({
+                width: 100,
+                height: (100 * hoehe) | round(0),
+                mode: 'crop',
+                quality: 50
+            }) %}
+        {% else %}
+            {% do bild.setTransform({
+                width: 100,
+                height: (100 / bild.width * bild.height) | round(0),
+                quality: 50
+            }) %}
+        {% endif %}
+        {% do bild.setTransform({
+            width: 100,
+            quality: 30
+        }) %}
+        {% if objectFit == false %}
+            {% set objectFitVariable = "" %}
+        {% else %}
+            {% set objectFitVariable = "object-fit:" ~ objectFit ~ ";" %}
+        {% endif %}
+
+        {% set imgAttribute = {
             src: bild.url,
             width: bild.width,
             height: bild.height,
             alt: bildbeschreibung,
-            class: class ~ '-img macro-bild__img' ~ lazyloadVariable,
+            class: "#{class}-img macro-bild__img #{lazyloadVariable}",
             'background-color': hintergrundfarbe,
             'object-position': cssObjectPosition,
             data: {
                 sizes: sizesAuto
             }
-        }) }}
+        } %}
+        <img {{ attr(imgAttribute) }} style="{{ objectFitVariable }}">
     </picture>
 </div>
 

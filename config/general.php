@@ -11,22 +11,36 @@
 use craft\config\GeneralConfig;
 use craft\helpers\App;
 
+// Jede Umgebung isXxx wird true oder false
+// Abfrage mit ->allowAdminChanges($isXxx) oder invers ->allowAdminChanges(!$isDev)
 $isDev = App::env('CRAFT_ENVIRONMENT') === 'dev';
-$isProd = App::env('CRAFT_ENVIRONMENT') === 'production';
+$isStaging = App::env('CRAFT_ENVIRONMENT') === 'staging';
+$isProduction = App::env('CRAFT_ENVIRONMENT') === 'production';
 
+// https://nystudio107.com/blog/fluent-multi-environment-config-for-craft-cms-4
 return GeneralConfig::create()
     // Set the default week start day for date pickers (0 = Sunday, 1 = Monday, etc.)
     ->defaultWeekStartDay(1)
     // Prevent generated URLs from including "index.php"
     ->omitScriptNameInUrls()
-    // Enable Dev Mode on the dev environment (see https://craftcms.com/guides/what-dev-mode-does)
+    // Enable Dev Mode (see https://craftcms.com/guides/what-dev-mode-does)
     ->devMode($isDev)
-    // Only allow administrative changes on the dev environment
+    // Allow administrative changes
     ->allowAdminChanges($isDev)
-    // Disallow robots everywhere except the production environment
-    ->disallowRobots(!$isProd)
+    // Disallow robots
+    ->disallowRobots(!$isProduction)
+
     // Slugs ohne Umlaute
     ->limitAutoSlugsToAscii(true)
-    // Loginadresse /redaktion statt /admin
+    // Loginadresse des Redaktionssystems
     ->cpTrigger('redaktion')
+    
+    // Aliases _nicht_ mit getenv() aus Sicherheitsgründen
+    // https://craftcms.stackexchange.com/questions/36986/use-of-appenv-compared-to-getenv-since-craft-3-4-18
+    ->aliases([
+        '@web' => craft\helpers\App::env('BASE_URL'),
+        '@webroot' => dirname(__DIR__) . '/web',
+        '@assetBaseUrl' => craft\helpers\App::env('ASSETS_BASE_URL'),
+        '@assetBasePath' => craft\helpers\App::env('ASSETS_BASE_PATH'),
+    ])
 ;

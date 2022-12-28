@@ -116,6 +116,7 @@ package-lock.json
 **/.DS_Store
 
 # Inspiriert von https://github.com/nystudio107/craft-scripts/blob/master/example.gitignore
+# Inspiriert von https://github.com/nystudio107/craft-scripts/blob/master/example.gitignore
 # CRAFT ENVIRONMENT
 # .env.php
 # .env.sh
@@ -131,14 +132,19 @@ package-lock.json
 /storage/*
 
 # ASSETS
-/public/assets/*
-/web/assets/*
+/public/assets/
+/web/assets/
 
 # IMAGER TRANSFORMS
-/public/imager/*
-/web/imager/*
+/public/imager/
+/web/imager/
+
+# MEDIEN 
+/src/medien/
+/web/medien/
 
 # Von Gulp bereitgestellte Dateien
-/web/css/*
-/web/js/*
-/templates/*
+/web/css/
+/web/js/
+/web/bausteine/
+/templates/
