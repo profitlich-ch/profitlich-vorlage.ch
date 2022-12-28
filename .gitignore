@@ -116,6 +116,7 @@ package-lock.json
 **/.DS_Store
 
 # Inspiriert von https://github.com/nystudio107/craft-scripts/blob/master/example.gitignore
+# Inspiriert von https://github.com/nystudio107/craft-scripts/blob/master/example.gitignore
 # CRAFT ENVIRONMENT
 # .env.php
 # .env.sh
@@ -127,8 +128,8 @@ package-lock.json
 /.idea
 
 # CRAFT STORAGE
-/craft/storage/
-/storage/
+/craft/storage/*
+/storage/*
 
 # ASSETS
 /public/assets/

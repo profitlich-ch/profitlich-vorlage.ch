@@ -1,4 +1,7 @@
-const modus = 'development';
+// dev oder staging oder production
+// staging lädt auf den Stagingserver
+// production lädt auf den Produtivserver, lässt alle dev Inhalte weg (JS, CSS) und komprimiert JS
+const modus = 'dev';
 
 const path = require('path');
 const { src, dest, watch, series, parallel, gulp } = require('gulp');
@@ -32,12 +35,14 @@ var ftpVerbindungDevelopment = ftp.create({
 });
 
 var ftpVerbindungStaging = ftp.create({
+var ftpVerbindungStaging = ftp.create({
     host: "",
     user: "",
     pass: "",
     parallel: 1
 });
 
+var ftpVerbindungProduction = ftp.create({
 var ftpVerbindungProduction = ftp.create({
     host: "",
     user: "",
@@ -51,16 +56,22 @@ const dateien = {
         src: 'src/**/*.*',
     },
     scss: {
-        src: (modus == 'production') ? ['src/scss/**/*.scss', '!src/scss/dev/**.*'] : 'src/scss/**/*.scss',
+        src: 'src/scss/**/*.scss',
         dest: 'web/css',
     },
-    js: {
-        // src: (modus == 'dev' || modus == 'development') ? 'src/js/**/*.js' : ['src/js/**/*.js', '!src/js/dev/**.*'],
-        src: 'src/js/javascript.js',
+    
+    jsDefer: {
+        src: (modus == 'dev') ? 'src/js/defer/**/*.js' : ['src/js/defer/**/*.js', '!src/js/defer/dev/**/*.*'],
         dest: 'web/js',
     },
+    
+    jsInline: {
+        src: (modus == 'dev') ? 'src/js/inline/**/*.js' : ['src/js/inline/**/*.js', '!src/js/inline/dev/**/*.*'],
+        dest: 'templates/js',
+    },
+    
     jsBausteine: {
-        src: 'src/bausteine/**/*.js',
+        src: ['src/bausteine/**/*.js', '!src/bausteine/**/_*.js'],
         dest: 'web/bausteine',
     },
     // https://stackoverflow.com/questions/28876469/multiple-file-extensions-within-the-same-directory-using-gulp
@@ -69,12 +80,12 @@ const dateien = {
         dest: 'templates',
     },
     bausteineTwig: {
-        src: 'src/bausteine/**/*.twig',
+        src: 'src/bausteine/**/*.+(twig|js)',
         dest: 'templates/_bausteine',
     },
     bausteineAssets: {
-        src: 'src/bausteine/**/*.+(svg|jpg|jpeg|gif|png|html)',
-        dest: 'templates/_bausteine',
+        src: ['src/bausteine/**/*.+(svg|jpg|jpeg|gif|png|html)', '!src/bausteine/**/_*.*'],
+        dest: 'web/bausteine',
     },
     // http://glivera-team.github.io/svg/2019/03/15/svg-sprites-2.en.html
     sprites: {
@@ -103,7 +114,7 @@ const dateien = {
     },
     upload: {
         src: 'dist/**/*.*',
-        destDev: '/',
+        destStaging: '/',
         destProduction: '/',
     },
 }
@@ -140,25 +151,42 @@ function scssTask() {
     )   
 }
 
-// JS kompilieren
-function jsTask() {
-    return src(dateien.js.src)
+// JS Defer kompilieren
+function jsDeferTask() {
+    return src(dateien.jsDefer.src)
 
-    .pipe(concat('domscript.js'))
+    // Alle Dateien in einer zusammenfassen
+    .pipe(concat('defer.js'))
 
     .pipe(dest
-        (dateien.js.dest)
+        (dateien.jsDefer.dest)
     )
 
-    // Datei in min umbenennen
-    .pipe(rename('domscript.min.js'))
-
-    // Komprimieren mit Terser wenn im production modus
-    .pipe(gulpif( modus != 'staging' && modus != 'dev', terser() ))
+    // Komprimieren mit Terser wenn nicht im dev Modus
+    .pipe(gulpif( modus != 'dev', terser() ))
 
     // Dateien(en) schreiben
     .pipe(dest
-        (dateien.js.dest)
+        (dateien.jsDefer.dest)
+    )
+}
+
+// JS Inline kompilieren
+function jsInlineTask() {
+    return src(dateien.jsInline.src)
+
+    .pipe(concat('inline.js'))
+
+    .pipe(dest
+        (dateien.jsInline.dest)
+    )
+
+    // Komprimieren mit Terser wenn nicht im dev Modus
+    .pipe(gulpif( modus != 'dev', terser() ))
+
+    // Dateien(en) schreiben
+    .pipe(dest
+        (dateien.jsInline.dest)
     )
 }
 
@@ -171,6 +199,7 @@ function jsBausteineTask() {
     )
 
     // Komprimieren mit Terser
+    .pipe(gulpif( modus == 'production', terser() ))
     .pipe(gulpif( modus == 'production', terser() ))
 
     // Dateien(en) schreiben
@@ -301,6 +330,8 @@ function uploadTask() {
     if (modus == 'staging') {
         return src( dateien.upload.src, { base: 'dist', buffer: false } )
     
+        .pipe(ftpVerbindungStaging.newer
+            (dateien.upload.destStaging)
         .pipe(ftpVerbindungDevelopment.newer
             (dateien.upload.destDev)
         ) 
@@ -330,7 +361,8 @@ function uploadTask() {
 // Revisionieren
 function revisionierenTask() {
     
-    if (modus !='development') {
+    if (modus !='dev') {
+        
         return src('web/**/*.{css,js,svg,jpg,png,eot,ttf,otf,woff,woff2}')
 
         // Hash anfügen mit Gulp Rev
@@ -357,7 +389,8 @@ function revisionierenTask() {
 // Revisionen in Dateien schreiben
 function revschreibenTask() {
     
-    if (modus !='development') {
+    if (modus !='dev') {
+        
         const manifest = readFileSync('web/rev-manifest.json');
 
         return src('dist/**/*.{twig,css,js}')
@@ -391,7 +424,7 @@ function watchTask() {
             aufraeumenTask,
             // importJsonTask,
             parallel(
-                templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosTask, scssTask, jsTask, medienTask, mockupTask, fontsTask, spritesTask
+                templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosTask, scssTask, jsDeferTask, jsInlineTask, medienTask, mockupTask, fontsTask, spritesTask
             ),
             injizierenTask,
             revisionierenTask,
@@ -407,7 +440,7 @@ exports.default = series (
         aufraeumenTask,
         // importJsonTask,
         parallel(
-            templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosTask, scssTask, jsTask, medienTask, mockupTask, fontsTask, spritesTask
+            templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosTask, scssTask, jsDeferTask, jsInlineTask, medienTask, mockupTask, fontsTask, spritesTask
         ),
         injizierenTask,
         revisionierenTask,
@@ -415,9 +448,4 @@ exports.default = series (
         uploadTask,
     ),
     watchTask,
-);
-
-// Medienbackuptask anlegen
-exports.backup = series (
-    medienBackupTask
 );

@@ -1,33 +1,59 @@
-{# {% set hintergrundfarbe = '#00ff00' %} #}
-{% set variablen = {
-    hintergrundfarbe: '#ff00ff',
-    bar: 'bar'
-} %}
-
 <!DOCTYPE html>
 <html lang="{{ craft.app.language }}">
 	<head>
 		<meta charset="utf-8"/>
-		<title>{{ siteName }}</title>
+		<title>
+			{% if craft.app.request.segment(1) %}
+				{% block seitentitel %}{% endblock %}
+				—
+			{% endif %}
+			PROJEKTNAME
+		</title>
 		<meta content="width=device-width, initial-scale=1.0" name="viewport">
-		<meta name="description" content="">
-		<script src="/js/main.js" defer></script>
-
+		{% block metaDescription %}{% endblock %}
+        {% js "/js/defer.js" with {
+            defer: true
+        } %}
+		
 		<!-- https://web.dev/defer-non-critical-css/ -->
-        <link rel="preload" href="/css/style.css" as="style">
-        <link rel="stylesheet" href="/css/style.css" media="print" onload="this.media='all'">
+		<link rel="preload" href="/css/style.css" as="style">
+		<link rel="stylesheet" href="/css/style.css" media="print" onload="this.media='all'">
 		<noscript><link rel="stylesheet" href="/css/style.css"/></noscript>
 
-		<!-- FOUC -->
-		<!-- https://www.primative.net/blog/how-to-get-rid-of-the-flash-of-unstyled-content/ -->
+        {% if devMode %}
+            <link rel="stylesheet" href="/css/dev.css">
+            {% js "/js/defer.js" with {
+                defer: true
+            } %}
+        {% endif %}
+
+		<script>
+			{{ source("/js/inline.js") }}
+		</script>
+
+		<!-- Webfonts -->
+
 		<style>
+			{# FOUC #}
+			{# https://www.primative.net/blog/how-to-get-rid-of-the-flash-of-unstyled-content/ #}
 			.no-js {
 				visibility: visible;
 			}
+			{# Transition erst nach dem Laden der Seite anwenden #}
+			body.preload * {
+				transition: transform 0s !important;
+			}
 		</style>
 	</head>
-	<body
-		class="body no-js preload" style="visibility: hidden" data-menue-aktiv="false" data-menue-bewegt="false" data-dev="true" data-scrolled="false">
+	{% if not craft.app.request.segment(1) %}
+		{% set seitenname = 'startseite' %}
+	{% else %}
+		{% set seitenname = craft.app.request.segment(1) %}
+        {% if craft.app.request.segment(2) %}
+            {% set seitenname = craft.app.request.segment(1) ~ '-entry' %}
+        {% endif %}
+	{% endif %}
+	<body class="body body--{{ seitenname }} no-js preload" style="visibility: hidden" data-menue-aktiv="false" data-menue-bewegt="false" data-scrolled="false">
 
 		<!-- Firefox Hack gegen FOUC: https://www.primative.net/blog/how-to-get-rid-of-the-flash-of-unstyled-content/ -->
 		<script>0</script>
@@ -37,30 +63,24 @@
 			document.querySelector('body').classList.remove('no-js');
 		</script>
 
-		<main class="main">
-        
-            {% block content %}{% endblock %}
-			
-		</main>
+        <main class="main"> {% block content %}{% endblock %}</main>
 
-		 {# {% include 'bausteine/_footer.twig' %} #}
-        
 		<script>
-			<!-- FOUC -->
+			{# FOUC #}
 			let domReady = (cb) => {
-                document.readyState === 'interactive' || document.readyState === 'complete'
-                    ? cb()
-                    : document.addEventListener('DOMContentLoaded', cb);
-                };
-                            
-                domReady(() => {
-                    document.body.style.visibility = 'visible';
-                });
-
-			<!-- Preload beenden -->
+			document.readyState === 'interactive' || document.readyState === 'complete'
+				? cb()
+				: document.addEventListener('DOMContentLoaded', cb);
+			};
+						
+			domReady(() => {
+				document.body.style.visibility = 'visible';
+			});
+			{# Preload beenden #}
 			setTimeout(function(){
-                document.body.classList.remove('preload');
-            }, 500);
+				document.body.classList.remove('preload');
+			}, 500);
 		</script>
+		
 	</body>
 </html>
