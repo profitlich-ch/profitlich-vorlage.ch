@@ -29,7 +29,7 @@
 ### Quellsystem
 - (Werkzeuge › Projektkonfiguration › YAML-Änderungen anwenden)
 - `ddev ssh`
-- mysql dump in Hauptverzeichnis: `mysqldump db > dump.sql`
+- mysql dump in Hauptverzeichnis: `mysqldump --add-drop-database db > dump.sql`
 - `exit`
 - git push
 

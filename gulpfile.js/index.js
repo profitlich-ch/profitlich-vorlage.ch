@@ -1,22 +1,22 @@
-const path = require('path');
+// dev oder staging oder production
+// staging lädt auf den Stagingserver
+// production lädt auf den Produtivserver, lässt alle dev Inhalte weg (JS, CSS) und komprimiert JS
+const modus = 'dev';
 
+const path = require('path');
 const { src, dest, watch, series, parallel, gulp } = require('gulp');
 const { readFileSync } = require('fs');
 
 const autoprefixer = require('autoprefixer');
-const babel        = require('gulp-babel');
-const browsersync  = require('browser-sync').create();
 const cleanCSS     = require('gulp-clean-css');
 const concat       = require('gulp-concat');
 const del          = require('del');
-const flatten      = require('gulp-flatten');
 const ftp          = require('vinyl-ftp');
 const gulpif       = require('gulp-if');
 const injectCSS    = require('gulp-inject-css');
 const postcss	   = require('gulp-postcss');
 const postcssObjectFitImages = require('postcss-object-fit-images');
 const postcssEasingGradients = require('postcss-easing-gradients');
-const realFavicon  = require ('gulp-real-favicon');
 const rename       = require('gulp-rename');
 const replace      = require('gulp-replace');
 const rev          = require('gulp-rev');
@@ -27,24 +27,16 @@ const sourcemaps   = require('gulp-sourcemaps');
 const svgo         = require('gulp-svgo');
 const svgSprite    = require('gulp-svg-sprite');
 const terser       = require('gulp-terser');
-const webpack      = require('webpack-stream');
 
 
-// lokal oder dev oder live
-// lokal nutzt Browsersync
-// dev lädt auf den Entwicklungsserver
-// live lädt auf den Live Server, lässt alle dev Inhalte weg (JS, CSS) und komprimiert JS
-const modus = 'lokal';
-
-
-var ftpVerbindungDev = ftp.create({
+var ftpVerbindungStaging = ftp.create({
     host: "",
     user: "",
     pass: "",
     parallel: 1
 });
 
-var ftpVerbindungLive = ftp.create({
+var ftpVerbindungProduction = ftp.create({
     host: "",
     user: "",
     pass: "",
@@ -58,18 +50,22 @@ const dateien = {
     },
 
     scss: {
-        src: (modus == 'dev' || modus == 'lokal') ? 'src/scss/**/*.scss' : ['src/scss/**/*.scss', '!src/scss/dev/**.*'],
+        src: 'src/scss/**/*.scss',
         dest: 'web/css',
     },
     
-    js: {
-        // src: (modus == 'dev' || modus == 'lokal') ? 'src/js/**/*.js' : ['src/js/**/*.js', '!src/js/dev/**.*'],
-        src: 'src/js/javascript.js',
+    jsDefer: {
+        src: (modus == 'dev') ? 'src/js/defer/**/*.js' : ['src/js/defer/**/*.js', '!src/js/defer/dev/**/*.*'],
         dest: 'web/js',
     },
     
+    jsInline: {
+        src: (modus == 'dev') ? 'src/js/inline/**/*.js' : ['src/js/inline/**/*.js', '!src/js/inline/dev/**/*.*'],
+        dest: 'templates/js',
+    },
+    
     jsBausteine: {
-        src: 'src/bausteine/**/*.js',
+        src: ['src/bausteine/**/*.js', '!src/bausteine/**/_*.js'],
         dest: 'web/bausteine',
     },
     
@@ -80,13 +76,13 @@ const dateien = {
     },
 
     bausteineTwig: {
-        src: 'src/bausteine/**/*.twig',
+        src: 'src/bausteine/**/*.+(twig|js)',
         dest: 'templates/_bausteine',
     },
 
     bausteineAssets: {
-        src: 'src/bausteine/**/*.+(svg|jpg|jpeg|gif|png|html)',
-        dest: 'templates/_bausteine',
+        src: ['src/bausteine/**/*.+(svg|jpg|jpeg|gif|png|html)', '!src/bausteine/**/_*.*'],
+        dest: 'web/bausteine',
     },
 
     // http://glivera-team.github.io/svg/2019/03/15/svg-sprites-2.en.html
@@ -124,8 +120,8 @@ const dateien = {
     
     upload: {
         src: 'dist/**/*.*',
-        destDev: '/',
-        destLive: '/',
+        destStaging: '/',
+        destProduction: '/',
     },
 }
 
@@ -141,10 +137,6 @@ function scssTask() {
     .pipe(sourcemaps.init())
     
     .pipe(sass())
-    
-    // Media Queries auf eigene Dateien aufteilen
-    // https://github.com/Riant/gulp-extract-media-queries2
-    // .pipe(extractmq())
 
     // Post CSS: object-fit, Autoprefixer
     .pipe(postcss([
@@ -168,34 +160,43 @@ function scssTask() {
         
 }
 
-// JS kompilieren
-function jsTask() {
+// JS Defer kompilieren
+function jsDeferTask() {
+    return src(dateien.jsDefer.src)
 
-    return src(dateien.js.src)
-
-    // .pipe(concat('domscript.js'))
-
-    .pipe(
-        webpack({
-            
-        })
-    )
+    // Alle Dateien in einer zusammenfassen
+    .pipe(concat('defer.js'))
 
     .pipe(dest
-        (dateien.js.dest)
+        (dateien.jsDefer.dest)
     )
 
-    // Datei in min umbenennen
-    .pipe(rename('javascript.min.js'))
-
-    // Komprimieren mit Terser wenn im live modus
-    .pipe(gulpif( modus != 'dev' && modus != 'lokal', terser() ))
+    // Komprimieren mit Terser wenn nicht im dev Modus
+    .pipe(gulpif( modus != 'dev', terser() ))
 
     // Dateien(en) schreiben
     .pipe(dest
-        (dateien.js.dest)
+        (dateien.jsDefer.dest)
+    )
+}
+
+// JS Inline kompilieren
+function jsInlineTask() {
+    return src(dateien.jsInline.src)
+
+    .pipe(concat('inline.js'))
+
+    .pipe(dest
+        (dateien.jsInline.dest)
     )
 
+    // Komprimieren mit Terser wenn nicht im dev Modus
+    .pipe(gulpif( modus != 'dev', terser() ))
+
+    // Dateien(en) schreiben
+    .pipe(dest
+        (dateien.jsInline.dest)
+    )
 }
 
 // JS Bausteine kompilieren
@@ -208,7 +209,7 @@ function jsBausteineTask() {
     )
 
     // Komprimieren mit Terser
-    .pipe(gulpif( modus == 'live', terser() ))
+    .pipe(gulpif( modus == 'production', terser() ))
 
     // Dateien(en) schreiben
     .pipe(dest
@@ -346,11 +347,11 @@ function uploadTask() {
 
         return src( dateien.upload.src, { base: 'dist', buffer: false } )
     
-        .pipe(ftpVerbindungDev.newer
-            (dateien.upload.destDev)
+        .pipe(ftpVerbindungStaging.newer
+            (dateien.upload.destStaging)
         ) 
-        .pipe(ftpVerbindungDev.dest
-            (dateien.upload.destDev)
+        .pipe(ftpVerbindungStaging.dest
+            (dateien.upload.destStaging)
         )
 
         // https://github.com/morris/vinyl-ftp/issues/61
@@ -373,15 +374,15 @@ function uploadTask() {
 
     }
     
-    if (modus =='live') {
+    if (modus =='production') {
 
         return src( dateien.upload.src, { base: 'dist', buffer: false } )
     
-        .pipe(ftpVerbindungLive.newer
-            (dateien.upload.destLive)
+        .pipe(ftpVerbindungProduction.newer
+            (dateien.upload.destProduction)
         ) 
-        .pipe(ftpVerbindungLive.dest
-            (dateien.upload.destLive)
+        .pipe(ftpVerbindungProduction.dest
+            (dateien.upload.destProduction)
         )
 
     } else {
@@ -396,7 +397,7 @@ function uploadTask() {
 // Revisionieren
 function revisionierenTask() {
     
-    if (modus !='lokal') {
+    if (modus !='dev') {
         
         return src('web/**/*.{css,js,svg,jpg,png,eot,ttf,otf,woff,woff2}')
 
@@ -426,7 +427,7 @@ function revisionierenTask() {
 // Revisionen in Dateien schreiben
 function revschreibenTask() {
     
-    if (modus !='lokal') {
+    if (modus !='dev') {
         
         const manifest = readFileSync('web/rev-manifest.json');
 
@@ -468,7 +469,7 @@ function watchTask() {
         series(
             aufraeumenTask,
             parallel(
-                templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosTask, scssTask, jsTask, medienTask, mockupTask, fontsTask, spritesTask
+                templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosTask, scssTask, jsDeferTask, jsInlineTask, medienTask, mockupTask, fontsTask, spritesTask
             ),
             injizierenTask,
             revisionierenTask,
@@ -483,7 +484,7 @@ exports.default = series (
     series(
         aufraeumenTask,
         parallel(
-            templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosTask, scssTask, jsTask, medienTask, mockupTask, fontsTask, spritesTask
+            templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosTask, scssTask, jsDeferTask, jsInlineTask, medienTask, mockupTask, fontsTask, spritesTask
         ),
         injizierenTask,
         revisionierenTask,
@@ -492,124 +493,3 @@ exports.default = series (
     ),
     watchTask,
 );
-
-
-// Generate the icons. This task takes a few seconds to complete.
-// You should run it at least once to create the icons. Then,
-// you should run it whenever RealFaviconGenerator updates its
-// package (see the check-for-favicon-update task below).
-function generateFavicon(done) {
-	realFavicon.generateFavicon({
-		masterPicture: dateien.favicon.src,
-		dest: dateien.favicon.dest,
-		iconsPath: '/',
-		design: {
-			ios: {
-				masterPicture: {
-					type: 'inline',
-					content: 'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGlkPSJhIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzNSAzNSI+PGRlZnM+PHN0eWxlPi5ke2ZpbGw6IzliNjQ1YTt9PC9zdHlsZT48L2RlZnM+PGcgaWQ9ImIiPjxyZWN0IGNsYXNzPSJkIiB4PSIxNi45OSIgd2lkdGg9IjEuMDIiIGhlaWdodD0iMzUiLz48L2c+PGcgaWQ9ImMiPjxyZWN0IGNsYXNzPSJkIiB5PSIxNi45OSIgd2lkdGg9IjM1IiBoZWlnaHQ9IjEuMDIiLz48L2c+PC9zdmc+'
-				},
-				pictureAspect: 'backgroundAndMargin',
-				backgroundColor: '#ffffff',
-				margin: '14%',
-				assets: {
-					ios6AndPriorIcons: false,
-					ios7AndLaterIcons: false,
-					precomposedIcons: false,
-					declareOnlyDefaultIcon: true
-				},
-				appName: 'Appname'
-			},
-			desktopBrowser: {
-				design: 'background',
-				backgroundColor: '#34f063',
-				backgroundRadius: 0.5,
-				imageScale: 0.8
-			},
-			windows: {
-				masterPicture: {
-					type: 'inline',
-					content: 'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGlkPSJhIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzOCAzOCI+PGRlZnM+PHN0eWxlPi5ie2ZpbGw6IzliNjQ1YTt9PC9zdHlsZT48L2RlZnM+PHBhdGggY2xhc3M9ImIiIGQ9Ik0xOSwzOEM4LjUyLDM4LDAsMjkuNDgsMCwxOVM4LjUyLDAsMTksMHMxOSw4LjUyLDE5LDE5LTguNTIsMTktMTksMTlaTTE5LDEuM0M5LjI0LDEuMywxLjMsOS4yNCwxLjMsMTlzNy45NCwxNy43LDE3LjcsMTcuNywxNy43LTcuOTQsMTcuNy0xNy43UzI4Ljc2LDEuMywxOSwxLjNaIi8+PHBvbHlnb24gY2xhc3M9ImIiIHBvaW50cz0iMjQuODQgMTguODcgMTkuNDggMjQuMjMgMTkuNDggMTAuNTkgMTguMTggMTAuNTkgMTguMTggMjQuMjQgMTIuODIgMTguODcgMTEuOSAxOS43OSAxOC44MyAyNi43MiAyNS43NiAxOS43OSAyNC44NCAxOC44NyIvPjwvc3ZnPg=='
-				},
-				pictureAspect: 'noChange',
-				backgroundColor: '#a030a0',
-				onConflict: 'override',
-				assets: {
-					windows80Ie10Tile: false,
-					windows10Ie11EdgeTiles: {
-						small: false,
-						medium: true,
-						big: false,
-						rectangle: false
-					}
-				},
-				appName: 'Appname'
-			},
-			androidChrome: {
-				masterPicture: {
-					type: 'inline',
-					content: 'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGlkPSJhIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzOCAzOCI+PGRlZnM+PHN0eWxlPi5ie2ZpbGw6IzliNjQ1YTt9PC9zdHlsZT48L2RlZnM+PHBhdGggY2xhc3M9ImIiIGQ9Ik0xOSwzOEM4LjUyLDM4LDAsMjkuNDgsMCwxOVM4LjUyLDAsMTksMHMxOSw4LjUyLDE5LDE5LTguNTIsMTktMTksMTlaTTE5LDEuM0M5LjI0LDEuMywxLjMsOS4yNCwxLjMsMTlzNy45NCwxNy43LDE3LjcsMTcuNywxNy43LTcuOTQsMTcuNy0xNy43UzI4Ljc2LDEuMywxOSwxLjNaIi8+PHBvbHlnb24gY2xhc3M9ImIiIHBvaW50cz0iMjQuODQgMTguODcgMTkuNDggMjQuMjMgMTkuNDggMTAuNTkgMTguMTggMTAuNTkgMTguMTggMjQuMjQgMTIuODIgMTguODcgMTEuOSAxOS43OSAxOC44MyAyNi43MiAyNS43NiAxOS43OSAyNC44NCAxOC44NyIvPjwvc3ZnPg=='
-				},
-				pictureAspect: 'backgroundAndMargin',
-				margin: '17%',
-				backgroundColor: '#4567f3',
-				themeColor: '#4567f3',
-				manifest: {
-					name: 'Appname',
-					display: 'standalone',
-					orientation: 'notSet',
-					onConflict: 'override',
-					declared: true
-				},
-				assets: {
-					legacyIcon: false,
-					lowResolutionIcons: false
-				}
-			},
-			safariPinnedTab: {
-				masterPicture: {
-					type: 'inline',
-					content: 'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGlkPSJhIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzOCAzOCI+PGRlZnM+PHN0eWxlPi5ie2ZpbGw6IzliNjQ1YTt9PC9zdHlsZT48L2RlZnM+PHBhdGggY2xhc3M9ImIiIGQ9Ik0xOSwzOEM4LjUyLDM4LDAsMjkuNDgsMCwxOVM4LjUyLDAsMTksMHMxOSw4LjUyLDE5LDE5LTguNTIsMTktMTksMTlaTTE5LDEuM0M5LjI0LDEuMywxLjMsOS4yNCwxLjMsMTlzNy45NCwxNy43LDE3LjcsMTcuNywxNy43LTcuOTQsMTcuNy0xNy43UzI4Ljc2LDEuMywxOSwxLjNaIi8+PHBvbHlnb24gY2xhc3M9ImIiIHBvaW50cz0iMjQuODQgMTguODcgMTkuNDggMjQuMjMgMTkuNDggMTAuNTkgMTguMTggMTAuNTkgMTguMTggMjQuMjQgMTIuODIgMTguODcgMTEuOSAxOS43OSAxOC44MyAyNi43MiAyNS43NiAxOS43OSAyNC44NCAxOC44NyIvPjwvc3ZnPg=='
-				},
-				pictureAspect: 'silhouette',
-				themeColor: '#ff00a0'
-			}
-		},
-		settings: {
-			scalingAlgorithm: 'Mitchell',
-			errorOnImageTooSmall: false,
-			readmeFile: false,
-			htmlCodeFile: false,
-			usePathAsIs: false
-		},
-		markupFile: dateien.favicon.dataFile
-	}, function() {
-		done();
-	});
-}
-
-// Inject the favicon markups in your HTML pages. You should run
-// this task whenever you modify a page. You can keep this task
-// as is or refactor your existing HTML pipeline.
-function injectFaviconMarkups() {
-	return src(['src/html/favicon.html'])
-		.pipe(realFavicon.injectFaviconMarkups(JSON.parse(readFileSync(dateien.favicon.dataFile)).favicon.html_code))
-		.pipe(dest('src/favicon'));
-}
-
-// Check for updates on RealFaviconGenerator (think: Apple has just
-// released a new Touch icon along with the latest version of iOS).
-// Run this task from time to time. Ideally, make it part of your
-// continuous integration system.
-function checkForFaviconUpdate(done) {
-	var currentVersion = JSON.parse(readFileSync.readFileSync(dateien.favicon.dataFile)).version;
-	realFavicon.checkForUpdates(currentVersion, function(err) {
-		if (err) {
-			throw err;
-		}
-	});
-}
-
-exports.generateFavicon = generateFavicon;
-exports.injectFaviconMarkups = injectFaviconMarkups;
-exports.checkForFaviconUpdate = checkForFaviconUpdate;
