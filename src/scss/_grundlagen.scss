@@ -86,7 +86,7 @@ svg {
 // Mit der Tastatur fokussiert
 *:focus-visible { 
     outline: 2px solid map-get($farben, braun-1);
- }
+}
 
 // Alt Text unsichtbar machen, aber für Screenreader lesbar halten
 // Bilder als Block statt als Inline anzeigen. Das löst das Problem von unerwünschten Pixeln unterhalb des Bildes.
