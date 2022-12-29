@@ -53,7 +53,17 @@
             {% set seitenname = craft.app.request.segment(1) ~ '-entry' %}
         {% endif %}
 	{% endif %}
-	<body class="body body--{{ seitenname }} no-js preload" style="visibility: hidden" data-menue-aktiv="false" data-menue-bewegt="false" data-scrolled="false">
+    {% set bodyDataTags = {
+        data: {
+            menueAktiv: 'false',
+            menueBewegt: 'false',
+            bodyScrolled: 'false'
+        },
+        style: {
+            'visibility': 'hidden'
+        },
+    } %}
+	<body class="body body--{{ seitenname }} no-js preload" {{ attr(bodyDataTags) }}>
 
 		<!-- Firefox Hack gegen FOUC: https://www.primative.net/blog/how-to-get-rid-of-the-flash-of-unstyled-content/ -->
 		<script>0</script>
@@ -63,7 +73,17 @@
 			document.querySelector('body').classList.remove('no-js');
 		</script>
 
-        <main class="main"> {% block content %}{% endblock %}</main>
+        <button type="button" id="hamburger" style="position: fixed; z-index: 100; left: 20px; top: 20px">=</button>
+
+        <nav id="menue">
+            <div class="menue__link">Link 1</div>
+            <div class="menue__link">Link 2</div>
+            <div class="menue__link">Link 3</div>
+        </nav>
+
+        <div id="seite">
+            <main class="main"> {% block content %}{% endblock %}</main>
+        </div>
 
 		<script>
 			{# FOUC #}

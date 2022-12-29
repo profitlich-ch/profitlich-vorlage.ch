@@ -1,0 +1,8 @@
+body {
+
+    &[data-menue-aktiv="true"] {
+        position: fixed;
+        width: 100%;
+    }
+
+}

@@ -47,12 +47,12 @@ const dateien = {
         src: 'src/**/*.*',
     },
     scss: {
-        src: 'src/scss/**/*.scss',
+        src: ['src/scss/**/*.scss', 'src/macros/**/*.scss'],
         dest: 'web/css',
     },
     
     jsDefer: {
-        src: (modus == 'dev') ? 'src/js/defer/**/*.js' : ['src/js/defer/**/*.js', '!src/js/defer/dev/**/*.*'],
+        src: (modus == 'dev') ? ['src/js/defer/**/*.js', 'src/macros/**/*.js'] : ['src/js/defer/**/*.js', 'src/macros/**/*.js', '!src/js/defer/dev/**/*.*'],
         dest: 'web/js',
     },
     
