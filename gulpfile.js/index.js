@@ -146,6 +146,9 @@ function scssTask() {
 function jsDeferTask() {
     return src(dateien.jsDefer.src)
 
+    // Sourcemaps initialisieren
+    .pipe(sourcemaps.init())
+
     // Alle Dateien in einer zusammenfassen
     .pipe(concat('defer.js'))
 
@@ -155,6 +158,9 @@ function jsDeferTask() {
 
     // Komprimieren mit Terser wenn nicht im dev Modus
     .pipe(gulpif( modus != 'dev', terser() ))
+
+    // Sourcemaps schreiben
+    .pipe(sourcemaps.write('.'))
 
     // Dateien(en) schreiben
     .pipe(dest
@@ -166,6 +172,10 @@ function jsDeferTask() {
 function jsInlineTask() {
     return src(dateien.jsInline.src)
 
+    // Sourcemaps initialisieren
+    .pipe(sourcemaps.init())
+
+    // Alle Dateien in einer zusammenfassen
     .pipe(concat('inline.js'))
 
     .pipe(dest
@@ -174,6 +184,9 @@ function jsInlineTask() {
 
     // Komprimieren mit Terser wenn nicht im dev Modus
     .pipe(gulpif( modus != 'dev', terser() ))
+
+    // Sourcemaps schreiben
+    .pipe(sourcemaps.write('.'))
 
     // Dateien(en) schreiben
     .pipe(dest
@@ -185,13 +198,18 @@ function jsInlineTask() {
 function jsBausteineTask() {
     return src(dateien.jsBausteine.src)
 
+    // Sourcemaps initialisieren
+    .pipe(sourcemaps.init())
+
     .pipe(dest
         (dateien.jsBausteine.dest)
     )
 
     // Komprimieren mit Terser
     .pipe(gulpif( modus == 'production', terser() ))
-    .pipe(gulpif( modus == 'production', terser() ))
+
+    // Sourcemaps schreiben
+    .pipe(sourcemaps.write('.'))
 
     // Dateien(en) schreiben
     .pipe(dest
