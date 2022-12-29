@@ -14,6 +14,7 @@ const del          = require('del');
 const ftp          = require('vinyl-ftp');
 const gulpif       = require('gulp-if');
 const injectCSS    = require('gulp-inject-css');
+const log          = require('fancy-log');
 const postcss	   = require('gulp-postcss');
 const postcssEasingGradients = require('postcss-easing-gradients');
 const rename       = require('gulp-rename');
@@ -107,6 +108,10 @@ const dateien = {
         src: 'dist/**/*.*',
         destStaging: '/',
         destProduction: '/',
+    },
+    gulpConfig: {
+        src: 'config/custom.php',
+        dest: 'config',
     },
 }
 
@@ -361,50 +366,6 @@ function uploadTask() {
 };
 
 
-// Revisionieren
-function revisionierenTask() {
-    
-    if (modus !='dev') {
-        
-        return src('web/**/*.{css,js,svg,jpg,png,eot,ttf,otf,woff,woff2}')
-
-        // Hash anfügen mit Gulp Rev
-        .pipe(rev())
-        // Dateien(en) schreiben
-        .pipe(dest('web'))
-
-        .pipe(rev.manifest({
-            merge: true
-        }))
-
-        // Alte gehashte Dateien löschen
-        // .pipe(revdel())
-
-        .pipe(replace('web/', ''))
-        .pipe(dest('web'))
-        
-    } else {
-        return src('/web/**/*.*')
-    }
-}
-
-
-// Revisionen in Dateien schreiben
-function revschreibenTask() {
-    
-    if (modus !='dev') {
-        
-        const manifest = readFileSync('web/rev-manifest.json');
-
-        return src('dist/**/*.{twig,css,js}')
-        .pipe(revrewrite({ manifest }))
-        .pipe(dest('dist'));
-    } else {
-        return src('/dist/**/*.*')
-    }
-}
-
-
 // Aufräumen
 function aufraeumenTask() {
     return del('./dist');
@@ -418,6 +379,19 @@ function injizierenTask() {
     .pipe(dest('dist'));
 }
 
+// Versionsnummer staticAssetsVersion setzen
+function staticAssetsVersionTask() {
+    return src(dateien.gulpConfig.src)
+    .pipe(replace(/'staticAssetsVersion' => (\d+),/g, function(match, p1, offset, string) {
+        unixZeit = Math.floor(new Date().getTime() / 1000);
+        log('-> staticAssetsVersion geändert zu ' + unixZeit);
+        return "'staticAssetsVersion' => " + unixZeit + ",";
+    }))
+    .pipe(dest
+        (dateien.gulpConfig.dest)
+    );
+}
+
 
 // Änderungen beobachten
 function watchTask() {
@@ -427,11 +401,11 @@ function watchTask() {
             aufraeumenTask,
             // importJsonTask,
             parallel(
-                templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosTask, scssTask, jsDeferTask, jsInlineTask, medienTask, mockupTask, fontsTask, spritesTask
+                templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosTask, scssTask, jsDeferTask, jsInlineTask, medienTask, mockupTask, fontsTask, spritesTask, staticAssetsVersionTask
             ),
             injizierenTask,
-            revisionierenTask,
-            revschreibenTask,
+            // revisionierenTask,
+            // revschreibenTask,
             uploadTask,
         )
     );
@@ -443,11 +417,11 @@ exports.default = series (
         aufraeumenTask,
         // importJsonTask,
         parallel(
-            templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosTask, scssTask, jsDeferTask, jsInlineTask, medienTask, mockupTask, fontsTask, spritesTask
+            templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosTask, scssTask, jsDeferTask, jsInlineTask, medienTask, mockupTask, fontsTask, spritesTask, staticAssetsVersionTask
         ),
         injizierenTask,
-        revisionierenTask,
-        revschreibenTask,
+        // revisionierenTask,
+        // revschreibenTask,
         uploadTask,
     ),
     watchTask,

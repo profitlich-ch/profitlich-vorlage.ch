@@ -11,22 +11,20 @@
 		</title>
 		<meta content="width=device-width, initial-scale=1.0" name="viewport">
 		{% block metaDescription %}{% endblock %}
-        {% js "/js/defer.js" with {
-            defer: true
-        } %}
+
+        {% set staticAssetsVersion = craft.app.config.custom.staticAssetsVersion %}
+
 		
 		<!-- https://web.dev/defer-non-critical-css/ -->
-		<link rel="preload" href="/css/style.css" as="style">
-		<link rel="stylesheet" href="/css/style.css" media="print" onload="this.media='all'">
-		<noscript><link rel="stylesheet" href="/css/style.css"/></noscript>
+		<link rel="preload" href="/css/style.{{ staticAssetsVersion }}.css" as="style">
+		<link rel="stylesheet" href="/css/style.{{ staticAssetsVersion }}.css" media="print" onload="this.media='all'">
+		<noscript><link rel="stylesheet" href="/css/style.{{ staticAssetsVersion }}.css"/></noscript>
 
         {% if devMode %}
-            <link rel="stylesheet" href="/css/dev.css">
-            {% js "/js/defer.js" with {
-                defer: true
-            } %}
+            <link rel="stylesheet" href="/css/dev.{{ staticAssetsVersion }}.css">
         {% endif %}
 
+        <script src="js/defer.{{ staticAssetsVersion }}.js" defer></script>
 		<script>
 			{{ source("/js/inline.js") }}
 		</script>

@@ -30,6 +30,9 @@ return GeneralConfig::create()
     // Disallow robots
     ->disallowRobots(!$isProduction)
 
+    // Allow template chaching
+    ->enableTemplateCaching(!$isDev)
+
     // Slugs ohne Umlaute
     ->limitAutoSlugsToAscii(true)
     // Loginadresse des Redaktionssystems
