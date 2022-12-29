@@ -144,15 +144,18 @@ Datei, mit der überschrieben werden soll
 
 
 # Git Vorgehen
-- Jeder entwickelt in einem eigenen branch dev-name
-- dev-name pushen
-- pull request von dev-name nach dev
+- Die aktuelle Version ist der main branch
+- TODO: Vorgehen mit Releases entwickeln (vor allem wenn das Projekt produktiv ist)
+- branch aus issue generieren in Github
+- pull request von issue branch nach main, dabei `close` in den Kommentar schreiben, um das issue zu schliessen
+- Schliesst der branch weitere issues, diese jweiles so mit ihrer Nummer angeben: `closes #0`
+- In VS Code alte branches löschen: `git fetch --prune`
+### Prüfen, ob noch nötig mit neuem Vorgehen:
 - Konflikt: dateModified config/project/config.yaml auf das neuere Datum (höhere Zahl)
 - Konflikt: fields, entries etc. absprechen, was bleibt und gelöscht wird
 - Merge
 - `checkout dev`, `git pull dev`
 - `checkout dev-name`, `git pull origin dev` (origin dev, weil sonst dev-name gepullt wird)
-- Weiterarbeiten an dev-name
 
 
 # Assets Synchronisierung
