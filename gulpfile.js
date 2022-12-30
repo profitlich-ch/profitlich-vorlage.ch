@@ -5,23 +5,21 @@ const modus = 'dev';
 
 const path = require('path');
 const { src, dest, watch, series, parallel, gulp } = require('gulp');
-const { readFileSync } = require('fs');
+// const { readFileSync } = require('fs');
 
 const autoprefixer = require('autoprefixer');
 const cleanCSS     = require('gulp-clean-css');
 const concat       = require('gulp-concat');
-const del          = require('del');
+// const del          = require('del');
 const ftp          = require('vinyl-ftp');
 const gulpif       = require('gulp-if');
 const injectCSS    = require('gulp-inject-css');
 const log          = require('fancy-log');
 const postcss	   = require('gulp-postcss');
 const postcssEasingGradients = require('postcss-easing-gradients');
-const rename       = require('gulp-rename');
 const replace      = require('gulp-replace');
-const rev          = require('gulp-rev');
-const revrewrite   = require('gulp-rev-rewrite');
 const sass         = require('gulp-sass')(require('sass'));
+const sassImportJson = require('@sayhellogmbh/gulp-sass-import-json');
 const sassGlob     = require('gulp-sass-glob');
 const sourcemaps   = require('gulp-sourcemaps');
 const svgo         = require('gulp-svgo');
@@ -51,17 +49,14 @@ const dateien = {
         src: ['src/scss/**/*.scss', 'src/macros/**/*.scss'],
         dest: 'web/css',
     },
-    
     jsDefer: {
         src: (modus == 'dev') ? ['src/js/defer/**/*.js', 'src/macros/**/*.js'] : ['src/js/defer/**/*.js', 'src/macros/**/*.js', '!src/js/defer/dev/**/*.*'],
         dest: 'web/js',
     },
-    
     jsInline: {
         src: (modus == 'dev') ? 'src/js/inline/**/*.js' : ['src/js/inline/**/*.js', '!src/js/inline/dev/**/*.*'],
         dest: 'templates/js',
     },
-    
     jsBausteine: {
         src: ['src/bausteine/**/*.js', '!src/bausteine/**/_*.js'],
         dest: 'web/bausteine',
@@ -118,6 +113,12 @@ const dateien = {
 // SCSS kompilieren
 function scssTask() {
     return src(dateien.scss.src)
+
+    // .pipe(sassImportJson({
+    //     isSсss: true
+    //     // Cache auf false setzen, wenn Änderungen an der config.json ohne Neustart von Gulp erkannt werden sollen
+    //     // ,cache: false
+    // }))
 
     // Globs lesen (wildcard)
     .pipe(sassGlob())
@@ -398,14 +399,11 @@ function watchTask() {
     watch(
         [dateien.src.src],
         series(
-            aufraeumenTask,
-            // importJsonTask,
+            // aufraeumenTask,
             parallel(
                 templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosTask, scssTask, jsDeferTask, jsInlineTask, medienTask, mockupTask, fontsTask, spritesTask, staticAssetsVersionTask
             ),
             injizierenTask,
-            // revisionierenTask,
-            // revschreibenTask,
             uploadTask,
         )
     );
@@ -414,14 +412,11 @@ function watchTask() {
 // Standardaufgabe anlegen
 exports.default = series (
     series(
-        aufraeumenTask,
-        // importJsonTask,
+        // aufraeumenTask,
         parallel(
             templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosTask, scssTask, jsDeferTask, jsInlineTask, medienTask, mockupTask, fontsTask, spritesTask, staticAssetsVersionTask
         ),
         injizierenTask,
-        // revisionierenTask,
-        // revschreibenTask,
         uploadTask,
     ),
     watchTask,
