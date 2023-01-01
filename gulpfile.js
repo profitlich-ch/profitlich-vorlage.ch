@@ -10,7 +10,6 @@ const { src, dest, watch, series, parallel, gulp } = require('gulp');
 const autoprefixer = require('autoprefixer');
 const cleanCSS     = require('gulp-clean-css');
 const concat       = require('gulp-concat');
-// const del          = require('del');
 const ftp          = require('vinyl-ftp');
 const gulpif       = require('gulp-if');
 const injectCSS    = require('gulp-inject-css');
@@ -383,11 +382,13 @@ function injizierenTask() {
 // Versionsnummer staticAssetsVersion setzen
 function staticAssetsVersionTask() {
     return src(dateien.gulpConfig.src)
-    .pipe(replace(/'staticAssetsVersion' => (\d+),/g, function(match, p1, offset, string) {
+    .pipe(gulpif( modus == 'production', 
+        replace(/'staticAssetsVersion' => (\d+),/g, function(match, p1, offset, string) {
         unixZeit = Math.floor(new Date().getTime() / 1000);
         log('-> staticAssetsVersion geändert zu ' + unixZeit);
         return "'staticAssetsVersion' => " + unixZeit + ",";
-    }))
+        }))
+    )
     .pipe(dest
         (dateien.gulpConfig.dest)
     );
@@ -400,6 +401,7 @@ function watchTask() {
         [dateien.src.src],
         series(
             // aufraeumenTask,
+            // importJsonTask,
             parallel(
                 templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosTask, scssTask, jsDeferTask, jsInlineTask, medienTask, mockupTask, fontsTask, spritesTask, staticAssetsVersionTask
             ),
@@ -413,6 +415,7 @@ function watchTask() {
 exports.default = series (
     series(
         // aufraeumenTask,
+        // importJsonTask,
         parallel(
             templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosTask, scssTask, jsDeferTask, jsInlineTask, medienTask, mockupTask, fontsTask, spritesTask, staticAssetsVersionTask
         ),
