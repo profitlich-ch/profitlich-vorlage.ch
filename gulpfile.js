@@ -10,17 +10,13 @@ const { readFileSync } = require('fs');
 const autoprefixer = require('autoprefixer');
 const cleanCSS     = require('gulp-clean-css');
 const concat       = require('gulp-concat');
-const del          = require('del');
 const ftp          = require('vinyl-ftp');
 const gulpif       = require('gulp-if');
 const injectCSS    = require('gulp-inject-css');
 const log          = require('fancy-log');
 const postcss	   = require('gulp-postcss');
 const postcssEasingGradients = require('postcss-easing-gradients');
-const rename       = require('gulp-rename');
 const replace      = require('gulp-replace');
-const rev          = require('gulp-rev');
-const revrewrite   = require('gulp-rev-rewrite');
 const sass         = require('gulp-sass')(require('sass'));
 const sassGlob     = require('gulp-sass-glob');
 const sourcemaps   = require('gulp-sourcemaps');
@@ -382,11 +378,13 @@ function injizierenTask() {
 // Versionsnummer staticAssetsVersion setzen
 function staticAssetsVersionTask() {
     return src(dateien.gulpConfig.src)
-    .pipe(replace(/'staticAssetsVersion' => (\d+),/g, function(match, p1, offset, string) {
+    .pipe(gulpif( modus == 'production', 
+        replace(/'staticAssetsVersion' => (\d+),/g, function(match, p1, offset, string) {
         unixZeit = Math.floor(new Date().getTime() / 1000);
         log('-> staticAssetsVersion geändert zu ' + unixZeit);
         return "'staticAssetsVersion' => " + unixZeit + ",";
-    }))
+        }))
+    )
     .pipe(dest
         (dateien.gulpConfig.dest)
     );
@@ -398,7 +396,7 @@ function watchTask() {
     watch(
         [dateien.src.src],
         series(
-            aufraeumenTask,
+            // aufraeumenTask,
             // importJsonTask,
             parallel(
                 templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosTask, scssTask, jsDeferTask, jsInlineTask, medienTask, mockupTask, fontsTask, spritesTask, staticAssetsVersionTask
@@ -414,7 +412,7 @@ function watchTask() {
 // Standardaufgabe anlegen
 exports.default = series (
     series(
-        aufraeumenTask,
+        // aufraeumenTask,
         // importJsonTask,
         parallel(
             templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosTask, scssTask, jsDeferTask, jsInlineTask, medienTask, mockupTask, fontsTask, spritesTask, staticAssetsVersionTask
