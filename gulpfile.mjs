@@ -425,12 +425,13 @@ function staticAssetsVersionTask() {
 
 // Browsersync
 // https://coder-coder.com/quick-guide-to-browsersync-gulp-4/
+const url = 'profitlich-vorlage.ch.ddev.site';
 function browsersyncServe(callback){
     if (modus =='dev') {
         browsersync.init({
-            server: {
-                baseDir: './web/',
-            }    ,
+            proxy: url,
+            host: url,
+            port: 3000,
             notify: false
         });
         callback();
@@ -455,7 +456,7 @@ const watchTask = gulp.watch(
         ),
         injizierenTask,
         configLoeschenTask,
-        browsersyncServe,
+        browsersyncReload,
         uploadTask,
     )
 );
@@ -469,7 +470,7 @@ task('build',
         ),
         injizierenTask,
         configLoeschenTask,
-        browsersyncReload,
+        browsersyncServe,
         uploadTask,
     )
 );
