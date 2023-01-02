@@ -1,0 +1,50 @@
+{
+    "modus": "dev",
+
+    "maximalbreite": "1699px",
+
+    "layouts": {
+        "smartphone":  "428px",
+        "tabletHoch":  "768px",
+        "tabletQuer": "1024px",
+        "desktop":    "1440px"
+    },
+
+    "farben": {
+        "rotbraun1": "#9B645A",
+        "rotbraun2": "#AD7A6E",
+        "braun1": "#86735D",
+        "braun2": "#93826E",
+        "braun3": "#F4F2F0",
+        "schwarz1": "#484848",
+        "hintergrund": "white"
+    },
+
+    "seitenraender": {
+        "smartphone": {
+            "top": 90,
+            "right": 40,
+            "bottom": 0,
+            "left": 40
+        },
+        "desktop": {
+            "top": 0,
+            "right": 310,
+            "bottom": 0,
+            "left": 100
+        }
+    },
+
+    "spalten": {
+        "smartphone": 5,
+        "desktop": 10
+    },
+
+    "spaltenabstaende": {
+        "smartphone": "10px",
+        "tabletHoch": "16px",
+        "tabletQuer": "22px",
+        "desktop": "30px",
+        "gross": "30px"
+    }
+}

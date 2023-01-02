@@ -10,6 +10,7 @@ const { src, dest, watch, series, parallel, gulp } = require('gulp');
 const autoprefixer = require('autoprefixer');
 const cleanCSS     = require('gulp-clean-css');
 const concat       = require('gulp-concat');
+const del          = require('del');
 const ftp          = require('vinyl-ftp');
 const gulpif       = require('gulp-if');
 const injectCSS    = require('gulp-inject-css');
@@ -426,7 +427,7 @@ function watchTask() {
             parallel(
                 templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosTask, scssTask, jsDeferTask, jsInlineTask, medienTask, mockupTask, fontsTask, spritesTask, staticAssetsVersionTask
             ),
-            // configLoeschenTask,
+            configLoeschenTask,
             injizierenTask,
             uploadTask,
         )
@@ -441,7 +442,7 @@ exports.default = series (
         parallel(
             templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosTask, scssTask, jsDeferTask, jsInlineTask, medienTask, mockupTask, fontsTask, spritesTask, staticAssetsVersionTask
         ),
-        // configLoeschenTask,
+        configLoeschenTask,
         injizierenTask,
         uploadTask,
     ),
