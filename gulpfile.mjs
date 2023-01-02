@@ -1,30 +1,36 @@
+// ESM gulpfile.mjs nach https://gist.github.com/noraj/007a943dc781dc8dd3198a29205bae04
+
 // dev oder staging oder production
 // staging lädt auf den Stagingserver
 // production lädt auf den Produtivserver, lässt alle dev Inhalte weg (JS, CSS) und komprimiert JS
 const modus = 'dev';
 
-const path = require('path');
-const { src, dest, watch, series, parallel, gulp } = require('gulp');
-// const { readFileSync } = require('fs');
+const { src, dest, task, watch, series, parallel } = gulp;
 
-const autoprefixer = require('autoprefixer');
-const cleanCSS     = require('gulp-clean-css');
-const concat       = require('gulp-concat');
-const del          = require('del');
-const ftp          = require('vinyl-ftp');
-const gulpif       = require('gulp-if');
-const injectCSS    = require('gulp-inject-css');
-const jsonCss      = require('gulp-json-css');
-const log          = require('fancy-log');
-const postcss	   = require('gulp-postcss');
-const postcssEasingGradients = require('postcss-easing-gradients');
-const replace      = require('gulp-replace');
-const sass         = require('gulp-sass')(require('sass'));
-const sassGlob     = require('gulp-sass-glob');
-const sourcemaps   = require('gulp-sourcemaps');
-const svgo         = require('gulp-svgo');
-const svgSprite    = require('gulp-svg-sprite');
-const terser       = require('gulp-terser');
+import { deleteAsync } from 'del';
+
+import autoprefixer from 'autoprefixer';
+import cleanCSS from 'gulp-clean-css';
+import concat from 'gulp-concat';
+import dartSass from 'sass';
+import ftp from 'vinyl-ftp';
+import gulp from 'gulp';
+import gulpif from 'gulp-if';
+import gulpSass from 'gulp-sass';
+import injectCSS from 'gulp-inject-css';
+import jsonCss from 'gulp-json-css';
+import log from 'fancy-log';
+import path from 'path';
+import postcss from 'gulp-postcss';
+import postcssEasingGradients from 'postcss-easing-gradients';
+import replace from 'gulp-replace';
+import sassGlob from 'gulp-sass-glob';
+import sourcemaps from 'gulp-sourcemaps';
+import svgo from 'gulp-svgo';
+import svgSprite from 'gulp-svg-sprite';
+import terser from 'gulp-terser';
+
+const sass = gulpSass(dartSass);
 
 var ftpVerbindungStaging = ftp.create({
     host: "",
@@ -129,7 +135,7 @@ function configTask() {
 
 // Variablendatei _config.scss löschen
 function configLoeschenTask() {
-    return del('src/_config.scss');
+    return deleteAsync('src/scss/_config.scss');
 }
 
 // SCSS kompilieren
@@ -390,7 +396,7 @@ function uploadTask() {
 
 // Aufräumen
 function aufraeumenTask() {
-    return del('./dist');
+    return deleteAsync('./dist');
 }
 
 
@@ -418,33 +424,35 @@ function staticAssetsVersionTask() {
 
 
 // Änderungen beobachten
-function watchTask() {
-    watch(
-        [dateien.src.src],
-        series(
-            // aufraeumenTask,
-            configTask,
-            parallel(
-                templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosTask, scssTask, jsDeferTask, jsInlineTask, medienTask, mockupTask, fontsTask, spritesTask, staticAssetsVersionTask
-            ),
-            configLoeschenTask,
-            injizierenTask,
-            uploadTask,
-        )
-    );
-}
+const watchTask = gulp.watch(
+    [dateien.src.src, '!src/scss/_config.scss'],
+    gulp.series(
+        // aufraeumenTask,
+        configTask,
+        gulp.parallel(
+            templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosTask, scssTask, jsDeferTask, jsInlineTask, medienTask, mockupTask, fontsTask, spritesTask, staticAssetsVersionTask
+        ),
+        injizierenTask,
+        configLoeschenTask,
+        uploadTask,
+    )
+);
 
-// Standardaufgabe anlegen
-exports.default = series (
+task('build',
     series(
         // aufraeumenTask,
         configTask,
         parallel(
             templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosTask, scssTask, jsDeferTask, jsInlineTask, medienTask, mockupTask, fontsTask, spritesTask, staticAssetsVersionTask
         ),
-        configLoeschenTask,
         injizierenTask,
+        configLoeschenTask,
         uploadTask,
-    ),
-    watchTask,
+    )
 );
+
+task('build').description = 'Dateien kompilieren';
+
+// Standardaufgabe anlegen
+task('default', series('build'));
+task('default').description = 'Standardaufgabe';
