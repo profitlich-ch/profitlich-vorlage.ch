@@ -10,6 +10,7 @@ const { src, dest, task, watch, series, parallel } = gulp;
 import { deleteAsync } from 'del';
 
 import autoprefixer from 'autoprefixer';
+import browsersync from 'browser-sync';
 import cleanCSS from 'gulp-clean-css';
 import concat from 'gulp-concat';
 import dartSass from 'sass';
@@ -422,6 +423,27 @@ function staticAssetsVersionTask() {
     );
 }
 
+// Browsersync
+// https://coder-coder.com/quick-guide-to-browsersync-gulp-4/
+const url = 'profitlich-vorlage.ch.ddev.site';
+function browsersyncServe(callback){
+    if (modus =='dev') {
+        browsersync.init({
+            proxy: url,
+            host: url,
+            port: 3000,
+            notify: false
+        });
+        callback();
+    } else {
+        callback();
+    }
+}
+
+function browsersyncReload(callback){
+    browsersync.reload();
+    callback();
+}
 
 // Änderungen beobachten
 const watchTask = gulp.watch(
@@ -434,6 +456,7 @@ const watchTask = gulp.watch(
         ),
         injizierenTask,
         configLoeschenTask,
+        // browsersyncReload,
         uploadTask,
     )
 );
@@ -447,6 +470,7 @@ task('build',
         ),
         injizierenTask,
         configLoeschenTask,
+        // browsersyncServe,
         uploadTask,
     )
 );
