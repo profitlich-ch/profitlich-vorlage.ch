@@ -5,7 +5,7 @@ const modus = 'dev';
 
 const path = require('path');
 const { src, dest, watch, series, parallel, gulp } = require('gulp');
-const { readFileSync } = require('fs');
+// const { readFileSync } = require('fs');
 
 const autoprefixer = require('autoprefixer');
 const cleanCSS     = require('gulp-clean-css');
@@ -13,6 +13,7 @@ const concat       = require('gulp-concat');
 const ftp          = require('vinyl-ftp');
 const gulpif       = require('gulp-if');
 const injectCSS    = require('gulp-inject-css');
+const jsonCss      = require('gulp-json-css');
 const log          = require('fancy-log');
 const postcss	   = require('gulp-postcss');
 const postcssEasingGradients = require('postcss-easing-gradients');
@@ -43,21 +44,22 @@ const dateien = {
     src: {
         src: 'src/**/*.*',
     },
+    config: {
+        src: 'src/_config.json',
+        dest: 'src/scss',
+    },
     scss: {
         src: ['src/scss/**/*.scss', 'src/macros/**/*.scss'],
         dest: 'web/css',
     },
-    
     jsDefer: {
         src: (modus == 'dev') ? ['src/js/defer/**/*.js', 'src/macros/**/*.js'] : ['src/js/defer/**/*.js', 'src/macros/**/*.js', '!src/js/defer/dev/**/*.*'],
         dest: 'web/js',
     },
-    
     jsInline: {
         src: (modus == 'dev') ? 'src/js/inline/**/*.js' : ['src/js/inline/**/*.js', '!src/js/inline/dev/**/*.*'],
         dest: 'templates/js',
     },
-    
     jsBausteine: {
         src: ['src/bausteine/**/*.js', '!src/bausteine/**/_*.js'],
         dest: 'web/bausteine',
@@ -111,9 +113,32 @@ const dateien = {
     },
 }
 
+// Variablen aus config.json in SCSS umwandeln
+function configTask() {
+    return src(dateien.config.src)
+
+    .pipe(jsonCss({
+        keepObjects: true
+    }))
+
+    .pipe(dest
+        (dateien.config.dest)
+    )   
+}
+
+// Variablendatei _config.scss löschen
+function configLoeschenTask() {
+    return del('src/_config.scss');
+}
+
 // SCSS kompilieren
 function scssTask() {
     return src(dateien.scss.src)
+
+    // Nur der Fork von SimonHarte ermöglicht Objekte/Listen statt flacher Variablen
+    .pipe(jsonCss({
+        keepObjects: true
+    }))
 
     // Globs lesen (wildcard)
     .pipe(sassGlob())
@@ -397,13 +422,12 @@ function watchTask() {
         [dateien.src.src],
         series(
             // aufraeumenTask,
-            // importJsonTask,
+            configTask,
             parallel(
                 templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosTask, scssTask, jsDeferTask, jsInlineTask, medienTask, mockupTask, fontsTask, spritesTask, staticAssetsVersionTask
             ),
+            // configLoeschenTask,
             injizierenTask,
-            // revisionierenTask,
-            // revschreibenTask,
             uploadTask,
         )
     );
@@ -413,13 +437,12 @@ function watchTask() {
 exports.default = series (
     series(
         // aufraeumenTask,
-        // importJsonTask,
+        configTask,
         parallel(
             templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosTask, scssTask, jsDeferTask, jsInlineTask, medienTask, mockupTask, fontsTask, spritesTask, staticAssetsVersionTask
         ),
+        // configLoeschenTask,
         injizierenTask,
-        // revisionierenTask,
-        // revschreibenTask,
         uploadTask,
     ),
     watchTask,
