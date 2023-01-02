@@ -456,7 +456,7 @@ const watchTask = gulp.watch(
         ),
         injizierenTask,
         configLoeschenTask,
-        browsersyncReload,
+        // browsersyncReload,
         uploadTask,
     )
 );
@@ -470,7 +470,7 @@ task('build',
         ),
         injizierenTask,
         configLoeschenTask,
-        browsersyncServe,
+        // browsersyncServe,
         uploadTask,
     )
 );
