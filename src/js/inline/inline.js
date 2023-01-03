@@ -30,7 +30,7 @@ var emlArray = document.getElementsByClassName("eml");
 for(var i = (emlArray.length - 1); i >= 0; i--) {
     var obj = emlArray[i];
     var eml = obj.getAttribute('data-eml');
-    var emlText = eml+'@cyan.ch';
+    var emlText = eml+'@domain.tld';
     var emlAddress = 'mailto:'+emlText;
     obj.setAttribute('href', emlAddress);
     obj.innerHTML = emlText;

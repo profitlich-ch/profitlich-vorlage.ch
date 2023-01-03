@@ -133,7 +133,7 @@ function karteInitialisieren(karte) {
 
     if (karteInitialisiert == false) {
         var script = document.createElement('script');
-        script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBTMOEq17kMMTXIkpvMENKJX1krwfs8-eQ&callback=initMap';
+        script.src = 'https://maps.googleapis.com/maps/api/js?key=APIKEY&callback=initMap';
         script.async = true;
     
         // Attach your callback function to the `window` object

@@ -150,7 +150,7 @@ Datei, mit der überschrieben werden soll
 - pull request von issue branch nach main, dabei `close` in den Kommentar schreiben, um das issue zu schliessen
 - Schliesst der branch weitere issues, diese jweiles so mit ihrer Nummer angeben: `closes #0`
 - In VS Code alte branches löschen: `git fetch --prune`
-### Prüfen, ob noch nötig mit neuem Vorgehen:
+### Bei Konflikten
 - Konflikt: dateModified config/project/config.yaml auf das neuere Datum (höhere Zahl)
 - Konflikt: fields, entries etc. absprechen, was bleibt und gelöscht wird
 - Merge
@@ -162,6 +162,18 @@ Datei, mit der überschrieben werden soll
 
     rsync -a -e 'ssh -p 2121' profitlich-ssh@profitlich.ch:/staging.profitlich.ch/web/assets/ web/assets/
 
+
+# Craft Updates
+
+Updates werden nur lokal (Umgebung development) durchgeführt. Die Datei `composer.json`muss für Updates gemäss SemVer vorbereitet sein: Versionen brauchen eine Erlaubnis zum Update mit `^3.5.2` statt `3.5.2` (^ minor updates, ~ patch update).  
+https://nystudio107.com/blog/updating-craft-cms-without-headaches
+
+Stand 3.1.2023 darf Composer nicht höher als Version 2.2.15 sein (https://github.com/craftcms/cms/issues/12482)  
+```
+composer self-update 2.2.15   // Stand 3.1.2023
+ddev ssh
+composer update
+```
 
 # Lese- und Recherchestoff
 

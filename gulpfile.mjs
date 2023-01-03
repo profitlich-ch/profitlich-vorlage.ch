@@ -57,7 +57,7 @@ const dateien = {
         dest: 'src/scss',
     },
     scss: {
-        src: ['src/scss/**/*.scss', 'src/macros/**/*.scss'],
+        src: (modus == 'dev') ? ['src/scss/**/*.scss', 'src/macros/**/*.scss'] : ['src/scss/**/*.scss', 'src/macros/**/*.scss', '!src/scss/dev/**/*.scss'],
         dest: 'web/css',
     },
     jsDefer: {
@@ -142,11 +142,6 @@ function configLoeschenTask() {
 // SCSS kompilieren
 function scssTask() {
     return src(dateien.scss.src)
-
-    // Nur der Fork von SimonHarte ermöglicht Objekte/Listen statt flacher Variablen
-    .pipe(jsonCss({
-        keepObjects: true
-    }))
 
     // Globs lesen (wildcard)
     .pipe(sassGlob())

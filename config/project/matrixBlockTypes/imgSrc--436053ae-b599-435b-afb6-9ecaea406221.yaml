@@ -1,0 +1,46 @@
+field: c192072a-82d1-40a2-9dc0-71723099dcd0 # CSP
+fieldLayouts:
+  940652ab-35df-465d-8504-888711f66347:
+    tabs:
+      -
+        elementCondition: null
+        elements:
+          -
+            elementCondition: null
+            fieldUid: 0d60cf4a-644b-4b66-a789-a72a76fcbb30 # Sources
+            instructions: null
+            label: null
+            required: true
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 523b4747-95df-4e1d-9ee5-a917b19159f2
+            userCondition: null
+            warning: null
+            width: 100
+        name: Content
+        uid: be4b2e18-3ecd-436a-b992-5d2746107af0
+        userCondition: null
+fields:
+  0d60cf4a-644b-4b66-a789-a72a76fcbb30: # Sources
+    columnSuffix: vvjihsha
+    contentColumnType: text
+    fieldGroup: null
+    handle: sources
+    instructions: null
+    name: Sources
+    searchable: false
+    settings:
+      byteLimit: null
+      charLimit: null
+      code: false
+      columnType: null
+      initialRows: 4
+      multiline: false
+      placeholder: null
+      uiMode: normal
+    translationKeyFormat: null
+    translationMethod: none
+    type: craft\fields\PlainText
+handle: imgSrc
+name: img-src
+sortOrder: 3

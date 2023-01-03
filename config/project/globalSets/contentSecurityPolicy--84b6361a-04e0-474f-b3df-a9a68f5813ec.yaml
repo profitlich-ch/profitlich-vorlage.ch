@@ -1,0 +1,36 @@
+fieldLayouts:
+  e97d6951-cc8c-4d07-85a8-c52d6632e6d2:
+    tabs:
+      -
+        elementCondition: null
+        elements:
+          -
+            elementCondition: null
+            fieldUid: df99b8eb-16d6-4e8a-ba0b-e702b5d17a78 # CSP aktivieren
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 3328c2b2-e160-4d92-957c-8007fc15257d
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            elementCondition: null
+            fieldUid: c192072a-82d1-40a2-9dc0-71723099dcd0 # CSP
+            instructions: null
+            label: null
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 69d8f9ff-9231-4560-8f85-cb1e2ced35f1
+            userCondition: null
+            warning: null
+            width: 100
+        name: CSP
+        uid: 6a0bf9a2-f678-4c9d-ac50-dfe7eb05bcce
+        userCondition: null
+handle: contentSecurityPolicy
+name: 'Content Security Policy'
+sortOrder: 1
