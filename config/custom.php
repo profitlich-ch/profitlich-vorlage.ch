@@ -1,6 +1,6 @@
-<!-- https://craftcms.com/docs/4.x/config/#custom-settings -->
-<!-- https://nystudio107.com/blog/simple-static-asset-versioning -->
 <?php
+    // https://craftcms.com/docs/4.x/config/#custom-settings
+    // https://nystudio107.com/blog/simple-static-asset-versioning
     return array(
 
         // All environments
