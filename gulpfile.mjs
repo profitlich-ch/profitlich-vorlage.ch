@@ -53,7 +53,7 @@ const dateien = {
         src: 'src/**/*.*',
     },
     config: {
-        src: 'src/_config.json',
+        src: 'src/config.json',
         dest: 'src/scss',
     },
     scss: {
@@ -140,9 +140,9 @@ function configTask() {
     )   
 }
 
-// Variablendatei _config.scss löschen
+// Variablendatei config.scss löschen
 function configLoeschenTask() {
-    return deleteAsync('src/scss/_config.scss');
+    return deleteAsync('src/scss/config.scss');
 }
 
 // SCSS kompilieren
@@ -485,7 +485,7 @@ function browsersyncReload(callback){
 
 // Änderungen beobachten
 const watchTask = gulp.watch(
-    [dateien.src.src, '!src/scss/_config.scss'],
+    [dateien.src.src, '!src/scss/config.scss'],
     gulp.series(
         // aufraeumenTask,
         configTask,
