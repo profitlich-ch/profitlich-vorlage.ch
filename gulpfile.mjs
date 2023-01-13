@@ -110,10 +110,15 @@ const dateien = {
         src: 'src/fonts/**/*.*',
         dest: 'web/fonts',
     },
-    upload: {
-        src: 'dist/**/*.*',
-        destStaging: '/',
-        destProduction: '/',
+    uploadWeb: {
+        src: ['web/**/**.*', '!web/assets/**/**.*', '!web/cpresources/**/**.*', '!web/assets/**/**.*', '!web/index.php'],
+        destStaging: '/web',
+        destProduction: '/web',
+    },
+    uploadTemplates: {
+        src: 'templates/**/*.*',
+        destStaging: '/templates',
+        destProduction: '/templates',
     },
     gulpConfig: {
         src: 'config/custom.php',
@@ -363,29 +368,66 @@ function fontsTask() {
 // FTP
 // https://medium.com/sliit-foss/automate-a-ftp-upload-with-gulp-js-4fde363cf9e8
 // https://www.riklewis.com/2019/09/saving-time-with-ftp-in-gulp/
-function uploadTask() {
+function uploadTemplatesTask() {
     
-    if (modus =='dev') {
-        return src( dateien.upload.src, { base: '/', buffer: false } )
+    if (modus =='staging') {
+        return src( dateien.uploadTemplates.src, {
+            buffer: false,
+            dot: true
+        } )
     
         .pipe(ftpVerbindungStaging.newer
-            (dateien.upload.destStaging)
+            (dateien.uploadTemplates.destStaging)
         ) 
         .pipe(ftpVerbindungStaging.dest
-            (dateien.upload.destStaging)
+            (dateien.uploadTemplates.destStaging)
         )
     }
     if (modus =='production') {
-        return src( dateien.upload.src, { base: '/', buffer: false } )
+        return src( dateien.uploadTemplates.src, {
+            buffer: false,
+            dot: true
+        } )
     
         .pipe(ftpVerbindungProduction.newer
-            (dateien.upload.destProduction)
+            (dateien.uploadTemplates.destProduction)
         ) 
         .pipe(ftpVerbindungProduction.dest
-            (dateien.upload.destProduction)
+            (dateien.uploadTemplates.destProduction)
         )
     } else {
-        return src( dateien.upload.src, { base: '/', buffer: false } )
+        return src( dateien.uploadTemplates.src, { buffer: false } )
+    }
+};
+function uploadWebTask() {
+    
+    if (modus =='staging') {
+        return src( dateien.uploadWeb.src, {
+            buffer: false,
+            dot: true
+        } )
+    
+        .pipe(ftpVerbindungStaging.newer
+            (dateien.uploadWeb.destStaging)
+        ) 
+        .pipe(ftpVerbindungStaging.dest
+            (dateien.uploadWeb.destStaging)
+        )
+    }
+    if (modus =='production') {
+        return src( dateien.uploadWeb.src, {
+            buffer: false,
+            dot: true
+        } )
+    
+        .pipe(ftpVerbindungProduction.newer
+            (dateien.uploadWeb.destProduction)
+        ) 
+        .pipe(ftpVerbindungProduction.dest
+            (dateien.uploadWeb.destProduction)
+        )
+    } else {
+        return src( dateien.uploadWeb.src, { buffer: false } )
     }
 };
 
@@ -452,7 +494,8 @@ const watchTask = gulp.watch(
         injizierenTask,
         configLoeschenTask,
         // browsersyncReload,
-        uploadTask,
+        uploadTemplatesTask,
+        uploadWebTask
     )
 );
 
@@ -466,7 +509,8 @@ task('build',
         injizierenTask,
         configLoeschenTask,
         // browsersyncServe,
-        uploadTask,
+        uploadTemplatesTask,
+        uploadWebTask
     )
 );
 
