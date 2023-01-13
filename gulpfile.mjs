@@ -61,9 +61,10 @@ const dateien = {
         dest: 'web/css',
     },
     jsDefer: {
-        src: (modus == 'dev') ? ['src/js/defer/**/*.js', 'src/macros/**/*.js'] : ['src/js/defer/**/*.js', 'src/macros/**/*.js', '!src/js/defer/dev/**/*.*'],
+        src: (modus == 'dev') ? ['src/js/defer/**/*.js', 'src/macros/**/*.js', 'src/bausteine/**/_*.js'] : ['src/js/defer/**/*.js', 'src/macros/**/*.js', 'src/bausteine/**/_*.js', '!src/js/defer/dev/**/*.*'],
         dest: 'web/js',
     },
+    
     jsInline: {
         src: (modus == 'dev') ? 'src/js/inline/**/*.js' : ['src/js/inline/**/*.js', '!src/js/inline/dev/**/*.*'],
         dest: 'templates/js',
