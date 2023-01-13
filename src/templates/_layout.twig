@@ -15,7 +15,7 @@
         {% set staticAssetsVersion = craft.app.config.custom.staticAssetsVersion %}
 
 		
-		<!-- https://web.dev/defer-non-critical-css/ -->
+		{# https://web.dev/defer-non-critical-css/ #}
 		<link rel="preload" href="/css/style.{{ staticAssetsVersion }}.css" as="style">
 		<link rel="stylesheet" href="/css/style.{{ staticAssetsVersion }}.css" media="print" onload="this.media='all'">
 		<noscript><link rel="stylesheet" href="/css/style.{{ staticAssetsVersion }}.css"/></noscript>
@@ -29,7 +29,7 @@
 			{{ source("/js/inline.js") }}
 		</script>
 
-		<!-- Webfonts -->
+		{# Webfonts #}
 
 		<style>
 			{# FOUC #}
@@ -63,10 +63,10 @@
     } %}
 	<body class="body body--{{ seitenname }} no-js preload" {{ attr(bodyDataTags) }}>
 
-		<!-- Firefox Hack gegen FOUC: https://www.primative.net/blog/how-to-get-rid-of-the-flash-of-unstyled-content/ -->
+		{# Firefox Hack gegen FOUC: https://www.primative.net/blog/how-to-get-rid-of-the-flash-of-unstyled-content/ #}
 		<script>0</script>
 
-		<!-- FOUC -->
+		{# FOUC #}
 		<script>
 			document.querySelector('body').classList.remove('no-js');
 		</script>
