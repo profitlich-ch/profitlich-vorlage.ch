@@ -408,7 +408,7 @@ function staticAssetsVersionTask() {
     return src(dateien.gulpConfig.src)
     .pipe(gulpif( modus == 'production', 
         replace(/'staticAssetsVersion' => (\d+),/g, function(match, p1, offset, string) {
-        unixZeit = Math.floor(new Date().getTime() / 1000);
+        var unixZeit = Math.floor(new Date().getTime() / 1000);
         log('-> staticAssetsVersion geändert zu ' + unixZeit);
         return "'staticAssetsVersion' => " + unixZeit + ",";
         }))
