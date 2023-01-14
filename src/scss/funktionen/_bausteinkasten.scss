@@ -100,15 +100,15 @@ $mediaqueries: (
 // Grösse
 // In Pixel oder vw umrechnen
 @function groesse($layout, $zahl) {
-    $zahl: strip-unit($zahl);
+    $zahl: $zahl;
     $breite: false;
     $korrekturfaktor: 1;
-    $breite: strip-unit( map-get($layouts, $layout) );
+    $breite: map-get($layouts, $layout);
 
     @if $layout == smartphone or $layout == gross {
         @return $zahl * 1px;
     } @else {
-        $vw: decimal-round( calc($zahl / strip-unit($breite)) * 100, 2) * 1vw;
+        $vw: decimal-round( calc($zahl / $breite) * 100, 2) * 1vw;
         @return $vw;
     }
 
