@@ -1,13 +1,20 @@
 {
     "modus": "dev",
 
-    "maximalbreite": "1699px",
+    "maximalbreite": 1699,
 
     "layouts": {
-        "smartphone":  "428px",
-        "tabletHoch":  "768px",
-        "tabletQuer": "1024px",
-        "desktop":    "1440px"
+        "smartphone": 428,
+        "tabletHoch": 768,
+        "tabletQuer": 1024,
+        "desktop": 1440
+    },
+    
+    "mediaqueries": {
+        "smartphone": 0,
+        "tabletHoch": 768,
+        "tabletQuer": 1024,
+        "desktop": 1440
     },
 
     "farben": {
@@ -41,10 +48,10 @@
     },
 
     "spaltenabstaende": {
-        "smartphone": "10px",
-        "tabletHoch": "16px",
-        "tabletQuer": "22px",
-        "desktop": "30px",
-        "gross": "30px"
+        "smartphone": 10,
+        "tabletHoch": 16,
+        "tabletQuer": 22,
+        "desktop": 30,
+        "gross": 30
     }
 }

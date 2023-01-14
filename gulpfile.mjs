@@ -20,6 +20,7 @@ import gulpif from 'gulp-if';
 import gulpSass from 'gulp-sass';
 import injectCSS from 'gulp-inject-css';
 import jsonCss from 'gulp-json-css';
+import jsonToJs from 'gulp-json-to-js';
 import log from 'fancy-log';
 import path from 'path';
 import postcss from 'gulp-postcss';
@@ -52,9 +53,13 @@ const dateien = {
     src: {
         src: 'src/**/*.*',
     },
-    config: {
+    configToScss: {
         src: 'src/config.json',
         dest: 'src/scss',
+    },
+    configToJs: {
+        src: 'src/config.json',
+        dest: 'src/js',
     },
     scss: {
         src: (modus == 'dev') ? ['src/scss/**/*.scss', 'src/macros/**/*.scss'] : ['src/scss/**/*.scss', 'src/macros/**/*.scss', '!src/scss/dev/**/*.scss'],
@@ -66,7 +71,7 @@ const dateien = {
     },
     
     jsInline: {
-        src: (modus == 'dev') ? 'src/js/inline/**/*.js' : ['src/js/inline/**/*.js', '!src/js/inline/dev/**/*.*'],
+        src: (modus == 'dev') ? ['src/js/config.js', 'src/js/inline/**/*.js'] : ['src/js/config.js', 'src/js/inline/**/*.js', '!src/js/inline/dev/**/*.*'],
         dest: 'templates/js',
     },
     jsBausteine: {
@@ -121,28 +126,39 @@ const dateien = {
         destStaging: '/templates',
         destProduction: '/templates',
     },
-    gulpConfig: {
+    craftCustomConfig: {
         src: 'config/custom.php',
         dest: 'config',
     },
 }
 
 // Variablen aus config.json in SCSS umwandeln
-function configTask() {
-    return src(dateien.config.src)
+function configToScssTask() {
+    return src(dateien.configToScss.src)
 
     .pipe(jsonCss({
         keepObjects: true
     }))
 
     .pipe(dest
-        (dateien.config.dest)
+        (dateien.configToScss.dest)
     )   
 }
 
-// Variablendatei config.scss löschen
+// Variablen aus config.json in JS umwandeln
+function configToJsTask() {
+    return src(dateien.configToJs.src)
+
+    .pipe(jsonToJs({nameVariableSufix: ''}))
+
+    .pipe(dest
+        (dateien.configToJs.dest)
+    )   
+}
+
+// Variablendatei config.scss und .js löschen
 function configLoeschenTask() {
-    return deleteAsync('src/scss/config.scss');
+    return deleteAsync(['src/scss/config.scss', 'src/js/config.js']);
 }
 
 // SCSS kompilieren
@@ -448,7 +464,7 @@ function injizierenTask() {
 
 // Versionsnummer staticAssetsVersion setzen
 function staticAssetsVersionTask() {
-    return src(dateien.gulpConfig.src)
+    return src(dateien.craftCustomConfig.src)
     .pipe(gulpif( modus == 'production', 
         replace(/'staticAssetsVersion' => (\d+),/g, function(match, p1, offset, string) {
         var unixZeit = Math.floor(new Date().getTime() / 1000);
@@ -457,7 +473,7 @@ function staticAssetsVersionTask() {
         }))
     )
     .pipe(dest
-        (dateien.gulpConfig.dest)
+        (dateien.craftCustomConfig.dest)
     );
 }
 
@@ -485,10 +501,11 @@ function browsersyncReload(callback){
 
 // Änderungen beobachten
 const watchTask = gulp.watch(
-    [dateien.src.src, '!src/scss/config.scss'],
+    [dateien.src.src, '!src/scss/config.scss', '!src/js/config.js'],
     gulp.series(
         // aufraeumenTask,
-        configTask,
+        configToScssTask,
+        configToJsTask,
         gulp.parallel(
             templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosTask, scssTask, jsDeferTask, jsInlineTask, medienTask, mockupTask, fontsTask, spritesTask, staticAssetsVersionTask
         ),
@@ -503,7 +520,8 @@ const watchTask = gulp.watch(
 task('build',
     series(
         // aufraeumenTask,
-        configTask,
+        configToScssTask,
+        configToJsTask,
         parallel(
             templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosTask, scssTask, jsDeferTask, jsInlineTask, medienTask, mockupTask, fontsTask, spritesTask, staticAssetsVersionTask
         ),

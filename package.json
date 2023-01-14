@@ -21,6 +21,7 @@
         "gulp-if": "^3.0.0",
         "gulp-inject-css": "^3.0.0",
         "gulp-json-css": "github:SimonHarte/gulp-json-css",
+        "gulp-json-to-js": "^1.0.2",
         "gulp-postcss": "^9.0.1",
         "gulp-replace": "^1.1.4",
         "gulp-sass": "^5.1.0",
