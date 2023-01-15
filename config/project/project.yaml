@@ -1,4 +1,4 @@
-dateModified: 1673818117
+dateModified: 1673818378
 email:
   fromEmail: dev@profitlich.ch
   fromName: 'Profitlich DEV'
@@ -41,7 +41,7 @@ meta:
     64605225-a1c9-4fc5-8520-475aac61e7c0: Admin # Admin
     ba078d2a-f8d8-4aa5-bebf-8265eda2519c: connect-src # connect-src
     be5b62b1-1f10-4c40-bcbb-a1505bd9708f: Sources # Sources
-    c5fd900c-2dd9-41f8-96b3-651e4d6ebb2e: 'Public Schema'
+    c5fd900c-2dd9-41f8-96b3-651e4d6ebb2e: 'Public Schema' # Public Schema
     c81f04dd-a4dc-4e6f-a97b-5ce6004b8cf8: 'Profitlich DEV' # Profitlich DEV
     c192072a-82d1-40a2-9dc0-71723099dcd0: CSP # CSP
     cd1d5e4f-4839-4d0a-b222-592fbe90251b: Sources # Sources
@@ -54,6 +54,10 @@ meta:
     e814380a-f915-44b8-92b3-a767fa94f64a: 'Profitlich DEV' # Profitlich DEV
 plugins:
   async-queue:
+    edition: standard
+    enabled: true
+    schemaVersion: 1.0.0
+  blur-hash:
     edition: standard
     enabled: true
     schemaVersion: 1.0.0

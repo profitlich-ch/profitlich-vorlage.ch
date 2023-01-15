@@ -108,10 +108,10 @@
                 quality: 50
             }) %}
         {% endif %}
-        {% do bild.setTransform({
+        {# {% do bild.setTransform({
             width: 100,
             quality: 30
-        }) %}
+        }) %} #}
         {% if objectFit == false %}
             {% set objectFitVariable = "" %}
         {% else %}
@@ -119,7 +119,7 @@
         {% endif %}
 
         {% set imgAttribute = {
-            src: bild.url,
+            src: blurhash(bild),
             width: bild.width,
             height: bild.height,
             alt: bildbeschreibung,

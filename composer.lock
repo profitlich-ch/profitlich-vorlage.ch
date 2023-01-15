@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "68dd6edd5d94601b964f5cb96013d51c",
+    "content-hash": "5aeaa5356a41c3dae4d46487760176ea",
     "packages": [
         {
             "name": "cebe/markdown",
@@ -1244,6 +1244,70 @@
             "time": "2022-02-28T11:07:21+00:00"
         },
         {
+            "name": "dodecastudio/craft-blurhash",
+            "version": "2.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dodecastudio/craft-blurhash.git",
+                "reference": "c1077b8f958bbaa61b55bcf9988633d92a2c1cb2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dodecastudio/craft-blurhash/zipball/c1077b8f958bbaa61b55bcf9988633d92a2c1cb2",
+                "reference": "c1077b8f958bbaa61b55bcf9988633d92a2c1cb2",
+                "shasum": ""
+            },
+            "require": {
+                "craftcms/cms": "^3.0|^4.0",
+                "kornrunner/blurhash": "^1.2",
+                "php": ">=7.4",
+                "treeware/plant": "^0.1.0"
+            },
+            "type": "craft-plugin",
+            "extra": {
+                "treeware": [],
+                "name": "BlurHash",
+                "handle": "blur-hash",
+                "developer": "Dodeca Studio",
+                "developerUrl": "https://dodeca.studio",
+                "documentationUrl": "https://github.com/dodecastudio/craft-blurhash/blob/main/README.md",
+                "changelogUrl": "https://github.com/dodecastudio/craft-blurhash/blob/main/CHANGELOG.md",
+                "class": "dodecastudio\\blurhash\\BlurHash",
+                "components": {
+                    "services": "dodecastudio\\blurhash\\services\\BlurHashService"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "dodecastudio\\blurhash\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "Dodeca Studio",
+                    "homepage": "https://dodeca.studio"
+                }
+            ],
+            "description": "Render a BlurHash from a given image.",
+            "keywords": [
+                "Craft",
+                "blurhash",
+                "cms",
+                "craft-plugin",
+                "craftcms"
+            ],
+            "support": {
+                "docs": "https://github.com/dodecastudio/craft-blurhash/blob/main/README.md",
+                "issues": "https://github.com/dodecastudio/craft-blurhash/issues",
+                "source": "https://github.com/dodecastudio/craft-blurhash"
+            },
+            "time": "2022-08-18T13:43:11+00:00"
+        },
+        {
             "name": "egulias/email-validator",
             "version": "3.2.1",
             "source": {
@@ -2116,6 +2180,54 @@
                 "source": "https://github.com/justinrainbow/json-schema/tree/5.2.12"
             },
             "time": "2022-04-13T08:02:27+00:00"
+        },
+        {
+            "name": "kornrunner/blurhash",
+            "version": "v1.2.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kornrunner/php-blurhash.git",
+                "reference": "bc8a4596cb0a49874f0158696a382ab3933fefe4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kornrunner/php-blurhash/zipball/bc8a4596cb0a49874f0158696a382ab3933fefe4",
+                "reference": "bc8a4596cb0a49874f0158696a382ab3933fefe4",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.3|^8.0"
+            },
+            "require-dev": {
+                "ext-gd": "*",
+                "ocramius/package-versions": "^1.4|^2.0",
+                "phpstan/phpstan": "^0.12",
+                "phpunit/phpunit": "^9",
+                "vimeo/psalm": "^4.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "kornrunner\\Blurhash\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Boris Momčilović",
+                    "email": "boris.momcilovic@gmail.com"
+                }
+            ],
+            "description": "Pure PHP implementation of Blurhash",
+            "homepage": "https://github.com/kornrunner/php-blurhash",
+            "support": {
+                "issues": "https://github.com/kornrunner/php-blurhash/issues",
+                "source": "https://github.com/kornrunner/php-blurhash.git"
+            },
+            "time": "2022-07-13T19:38:39+00:00"
         },
         {
             "name": "league/oauth2-client",
@@ -5567,6 +5679,47 @@
                 "source": "https://github.com/theiconic/name-parser/tree/v1.2.11"
             },
             "time": "2019-11-14T14:08:48+00:00"
+        },
+        {
+            "name": "treeware/plant",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/TreewareEarth/plant.git",
+                "reference": "bc1ff8eb350ce74b3fe0bd7ab80bc332d1096599"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/TreewareEarth/plant/zipball/bc1ff8eb350ce74b3fe0bd7ab80bc332d1096599",
+                "reference": "bc1ff8eb350ce74b3fe0bd7ab80bc332d1096599",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1.0|^2.0"
+            },
+            "require-dev": {
+                "composer/composer": "^1.0|^2.0",
+                "pestphp/pest": "^1.0",
+                "phpstan/phpstan": "^0.12",
+                "spatie/pest-plugin-snapshots": "^1.0",
+                "symfony/console": "^5.1",
+                "symplify/easy-coding-standard": "^9.2"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "Treeware\\Plant\\Plugin"
+            },
+            "autoload": {
+                "psr-4": {
+                    "Treeware\\Plant\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "support": {
+                "issues": "https://github.com/TreewareEarth/plant/issues",
+                "source": "https://github.com/TreewareEarth/plant/tree/0.1.0"
+            },
+            "time": "2021-05-04T17:17:46+00:00"
         },
         {
             "name": "twig/twig",
