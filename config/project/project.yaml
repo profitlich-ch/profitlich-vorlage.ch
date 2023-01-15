@@ -1,4 +1,4 @@
-dateModified: 1667910818
+dateModified: 1673818117
 email:
   fromEmail: dev@profitlich.ch
   fromName: 'Profitlich DEV'
@@ -11,23 +11,47 @@ fs:
       path: '@assetBasePath'
     type: craft\fs\Local
     url: '@assetBaseUrl'
+graphql:
+  publicToken:
+    enabled: false
+    expiryDate: null
 meta:
   __names__:
-    0a064e6b-5fcd-4a2b-acb7-b46630ad5244: Farbe # Farbe
+    0d60cf4a-644b-4b66-a789-a72a76fcbb30: Sources # Sources
     0e793c4c-3298-4c14-a50e-fe050eeaee18: Startseite # Startseite
-    6b8cfffa-f693-418b-bedc-62d6d047943e: 'Filipa 2' # Filipa 2
+    4f294744-c829-4e97-b06f-e05edae554e3: default-src # default-src
+    8c0b191b-b442-4c62-b0b8-65d641874b85: object-src # object-src
+    9e3d0ad5-ab39-4498-aedc-35f40e8e2db6: font-src # font-src
+    12bb9b63-f9e2-4865-911f-a740f8bf6886: 'Public Schema' # Public Schema
     25d2e79d-a04c-4824-a49f-c3baa6642d8a: Common # Common
-    33e4e2e0-ac84-49fd-ad87-186f3ea0666b: 'Konflikt 2' # Konflikt 2
     44fec1ae-cc09-42b5-b6a8-1c301d066c04: Projektbilder # Projektbilder
+    45d83988-8f59-4247-83a7-f5b9e31a4a4a: frame-src # frame-src
+    49a15a80-d5b7-4d30-bd0f-6119bededa72: style-src # style-src
+    62f62c0d-5d72-4158-ae43-c988a4d4a180: Sources # Sources
+    66d34452-89cc-4bff-b0af-797cf0f491a1: Sources # Sources
+    80a78191-3cdb-44c7-8574-310a6c309b7c: script-src # script-src
+    84b6361a-04e0-474f-b3df-a9a68f5813ec: 'Content Security Policy' # Content Security Policy
+    91c85d55-934f-4e3c-9e85-5d42c7cad42c: Actions # Actions
     396abe4e-d4af-4c68-a2fb-7a3bce13f340: Bildbeschreibung # Bildbeschreibung
-    7689ffd6-2bc9-4ccb-9f0e-705955ea7777: Felix # Felix
+    828b5f0c-e57e-4e01-a088-5ba851cbf76a: 'Public Schema' # Public Schema
+    866ba60a-bf12-4a6e-9fae-59f93e69f4dd: media-src # media-src
     10120e23-43ba-494f-ba6c-7241058df713: Startseite # Startseite
-    12994855-fd13-4d38-8ad9-156bb1960e74: Projektbilder # Projektbilder
-    82491024-fe0a-4331-a632-7b4e1a03d628: 'Konflikt ;)' # Konflikt ;)
+    83248dab-03cb-497d-bc03-612d85e02528: Sources # Sources
+    436053ae-b599-435b-afb6-9ecaea406221: img-src # img-src
+    64605225-a1c9-4fc5-8520-475aac61e7c0: Admin # Admin
+    ba078d2a-f8d8-4aa5-bebf-8265eda2519c: connect-src # connect-src
+    be5b62b1-1f10-4c40-bcbb-a1505bd9708f: Sources # Sources
+    c5fd900c-2dd9-41f8-96b3-651e4d6ebb2e: 'Public Schema'
     c81f04dd-a4dc-4e6f-a97b-5ce6004b8cf8: 'Profitlich DEV' # Profitlich DEV
-    d6ebc0e2-f57d-43d9-b5ad-e53f1b9394a5: Test # Test
+    c192072a-82d1-40a2-9dc0-71723099dcd0: CSP # CSP
+    cd1d5e4f-4839-4d0a-b222-592fbe90251b: Sources # Sources
+    d9dd2aba-1001-4f14-b8a7-ceef123e3743: Projektbilder # Projektbilder
+    df99b8eb-16d6-4e8a-ba0b-e702b5d17a78: 'CSP aktivieren' # CSP aktivieren
+    e094ba03-0546-4c18-815c-86026b73fd4a: form-action # form-action
+    e5d84a5c-c412-463f-96ae-d8172dc9a07a: Sources # Sources
+    e12099b2-b84e-462a-a130-4307bada0915: Sources # Sources
+    e248402f-324f-4fc3-b3db-118021402a18: Sources # Sources
     e814380a-f915-44b8-92b3-a767fa94f64a: 'Profitlich DEV' # Profitlich DEV
-    f622f802-6df6-4748-865c-f528e73121bf: Moritz # Moritz
 plugins:
   async-queue:
     edition: standard
