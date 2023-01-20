@@ -4,7 +4,7 @@ $farbe--raster: rgba(0, 0, 255, 0.5);
 $farbe--raster-mitte: rgba(0, 0, 0, 0.2);
 
 
-@mixin raster($layout, $spalten, $spaltenabstand, $seitenrand-links, $seitenrand-rechts) {
+@mixin dev-raster($layout, $spalten, $spaltenabstand, $seitenrand-links, $seitenrand-rechts) {
 
     $spaltenabstand: groesse($layout, $spaltenabstand);
     $seitenrand-links: groesse($layout, $seitenrand-links);
@@ -54,13 +54,13 @@ $farbe--raster-mitte: rgba(0, 0, 0, 0.2);
 @include mediaquery(smartphone) {
     $layout: smartphone;
 
-    @include raster($layout, map-get($spalten, $layout), map-get($spaltenabstaende, $layout), map-deep-get($seitenraender, $layout, 'left'), map-deep-get($seitenraender, $layout, 'right'));
+    @include dev-raster($layout, map-get($spalten, $layout), map-get($spaltenabstaende, $layout), map-deep-get($seitenraender, $layout, 'left'), map-deep-get($seitenraender, $layout, 'right'));
     
 }
 
 @include mediaquery(desktop) {
     $layout: desktop;
 
-    @include raster($layout, map-get($spalten, $layout), map-get($spaltenabstaende, $layout), map-deep-get($seitenraender, $layout, 'left'), map-deep-get($seitenraender, $layout, 'right'));
+    @include dev-raster($layout, map-get($spalten, $layout), map-get($spaltenabstaende, $layout), map-deep-get($seitenraender, $layout, 'left'), map-deep-get($seitenraender, $layout, 'right'));
 
 }
