@@ -4,13 +4,23 @@
     "maximalbreite": 1699,
 
     "layouts": {
+        "_README": "Breite des layouts in XD",
         "smartphone": 428,
         "tabletHoch": 768,
         "tabletQuer": 1024,
         "desktop": 1440
     },
     
+    "einheiten": {
+        "_README": "Feste Grössen px / mitwachsend vw",
+        "smartphone": "px",
+        "tabletHoch": "vw",
+        "tabletQuer": "vw",
+        "desktop": "vw"
+    },
+    
     "mediaqueries": {
+        "_README": "Viewportbreite in px ab dem das Layout angewendet wird",
         "smartphone": 0,
         "tabletHoch": 768,
         "tabletQuer": 1024,

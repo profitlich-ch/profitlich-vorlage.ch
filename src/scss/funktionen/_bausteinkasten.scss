@@ -1,20 +1,12 @@
-$devBausteinListeBreite: 0;
-@if ($modus == 'dev') {
-    $devBausteinListeBreite: 200px;
-}
-
-
 $breakpoints: (
-    // smartphoneBis:   map-get($layouts, tabletHoch) - 1px,
-    smartphoneBis:   799px,
-    tabletHochAb:    map-get($layouts, tabletHoch),
+    smartphoneBis:   map-get($layouts, tabletHoch) - 1px,
+    tabletHochAb:    map-get($layouts, tabletHoch) + 0px,
     tabletHochBis:   map-get($layouts, tabletQuer) - 1px,
-    tabletQuerAb:    map-get($layouts, tabletQuer),
+    tabletQuerAb:    map-get($layouts, tabletQuer) + 0px,
     tabletQuerBis:   map-get($layouts, desktop) - 1px,
-    // desktopAb:       map-get($layouts, desktop),
-    desktopAb:       800px,
+    desktopAb:       map-get($layouts, desktop) + 0px,
     desktopBis:      map-get($layouts, gross) - 1px,
-    gross:           map-get($layouts, gross),
+    gross:           map-get($layouts, gross) + 0px,
 );
 
 $mediaqueries: (
@@ -105,11 +97,10 @@ $mediaqueries: (
     $korrekturfaktor: 1;
     $breite: map-get($layouts, $layout);
 
-    @if $layout == smartphone or $layout == gross {
+    @if ( map-get($einheiten, $layout) == 'px' ) {
         @return $zahl * 1px;
     } @else {
-        $vw: decimal-round( calc($zahl / $breite) * 100, 2) * 1vw;
-        @return $vw;
+        @return decimal-round( calc($zahl / $breite) * 100, 2) * 1vw;
     }
 
 }
@@ -122,7 +113,7 @@ $mediaqueries: (
 
     $einheit: false;
 
-    @if $layout == smartphone or $layout == gross {
+    @if ( map-get($einheiten, $layout) == 'px' ) {
         $top: $top + px;
         $right: $right + px;
         $bottom: $bottom + px;
