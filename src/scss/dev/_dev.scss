@@ -48,19 +48,9 @@ $farbe--raster-mitte: rgba(0, 0, 0, 0.2);
     }
 }
 
-
-
-
-@include mediaquery(smartphone) {
-    $layout: smartphone;
-
-    @include dev-raster($layout, map-get($spalten, $layout), map-get($spaltenabstaende, $layout), map-deep-get($seitenraender, $layout, 'left'), map-deep-get($seitenraender, $layout, 'right'));
-    
-}
-
-@include mediaquery(desktop) {
-    $layout: desktop;
-
-    @include dev-raster($layout, map-get($spalten, $layout), map-get($spaltenabstaende, $layout), map-deep-get($seitenraender, $layout, 'left'), map-deep-get($seitenraender, $layout, 'right'));
-
+@each $layout, $breite in $layouts {
+    @debug $layout;
+    @include mediaquery($layout) {
+        @include dev-raster($layout, map-get($spalten, $layout), map-get($spaltenabstaende, $layout), map-deep-get($seitenraender, $layout, 'left'), map-deep-get($seitenraender, $layout, 'right'));
+    }
 }
