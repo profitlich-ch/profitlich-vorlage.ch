@@ -1,10 +1,10 @@
 {
+    "_README": "layouts – Breite des layouts in XD / einheiten – Feste Grössen px / mitwachsend vw / mediaqueries – Viewportbreite in px ab dem das Layout angewendet wird",
     "modus": "dev",
 
     "maximalbreite": 1699,
 
     "layouts": {
-        "_README": "Breite des layouts in XD",
         "smartphone": 428,
         "tabletHoch": 768,
         "tabletQuer": 1024,
@@ -12,7 +12,6 @@
     },
     
     "einheiten": {
-        "_README": "Feste Grössen px / mitwachsend vw",
         "smartphone": "px",
         "tabletHoch": "vw",
         "tabletQuer": "vw",
@@ -20,7 +19,6 @@
     },
     
     "mediaqueries": {
-        "_README": "Viewportbreite in px ab dem das Layout angewendet wird",
         "smartphone": 0,
         "tabletHoch": 768,
         "tabletQuer": 1024,
@@ -44,6 +42,18 @@
             "bottom": 0,
             "left": 40
         },
+        "tabletHoch": {
+            "top": 90,
+            "right": 40,
+            "bottom": 0,
+            "left": 40
+        },
+        "tabletQuer": {
+            "top": 90,
+            "right": 40,
+            "bottom": 0,
+            "left": 40
+        },
         "desktop": {
             "top": 0,
             "right": 310,
@@ -54,6 +64,8 @@
 
     "spalten": {
         "smartphone": 5,
+        "tabletHoch": 5,
+        "tabletQuer": 5,
         "desktop": 10
     },
 
