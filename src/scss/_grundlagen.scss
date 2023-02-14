@@ -11,7 +11,7 @@ body {
     background-color: map-get($farben, hintergrund);
     margin: 0 auto;
 
-    min-height: 100vh;
+    min-height: calc(var(--vh, 1vh) * 100);
     overflow-x: hidden;
 
     // Alle Unterstreichungen bei Unterlängen unterbrechen
