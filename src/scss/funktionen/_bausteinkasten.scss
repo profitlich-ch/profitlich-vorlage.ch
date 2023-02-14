@@ -40,7 +40,7 @@ $mediaqueries: (
 
 
 // Schriftart
-@mixin schriftart($layout, $schriftgroesse, $zeilenabstand, $fette: false) {
+@mixin schriftart($layout, $schriftgroesse, $zeilenabstand, $fette:'false') {
 
     font-size: groesse($layout, $schriftgroesse);
     line-height: groesse($layout, $zeilenabstand);
