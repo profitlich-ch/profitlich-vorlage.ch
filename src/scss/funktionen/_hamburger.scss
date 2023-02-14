@@ -129,7 +129,7 @@
         }
     }
 
-    &.aktiv {
+    body[data-menue-aktiv='true'] & {
         .hamburger-inner {
             transform: rotate(45deg);
             transition-delay: $hamburger-kompressionsgeschwindigkeit;
@@ -150,5 +150,4 @@
             }
         }
     }
-
 }

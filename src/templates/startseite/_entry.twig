@@ -1,15 +1,70 @@
 {% import "macros/bild/_bild.twig" as macroBild %}
 {% extends "_layout.twig" %}
 
-{% block content %}
 
-{# {% for bild in entry.projektbilder.all() %}
-    <div class="projekt__bild">
-        {{ macroBild.bild(bild, 'bild', 'Text der bildbeschreibung', '4:3') }}
-    </div>
-{% endfor %} #}
+{% block seitentitel %}
+	Atartseite
+{% endblock %}
 {% block metaDescription %}
 	<meta name="description" content="{{ entry.einstellungenMetaDescription }}">
 {% endblock %}
 
+{% block content %}
+	<button class="menue__hamburger" id="hamburger" type="button" aria-label="Menüknopf">
+		<span class="hamburger-box">
+			<span class="hamburger-inner"></span>
+		</span>
+	</button>
+	<nav class="menue" id="menue">
+		<div class="menue__container-links">
+			<div class="menue__links">
+				<a href="/atelier" class="menue__link{% if craft.app.request.getSegment(1) == 'atelier' %} menue__link--aktiv{% endif %}">Atelier</a>
+				<a href="/bauen" class="menue__link{% if craft.app.request.getSegment(1) == 'bauen' %} menue__link--aktiv{% endif %}">Bauen</a>
+				<a href="/einrichten" class="menue__link{% if craft.app.request.getSegment(1) == 'einrichten' %} menue__link--aktiv{% endif %}">Einrichten</a>
+				<a href="/angebote" class="menue__link{% if craft.app.request.getSegment(1) == 'angebote' %} menue__link--aktiv{% endif %}">Angebote</a>
+				<a href="/kontakt" class="menue__link{% if craft.app.request.getSegment(1) == 'kontakt' %} menue__link--aktiv{% endif %}">Kontakt</a>
+			</div>
+		</div>
+	</nav>
+
+	{% css %}
+	.menue {
+        @include abstand($layout, padding, alle, 20, 40, 50, 40);
+        background-color: map-get($farben, hellbraun);
+        display: none;
+        height: calc(var(--vh, 1vh) * 100);
+        justify-content: space-between;
+        left: 0;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+    }
+
+    .body[data-menue-aktiv="true"] .menue {
+        display: flex;
+        flex-direction: column;
+    }
+		
+    .menue__hamburger {
+        @include abstand($layout, padding, alle, 20, 40, 0, 40);
+        $hamburger-breite: 36px;
+        $hamburger-hoehe: 29px;
+        $hamburger-strichstaerke: 5px;
+        $hamburger-farbe: black;
+        $hamburger-farbe-aktiv: black;
+        @include hamburger($hamburger-breite, $hamburger-hoehe, $hamburger-strichstaerke, $hamburger-farbe, $hamburger-farbe-aktiv);
+        background-color: transparent;
+        position: fixed;
+        right: 0;
+        top: 0;
+        z-index: 1001;
+    }
+
+    hamburger-box {
+        height: 35px;
+        right: 0;
+        width: 37px;
+    }
+	{% endcss %}
 {% endblock %}
