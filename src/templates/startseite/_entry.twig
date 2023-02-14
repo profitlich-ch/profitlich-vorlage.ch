@@ -8,5 +8,8 @@
         {{ macroBild.bild(bild, 'bild', 'Text der bildbeschreibung', '4:3') }}
     </div>
 {% endfor %} #}
+{% block metaDescription %}
+	<meta name="description" content="{{ entry.einstellungenMetaDescription }}">
+{% endblock %}
 
 {% endblock %}

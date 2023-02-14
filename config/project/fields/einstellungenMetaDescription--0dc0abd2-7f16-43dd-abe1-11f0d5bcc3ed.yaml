@@ -1,9 +1,9 @@
-columnSuffix: dukgymih
+columnSuffix: hzxdxtwl
 contentColumnType: text
-fieldGroup: 25d2e79d-a04c-4824-a49f-c3baa6642d8a # Common
-handle: bildbeschreibung
+fieldGroup: 025b1af6-65d4-4fce-9a68-7c6b8d558758 # Einstellungen
+handle: einstellungenMetaDescription
 instructions: null
-name: Bildbeschreibung
+name: 'Meta Description'
 searchable: false
 settings:
   byteLimit: null
