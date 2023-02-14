@@ -8,6 +8,7 @@ html {
 }
 
 body {
+
     background-color: map-get($farben, hintergrund);
     margin: 0 auto;
 
@@ -21,16 +22,22 @@ body {
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased; 
 
-    // Transition erst nach dem Laden der Seite anwenden
-    &.preload * {
-        // animation-duration: 0s !important;
-        transition: transform 0s !important;
+    // font-family: 'AkzidenzGrotesk', sans-serif;
+
+    &[data-menue-aktiv="true"] {
+        position: fixed;
+        right: 0;
+        top: 0;
+        width: 100%;
     }
 
-    font-family: 'Source Serif Pro', serif;
+}
+
+#seite {
 
     // body Hintergrundfarbe als Pseudoelement, damit mix-blend-mode mit der Hintergrundfarbe funktioniert
     &:after {
+
         background-color: map-get($farben, hintergrund);
         content: "";
         height: 100%;
@@ -39,7 +46,9 @@ body {
         top: 0;
         width: 100%;
         z-index: -100;
+        
     }
+
 }
 
 p,
@@ -68,6 +77,13 @@ li {
     }
 }
 
+sup {
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+    top: -0.5em;
+}
+
 
 // Damit keine SVG's im Smartphone abgeschnitten werden. 
 svg {
@@ -82,14 +98,57 @@ svg {
 }
 // Mit der Tastatur fokussiert
 *:focus-visible { 
-    outline: 2px solid map-get($farben, braun-1);
+    outline: 2px solid black;
+ }
+
+// padding-bottom Trick für Bilder
+.bild-verhaeltnis {
+    
+    position: relative;
+    display: block;
+    height: 0;
+    width: 100%;
+
+    &.lazyloaded {
+
+        background-color: white;
+        transition: background-color 500ms ease-in;
+
+    }
+
+}
+
+.bild-verhaeltnis img,
+.bild-verhaeltnis picture {
+    
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+
 }
 
 // Alt Text unsichtbar machen, aber für Screenreader lesbar halten
 // Bilder als Block statt als Inline anzeigen. Das löst das Problem von unerwünschten Pixeln unterhalb des Bildes.
 img {
+
     color: transparent;
     display: block;
     line-height: 1em;
     text-indent: -9999px;
+
+}
+
+// Layzload Bilder erst nach dem Laden einblenden
+.lazyload,
+.lazyloading {
+	opacity: 0;
+}
+
+.lazyloaded {
+	opacity: 1;
+    /*  transition is applied to lazyloaded, not to lazyload */
+	transition: opacity 500ms ease-in;
 }
