@@ -129,8 +129,7 @@ package-lock.json
 
 # CRAFT STORAGE
 /craft/storage/*
-/storage/*
-
+/storage/*/*
 # ASSETS
 /public/assets/
 /web/assets/
