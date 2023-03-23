@@ -99,35 +99,6 @@ svg {
 // Mit der Tastatur fokussiert
 *:focus-visible { 
     outline: 2px solid black;
- }
-
-// padding-bottom Trick für Bilder
-.bild-verhaeltnis {
-    
-    position: relative;
-    display: block;
-    height: 0;
-    width: 100%;
-
-    &.lazyloaded {
-
-        background-color: white;
-        transition: background-color 500ms ease-in;
-
-    }
-
-}
-
-.bild-verhaeltnis img,
-.bild-verhaeltnis picture {
-    
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: block;
-
 }
 
 // Alt Text unsichtbar machen, aber für Screenreader lesbar halten
@@ -139,16 +110,4 @@ img {
     line-height: 1em;
     text-indent: -9999px;
 
-}
-
-// Layzload Bilder erst nach dem Laden einblenden
-.lazyload,
-.lazyloading {
-	opacity: 0;
-}
-
-.lazyloaded {
-	opacity: 1;
-    /*  transition is applied to lazyloaded, not to lazyload */
-	transition: opacity 500ms ease-in;
 }
