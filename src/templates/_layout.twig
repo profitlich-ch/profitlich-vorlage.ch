@@ -71,6 +71,23 @@
 			document.querySelector('body').classList.remove('no-js');
 		</script>
 
+        <button class="menue__hamburger" id="hamburger" type="button" aria-label="Menüknopf">
+            <span class="hamburger-box">
+                <span class="hamburger-inner"></span>
+            </span>
+        </button>
+        <nav class="menue" id="menue">
+            <div class="menue__container-links">
+                <div class="menue__links">
+                    <a href="/atelier" class="menue__link{% if craft.app.request.getSegment(1) == 'atelier' %} menue__link--aktiv{% endif %}">Atelier</a>
+                    <a href="/bauen" class="menue__link{% if craft.app.request.getSegment(1) == 'bauen' %} menue__link--aktiv{% endif %}">Bauen</a>
+                    <a href="/einrichten" class="menue__link{% if craft.app.request.getSegment(1) == 'einrichten' %} menue__link--aktiv{% endif %}">Einrichten</a>
+                    <a href="/angebote" class="menue__link{% if craft.app.request.getSegment(1) == 'angebote' %} menue__link--aktiv{% endif %}">Angebote</a>
+                    <a href="/kontakt" class="menue__link{% if craft.app.request.getSegment(1) == 'kontakt' %} menue__link--aktiv{% endif %}">Kontakt</a>
+                </div>
+            </div>
+        </nav>
+
         <div id="seite">
             <main class="main"> {% block content %}{% endblock %}</main>
         </div>
