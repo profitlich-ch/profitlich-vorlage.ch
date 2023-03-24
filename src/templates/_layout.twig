@@ -37,7 +37,8 @@
 			.no-js {
 				visibility: visible;
 			}
-			{# Transition erst nach dem Laden der Seite anwenden #}
+			{# Transition transform erst nach dem Laden der Seite anwenden #}
+			{# Ohne würde das Menü beim Laden der Seite fahren #}
 			body.preload * {
 				transition: transform 0s !important;
 			}
@@ -79,9 +80,24 @@
             <div class="menue__link">Link 3</div>
         </nav>
 
-        <div id="seite">
-            <main class="main"> {% block content %}{% endblock %}</main>
-        </div>
+        <button type="button" id="hamburger" style="position: fixed; z-index: 100; left: 20px; top: 20px">=</button>
+
+        <nav id="menue">
+            <div class="menue__link">Link 1</div>
+            <div class="menue__link">Link 2</div>
+            <div class="menue__link">Link 3</div>
+        </nav>
+
+        <button class="menue__hamburger" id="hamburger" type="button" aria-label="Menüknopf">
+            <span class="hamburger-box">
+                <span class="hamburger-inner"></span>
+            </span>
+        </button>
+        
+        <nav class="menue" id="menue">
+        </nav>
+
+        <main class="main"> {% block content %}{% endblock %}</main>
 
 		<script>
 			{# FOUC #}

@@ -31,14 +31,25 @@ fieldLayouts:
             warning: null
             width: 100
           -
+            attribute: alt
+            class: null
+            cols: null
+            disabled: false
             elementCondition: null
             fieldUid: 396abe4e-d4af-4c68-a2fb-7a3bce13f340 # Bildbeschreibung
             instructions: null
             label: null
-            required: true
+            name: null
+            orientation: null
+            placeholder: null
+            readonly: false
+            requirable: true
+            required: false
+            rows: null
             tip: null
-            type: craft\fieldlayoutelements\CustomField
-            uid: e1f9bdf7-3e08-4419-8e6f-4bb6c8eebfdd
+            title: null
+            type: craft\fieldlayoutelements\assets\AltField
+            uid: cfddc316-8fee-4796-8f5c-ddfc322ae723
             userCondition: null
             warning: null
             width: 100
