@@ -62,11 +62,11 @@ const dateien = {
         dest: 'src/js',
     },
     scss: {
-        src: (modus == 'dev') ? ['src/scss/**/*.scss', 'src/macros/**/*.scss'] : ['src/scss/**/*.scss', 'src/macros/**/*.scss', '!src/scss/dev/**/*.scss'],
+        src: (modus == 'dev') ? ['src/scss/**/*.scss', 'src/macros-funktionen/**/*.scss'] : ['src/scss/**/*.scss', 'src/macros-funktionen/**/*.scss', '!src/scss/dev/**/*.scss'],
         dest: 'web/css',
     },
     jsDefer: {
-        src: (modus == 'dev') ? ['src/js/defer/**/*.js', 'src/macros/**/*.js', 'src/bausteine/**/_*.js'] : ['src/js/defer/**/*.js', 'src/macros/**/*.js', 'src/bausteine/**/_*.js', '!src/js/defer/dev/**/*.*'],
+        src: (modus == 'dev') ? ['src/js/defer/**/*.js', 'src/macros-funktionen/**/*.js', 'src/bausteine/**/_*.js'] : ['src/js/defer/**/*.js', 'src/macros-funktionen/**/*.js', 'src/bausteine/**/_*.js', '!src/js/defer/dev/**/*.*'],
         dest: 'web/js',
     },
     
@@ -96,9 +96,9 @@ const dateien = {
         src: 'src/bausteine/**/_*.svg',
         dest: 'web/sprites',
     },
-    macros: {
-        src: 'src/macros/**/*.twig',
-        dest: 'templates/macros',
+    macrosFunktionen: {
+        src: 'src/macros-funktionen/**/*.twig',
+        dest: 'templates/macros-funktionen',
     },
     medien: {
         src: 'src/medien/**/*.*',
@@ -336,11 +336,11 @@ function spritesTask() {
 }
 
 // Macros kopieren
-function macrosTask() {
-    return src(dateien.macros.src)
+function macrosFunktionenTask() {
+    return src(dateien.macrosFunktionen.src)
 
     .pipe(dest
-        (dateien.macros.dest)
+        (dateien.macrosFunktionen.dest)
     );
 }
 
@@ -507,7 +507,7 @@ const watchTask = gulp.watch(
         configToScssTask,
         configToJsTask,
         gulp.parallel(
-            templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosTask, scssTask, jsDeferTask, jsInlineTask, medienTask, mockupTask, fontsTask, spritesTask, staticAssetsVersionTask
+            templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosFunktionenTask, scssTask, jsDeferTask, jsInlineTask, medienTask, mockupTask, fontsTask, spritesTask, staticAssetsVersionTask
         ),
         injizierenTask,
         configLoeschenTask,
@@ -523,7 +523,7 @@ task('build',
         configToScssTask,
         configToJsTask,
         parallel(
-            templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosTask, scssTask, jsDeferTask, jsInlineTask, medienTask, mockupTask, fontsTask, spritesTask, staticAssetsVersionTask
+            templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosFunktionenTask, scssTask, jsDeferTask, jsInlineTask, medienTask, mockupTask, fontsTask, spritesTask, staticAssetsVersionTask
         ),
         injizierenTask,
         configLoeschenTask,
