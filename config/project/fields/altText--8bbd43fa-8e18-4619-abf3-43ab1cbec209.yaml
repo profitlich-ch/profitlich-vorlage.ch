@@ -1,0 +1,19 @@
+columnSuffix: svlsrqsa
+contentColumnType: text
+fieldGroup: 025b1af6-65d4-4fce-9a68-7c6b8d558758 # Einstellungen
+handle: altText
+instructions: 'Die Beschreibung wird Suchmaschinen und Sehbehinderten als alternativer Text angezeigt. Schreibe dicht, nicht lang. Es ist nicht nötig zu schreiben, dass es ein Bild ist. Der Text wird nicht auf der Website angezeigt.'
+name: 'Alt Text (Bildbeschreibung)'
+searchable: false
+settings:
+  byteLimit: null
+  charLimit: null
+  code: false
+  columnType: null
+  initialRows: 4
+  multiline: false
+  placeholder: null
+  uiMode: normal
+translationKeyFormat: null
+translationMethod: none
+type: craft\fields\PlainText
