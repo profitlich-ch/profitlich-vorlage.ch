@@ -2,7 +2,7 @@ columnSuffix: hzxdxtwl
 contentColumnType: text
 fieldGroup: 025b1af6-65d4-4fce-9a68-7c6b8d558758 # Einstellungen
 handle: einstellungenMetaDescription
-instructions: null
+instructions: 'Ein kurzer Text, der in Suchmaschinen unter dem Seitennamen steht.'
 name: 'Meta Description'
 searchable: false
 settings:
