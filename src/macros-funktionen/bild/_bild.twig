@@ -70,7 +70,7 @@
     hintergrundfarbe == 'blur' ? 'background-image: url("' ~ blurhash(bild) ~ '")',
     hintergrundfarbe == 'blur' ? 'background-size: 100% 100%',
     hintergrundfarbe != false and hintergrundfarbe != 'blur' ? 'background-color:' ~ hintergrundfarbe,
-    objectFit ? "height: 100%": "padding-bottom:" ~ paddingBottom,
+    objectFit ? "height: 100%" : "padding-bottom:" ~ paddingBottom,
 ] %}
 
 <div class="{{ class ~ '-bild' ~ ' macro-bild' }}" style="{{ style | join(';') }}">
@@ -118,11 +118,7 @@
             width: 100,
             quality: 30
         }) %}
-        {% if objectFit == false %}
-            {% set objectFitVariable = "" %}
-        {% else %}
-            {% set objectFitVariable = "object-fit:" ~ objectFit ~ ";" %}
-        {% endif %}
+        {% set objectFitVariable = objectFit ? "object-fit:" ~ objectFit ~ ";" : "" %}
 
         {% set imgAttribute = {
             src: bild.url,
