@@ -1,4 +1,4 @@
-dateModified: 1679735307
+dateModified: 1679736475
 email:
   fromEmail: dev@profitlich.ch
   fromName: 'Profitlich DEV'
@@ -17,7 +17,7 @@ meta:
     0d60cf4a-644b-4b66-a789-a72a76fcbb30: Sources # Sources
     0dc0abd2-7f16-43dd-abe1-11f0d5bcc3ed: 'Meta Description' # Meta Description
     0e793c4c-3298-4c14-a50e-fe050eeaee18: Startseite # Startseite
-    8bbd43fa-8e18-4619-abf3-43ab1cbec209: 'Alt Text (Bildbeschreibung)' # Alternativer Text
+    8bbd43fa-8e18-4619-abf3-43ab1cbec209: 'Alt Text (Bildbeschreibung)' # Alt Text (Bildbeschreibung)
     025b1af6-65d4-4fce-9a68-7c6b8d558758: Einstellungen # Einstellungen
     25d2e79d-a04c-4824-a49f-c3baa6642d8a: Common # Common
     44fec1ae-cc09-42b5-b6a8-1c301d066c04: Projektbilder # Projektbilder
