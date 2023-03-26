@@ -1,6 +1,7 @@
 const body = document.body;
 var isDevToolsGeladen = false;
 var isDevToolsAnzeigen = false;
+var devDiv;
 
 if(docCookies.getItem('isDevTools')) {
     var isDevToolsCookie = docCookies.getItem('isDevTools');
@@ -10,7 +11,7 @@ if(docCookies.getItem('isDevTools')) {
 }
 
 function devToolsInitialisieren() {
-    const devDiv = document.createElement('div');
+    devDiv = document.createElement('div');
         devDiv.classList.add('dev');
         devDiv.setAttribute('id', 'dev');
     document.body.prepend(devDiv);
@@ -27,6 +28,7 @@ function devToolsInitialisieren() {
     isDevToolsGeladen = true;
 
     devToolsUmschalten(true);
+    devAnzeigeAktualisieren();
 }
 
 function devAnzeigeAktualisieren() {
