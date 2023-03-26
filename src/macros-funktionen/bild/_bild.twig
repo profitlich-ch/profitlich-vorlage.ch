@@ -76,25 +76,24 @@
 <div class="{{ class ~ '-bild' ~ ' macro-bild' }}" style="{{ style | join(';') }}">
     <picture class="macro-bild__picture" data-hoehe="{{ hoehe }}">
 
-        {# Sources für objectfit: cover und landscape #}
-        {% if objectFit == 'cover' and seitenverhaeltnisArray[0] > seitenverhaeltnisArray[1] %}
+        {% if objectFit == 'cover' %}
+            {# Sources für objectfit: cover und landscape #}
             {% do bild.setTransform({
                 quality: 75
             }) %}
             {{ tag('source', {
                 format: 'webp',
                 type: 'image/webp',
-                media: 'orientation: landscape',
+                media: '(orientation: landscape)',
                 srcset: bild.getSrcset(srcSet)
             }) }}
             {{ tag('source', {
                 format: 'jpg',
                 type: 'image/jpeg',
-                media: 'orientation: landscape',
+                media: '(orientation: landscape)',
                 srcset: bild.getSrcset(srcSet)
             }) }}
-        {# Sources für objectfit: cover und portrait #}
-        {% elseif objectFit == 'cover' and seitenverhaeltnisArray[0] < seitenverhaeltnisArray[1] %}
+            {# Sources für objectfit: cover und portrait #}
             {% do bild.setTransform({
                 width: 100,
                 height: 150,
@@ -104,13 +103,13 @@
             {{ tag('source', {
                 format: 'webp',
                 type: 'image/webp',
-                media: 'orientation: portrait',
+                media: '(orientation: portrait)',
                 srcset: bild.getSrcset(srcSet)
             }) }}
             {{ tag('source', {
                 format: 'jpg',
                 type: 'image/jpeg',
-                media: 'orientation: portrait',
+                media: '(orientation: portrait)',
                 srcset: bild.getSrcset(srcSet)
             }) }}
         {# Sources für Zuschneidung #}
@@ -149,22 +148,8 @@
         {% endif %}
 
         {# Image Tag vorbereiten #}
-        {# Sources für objectfit: cover und landscape #}
-        {% if objectFit == 'cover' and seitenverhaeltnisArray[0] > seitenverhaeltnisArray[1] %}
-            {% do bild.setTransform({
-                width: 400,
-                quality: 75
-            }) %}
-        {# Sources für objectfit: cover und portrait #}
-        {% elseif objectFit == 'cover' and seitenverhaeltnisArray[0] < seitenverhaeltnisArray[1] %}
-            {% do bild.setTransform({
-                width: 400,
-                height: 600,
-                mode: 'crop',
-                quality: 75
-            }) %}
         {# Sources für Zuschneidung #}
-        {% elseif seitenverhaeltnis %}
+        {% if seitenverhaeltnis %}
             {% do bild.setTransform({
                 width: 400,
                 height: (400 * hoehe) | round(0),
