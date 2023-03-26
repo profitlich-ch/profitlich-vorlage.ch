@@ -11,6 +11,13 @@
 
 {% block content %}
     {% set bild = entry.bild.one() %}
-    {{ macroBild.bild(bild, 'baute__bild', bild.alt, '1:1', 'blur') }}
+    <style> 
+        .test__bild {
+            height: 100vh;
+        }
+    </style>
+    <div class="test__bild">
+        {{ macroBild.bild(bild, 'test__bild', bild.alt, '1:1', 'blur', 'cover') }}
+    </div>
 
 {% endblock %}
