@@ -2,6 +2,7 @@
     "name": "domain.tld",
     "version": "1.0.0",
     "description": "",
+    "type": "module",
     "main": "gulpfile.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,13 +11,14 @@
     "license": "ISC",
     "devDependencies": {
         "@sayhellogmbh/gulp-sass-import-json": "github:SayHelloGmbH/gulp-sass-import-json",
-        "autoprefixer": "^10.4.13",
-        "browser-sync": "^2.27.11",
+        "autoprefixer": "^10.4.14",
+        "browser-sync": "^2.29.1",
         "del": "^7.0.0",
         "fancy-log": "^2.0.0",
         "gulp": "^4.0.2",
         "gulp-clean-css": "^4.3.0",
         "gulp-concat": "^2.6.1",
+        "gulp-dotenv-to-json": "^1.1.2",
         "gulp-flatten": "^0.4.0",
         "gulp-if": "^3.0.0",
         "gulp-inject-css": "^3.0.0",
@@ -27,17 +29,12 @@
         "gulp-sass": "^5.1.0",
         "gulp-sass-glob": "^1.1.0",
         "gulp-sourcemaps": "^3.0.0",
-        "gulp-svg-sprite": "^2.0.1",
+        "gulp-svg-sprite": "^2.0.3",
         "gulp-svgo": "^2.2.1",
         "gulp-terser": "^2.1.0",
-        "postcss": "^8.4.20",
+        "postcss": "^8.4.21",
         "postcss-easing-gradients": "github:arturparkhisenko/postcss-easing-gradients#change-postcss-to-v8",
-        "sass": "^1.57.1",
+        "sass": "^1.60.0",
         "vinyl-ftp": "^0.6.1"
-    },
-    "dependencies": {
-        "jquery": "^3.6.3",
-        "lazysizes": "^5.3.2",
-        "svgo": "^3.0.2"
     }
 }
