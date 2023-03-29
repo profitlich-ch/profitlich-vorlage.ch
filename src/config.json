@@ -1,6 +1,5 @@
 {
     "_README": "layouts – Breite des layouts in XD / einheiten – Feste Grössen px / mitwachsend vw / mediaqueries – Viewportbreite in px ab dem das Layout angewendet wird",
-    "modus": "dev",
 
     "maximalbreite": 1699,
 

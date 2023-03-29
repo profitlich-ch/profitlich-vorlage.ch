@@ -1,22 +1,54 @@
 var menueAktiv = false;
-var hamburger = document.getElementById('hamburger');
+var seite = document.getElementById('seite');
+var hamburger = document.getElementById('hamburger')
+
+// Alle Elemente finden, die tatsächlich sticky sind
+var stickyElemente = [];
+function stickyElementeFinden() {
+    var stickyElementeAlle = document.querySelectorAll('[data-sticky]');
+    if (stickyElementeAlle) {
+        for (let i = 0; i < stickyElementeAlle.length; i++) {
+            if (window.getComputedStyle(stickyElementeAlle[i]).position == 'sticky') {
+                stickyElemente.push(stickyElementeAlle[i]);
+            }
+        }
+    }
+}
+stickyElementeFinden();
 
 var y = 0;
+const stickyElementeArray = [];
+const nebeninformationDesktop = document.getElementById('projekt__nebeninformation--desktop');
 function menueToggle() {
-    if (menueAktiv == true) {
-        // Prüfen, ob Variable existiert
-        menueAktiv = false;
-        document.body.removeEventListener('click', menueBodyClick);
-        document.body.setAttribute('data-menue-aktiv', menueAktiv);
-        menueSeiteHover(false);
-        hamburger.style.marginRight = '';
-        document.body.style.paddingRight = '';
-        document.body.style.top = '';
-        window.scrollTo(0, y);
-    } else {
+    if (menueAktiv == false) {
+        // Scrolltrigger anhalten, bevor die Seite fixiert wird
+        ScrollTrigger.getAll().forEach(element => element.disable(false) );
+        if (typeof scrolltrigger != 'undefined') {
+            scrolltrigger.disable(false);
+        }
+        if (typeof stickyElemente != 'undefined') {
+            for (let i = 0; i < stickyElemente.length; i++) {
+                // Bestehende top Position in Array speichern, um sie beim Deaktivieren des Menüs wiederherzustellen
+                var stickyElementStyles = window.getComputedStyle(stickyElemente[i]);
+                stickyElementeArray[i] = [];
+                stickyElementeArray[i].top = stickyElementStyles.top;
+                
+                // Element statt sticky neu fixed positionieren
+                // Dafür muss der top-Wert auf den tatsächlichen Abstand zum viewport gesetzt werden
+                var stickyElementTop = stickyElemente[i].getBoundingClientRect().top;
+                var stickyElementWidth = stickyElemente[i].getBoundingClientRect().width;
+                stickyElemente[i].style.top = stickyElementTop + 'px';
+                stickyElemente[i].style.width = stickyElementWidth + 'px';
+                stickyElemente[i].style.position = 'fixed';
+            }
+        }
         menueAktiv = true;
         // Klick ausserhalb des Menüs
         document.body.addEventListener('click', menueBodyClick);
+        // Hover ausserhalb des Menüs
+        seite.addEventListener('mouseenter', menueSeiteHover);
+        seite.addEventListener('mouseleave', menueSeiteHover);
+        
         scrollbar = window.innerWidth - document.documentElement.clientWidth;
         y = window.scrollY;
         document.body.setAttribute('data-menue-aktiv', menueAktiv);
@@ -24,6 +56,25 @@ function menueToggle() {
         hamburger.style.marginRight = marginOriginal + scrollbar + 'px';
         document.body.style.paddingRight = scrollbar + 'px';
         document.body.style.top = -y + 'px';
+    } else {
+        if (typeof stickyElemente != 'undefined') {
+            for (let i = 0; i < stickyElemente.length; i++) {
+                stickyElemente[i].style.top = stickyElementeArray[i].top;
+                stickyElemente[i].style.position = 'sticky';
+            }
+        }
+        menueAktiv = false;
+        document.body.removeEventListener('click', menueBodyClick);
+        seite.removeEventListener('mouseenter', menueSeiteHover);
+        seite.removeEventListener('mouseleave', menueSeiteHover);
+        document.body.setAttribute('data-menue-aktiv', menueAktiv);
+        menueSeiteHover(false);
+        hamburger.style.marginRight = '';
+        document.body.style.paddingRight = '';
+        document.body.style.top = '';
+        window.scrollTo(0, y);
+        // Scrolltrigger erst wieder aktivieren, nachdem die Seite wieder unfixiert und an der richtigen Scrollposition ist
+        ScrollTrigger.getAll().forEach(element => element.enable(false) );
     }
 }
 
