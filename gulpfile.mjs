@@ -3,7 +3,7 @@
 // dev oder staging oder production
 // staging lädt auf den Stagingserver
 // production lädt auf den Produtivserver, lässt alle dev Inhalte weg (JS, CSS) und komprimiert JS
-const modus = 'dev';
+const modus = 'staging';
 
 const { src, dest, task, watch, series, parallel } = gulp;
 
@@ -14,6 +14,8 @@ import browsersync from 'browser-sync';
 import cleanCSS from 'gulp-clean-css';
 import concat from 'gulp-concat';
 import dartSass from 'sass';
+import dotenv from 'gulp-dotenv';
+import fs from 'fs';
 import ftp from 'vinyl-ftp';
 import gulp from 'gulp';
 import gulpif from 'gulp-if';
@@ -25,6 +27,7 @@ import log from 'fancy-log';
 import path from 'path';
 import postcss from 'gulp-postcss';
 import postcssEasingGradients from 'postcss-easing-gradients';
+import rename from 'gulp-rename';
 import replace from 'gulp-replace';
 import sassGlob from 'gulp-sass-glob';
 import sourcemaps from 'gulp-sourcemaps';
@@ -33,20 +36,6 @@ import svgSprite from 'gulp-svg-sprite';
 import terser from 'gulp-terser';
 
 const sass = gulpSass(dartSass);
-
-var ftpVerbindungStaging = ftp.create({
-    host: "",
-    user: "",
-    pass: "",
-    parallel: 1
-});
-
-var ftpVerbindungProduction = ftp.create({
-    host: "",
-    user: "",
-    pass: "",
-    parallel: 1
-});
 
 // Dateipfade
 const dateien = { 
@@ -132,6 +121,17 @@ const dateien = {
     },
 }
 
+// Variable für Import aus Dotenv
+// var dotenv;
+
+// dotenv in JSON umwandeln
+function dotenvToJsonTask() {
+    return src('./.env')
+    .pipe(dotenv())
+    .pipe(rename('env.json'))
+    .pipe(gulp.dest('.'));
+}
+
 // Variablen aus config.json in SCSS umwandeln
 function configToScssTask() {
     return src(dateien.configToScss.src)
@@ -156,9 +156,9 @@ function configToJsTask() {
     )   
 }
 
-// Variablendatei config.scss und .js löschen
+// Variablendateien config.scss und .js löschen, env.json löschen
 function configLoeschenTask() {
-    return deleteAsync(['src/scss/config.scss', 'src/js/config.js']);
+    return deleteAsync(['src/scss/config.scss', 'src/js/config.js', 'env.json']);
 }
 
 // SCSS kompilieren
@@ -386,30 +386,23 @@ function fontsTask() {
 // https://medium.com/sliit-foss/automate-a-ftp-upload-with-gulp-js-4fde363cf9e8
 // https://www.riklewis.com/2019/09/saving-time-with-ftp-in-gulp/
 function uploadTemplatesTask() {
-    
-    if (modus =='staging') {
+    if (modus =='staging' || modus =='production') {
+        var env = JSON.parse(fs.readFileSync("env.json"));
+        var ftpVerbindung = ftp.create({
+            host: "profitlich-vorlage.ch",
+            user: "profitlich-vorlage.ch",
+            pass: env.FTP_PASSWORD,
+            parallel: 1
+        });
         return src( dateien.uploadTemplates.src, {
             buffer: false,
             dot: true
         } )
     
-        .pipe(ftpVerbindungStaging.newer
-            (dateien.uploadTemplates.destStaging)
-        ) 
-        .pipe(ftpVerbindungStaging.dest
-            (dateien.uploadTemplates.destStaging)
-        )
-    }
-    if (modus =='production') {
-        return src( dateien.uploadTemplates.src, {
-            buffer: false,
-            dot: true
-        } )
-    
-        .pipe(ftpVerbindungProduction.newer
+        .pipe(ftpVerbindung.newer
             (dateien.uploadTemplates.destProduction)
         ) 
-        .pipe(ftpVerbindungProduction.dest
+        .pipe(ftpVerbindung.dest
             (dateien.uploadTemplates.destProduction)
         )
     } else {
@@ -417,30 +410,23 @@ function uploadTemplatesTask() {
     }
 };
 function uploadWebTask() {
-    
-    if (modus =='staging') {
+    if (modus =='staging' || modus =='production') {
+        var env = JSON.parse(fs.readFileSync("env.json"));
+        var ftpVerbindung = ftp.create({
+            host: "profitlich-vorlage.ch",
+            user: "profitlich-vorlage.ch",
+            pass: env.FTP_PASSWORD,
+            parallel: 1
+        });
         return src( dateien.uploadWeb.src, {
             buffer: false,
             dot: true
         } )
     
-        .pipe(ftpVerbindungStaging.newer
-            (dateien.uploadWeb.destStaging)
-        ) 
-        .pipe(ftpVerbindungStaging.dest
-            (dateien.uploadWeb.destStaging)
-        )
-    }
-    if (modus =='production') {
-        return src( dateien.uploadWeb.src, {
-            buffer: false,
-            dot: true
-        } )
-    
-        .pipe(ftpVerbindungProduction.newer
+        .pipe(ftpVerbindung.newer
             (dateien.uploadWeb.destProduction)
         ) 
-        .pipe(ftpVerbindungProduction.dest
+        .pipe(ftpVerbindung.dest
             (dateien.uploadWeb.destProduction)
         )
     } else {
@@ -503,7 +489,7 @@ function browsersyncReload(callback){
 const watchTask = gulp.watch(
     [dateien.src.src, '!src/scss/config.scss', '!src/js/config.js'],
     gulp.series(
-        // aufraeumenTask,
+        dotenvToJsonTask,
         configToScssTask,
         configToJsTask,
         gulp.parallel(
@@ -519,7 +505,7 @@ const watchTask = gulp.watch(
 
 task('build',
     series(
-        // aufraeumenTask,
+        dotenvToJsonTask,
         configToScssTask,
         configToJsTask,
         parallel(
