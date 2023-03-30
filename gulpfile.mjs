@@ -389,9 +389,10 @@ function uploadTemplatesTask() {
     if (modus =='staging' || modus =='production') {
         var env = JSON.parse(fs.readFileSync("env.json"));
         var ftpVerbindung = ftp.create({
-            host: "profitlich-vorlage.ch",
-            user: "profitlich-vorlage.ch",
-            pass: env.FTP_PASSWORD,
+            // Es darf kein Leerzeichen hinter dem Doppelpunkt stehen
+            host:env.FTP_HOST,
+            user:env.FTP_USER,
+            pass:env.FTP_PASSWORD,
             parallel: 1
         });
         return src( dateien.uploadTemplates.src, {
@@ -413,9 +414,9 @@ function uploadWebTask() {
     if (modus =='staging' || modus =='production') {
         var env = JSON.parse(fs.readFileSync("env.json"));
         var ftpVerbindung = ftp.create({
-            host: "profitlich-vorlage.ch",
-            user: "profitlich-vorlage.ch",
-            pass: env.FTP_PASSWORD,
+            host:env.FTP_HOST,
+            user:env.FTP_USER,
+            pass:env.FTP_PASSWORD,
             parallel: 1
         });
         return src( dateien.uploadWeb.src, {
@@ -496,10 +497,10 @@ const watchTask = gulp.watch(
             templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosFunktionenTask, scssTask, jsDeferTask, jsInlineTask, medienTask, mockupTask, fontsTask, spritesTask, staticAssetsVersionTask
         ),
         injizierenTask,
-        configLoeschenTask,
         // browsersyncReload,
         uploadTemplatesTask,
-        uploadWebTask
+        uploadWebTask,
+        configLoeschenTask
     )
 );
 
@@ -512,10 +513,10 @@ task('build',
             templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosFunktionenTask, scssTask, jsDeferTask, jsInlineTask, medienTask, mockupTask, fontsTask, spritesTask, staticAssetsVersionTask
         ),
         injizierenTask,
-        configLoeschenTask,
         // browsersyncServe,
         uploadTemplatesTask,
-        uploadWebTask
+        uploadWebTask,
+        configLoeschenTask
     )
 );
 
