@@ -125,7 +125,7 @@ const dateien = {
 // var dotenv;
 
 // dotenv in JSON umwandeln
-function dotenvToJsonTask() {
+function dotenvTask() {
     return src('./.env')
     .pipe(dotenv())
     .pipe(rename('env.json'))
@@ -489,7 +489,7 @@ function browsersyncReload(callback){
 const watchTask = gulp.watch(
     [dateien.src.src, '!src/scss/config.scss', '!src/js/config.js'],
     gulp.series(
-        dotenvToJsonTask,
+        dotenvTask,
         configToScssTask,
         configToJsTask,
         gulp.parallel(
@@ -505,7 +505,7 @@ const watchTask = gulp.watch(
 
 task('build',
     series(
-        dotenvToJsonTask,
+        dotenvTask,
         configToScssTask,
         configToJsTask,
         parallel(
