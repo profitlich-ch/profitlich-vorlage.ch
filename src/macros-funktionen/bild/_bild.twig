@@ -79,14 +79,18 @@
         {% if objectFit == 'cover' %}
             {# Sources für objectfit: cover und landscape #}
             {% do bild.setTransform({
+                format: 'webp',
                 quality: 75
             }) %}
             {{ tag('source', {
-                format: 'webp',
                 type: 'image/webp',
                 media: '(orientation: landscape)',
                 srcset: bild.getSrcset(srcSet)
             }) }}
+            {% do bild.setTransform({
+                format: 'jpg',
+                quality: 75
+            }) %}
             {{ tag('source', {
                 format: 'jpg',
                 type: 'image/jpeg',
@@ -95,17 +99,24 @@
             }) }}
             {# Sources für objectfit: cover und portrait #}
             {% do bild.setTransform({
+                format: 'webp',
                 width: 100,
                 height: 150,
                 mode: 'crop',
                 quality: 75
             }) %}
             {{ tag('source', {
-                format: 'webp',
                 type: 'image/webp',
                 media: '(orientation: portrait)',
                 srcset: bild.getSrcset(srcSet)
             }) }}
+            {% do bild.setTransform({
+                format: 'jpg',
+                width: 100,
+                height: 150,
+                mode: 'crop',
+                quality: 75
+            }) %}
             {{ tag('source', {
                 format: 'jpg',
                 type: 'image/jpeg',
@@ -115,16 +126,23 @@
         {# Sources für Zuschneidung #}
         {% elseif seitenverhaeltnis %}
             {% do bild.setTransform({
+                format: 'webp',
                 width: 100,
                 height: (100 * hoehe) | round(0),
                 mode: 'crop',
                 quality: 75
             }) %}
             {{ tag('source', {
-                format: 'webp',
                 type: 'image/webp',
                 srcset: bild.getSrcset(srcSet)
             }) }}
+            {% do bild.setTransform({
+                format: 'jpg',
+                width: 100,
+                height: (100 * hoehe) | round(0),
+                mode: 'crop',
+                quality: 75
+            }) %}
             {{ tag('source', {
                 format: 'jpg',
                 type: 'image/jpeg',
@@ -133,13 +151,17 @@
         {# Sources für Unbeschnitten #}
         {% else %}
             {% do bild.setTransform({
+                format: 'webp',
                 quality: 75
             }) %}
             {{ tag('source', {
-                format: 'webp',
                 type: 'image/webp',
                 srcset: bild.getSrcset(srcSet)
             }) }}
+            {% do bild.setTransform({
+                format: 'jpg',
+                quality: 75
+            }) %}
             {{ tag('source', {
                 format: 'jpg',
                 type: 'image/jpeg',
