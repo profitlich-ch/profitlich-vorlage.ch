@@ -1,8 +1,8 @@
 {
   "require": {
-    "craftcms/cms": "4.3.1",
-    "ostark/craft-async-queue": "3.1.0",
-    "percipioglobal/craft-password-policy": "4.0.0",
+    "craftcms/cms": "^4.3.1",
+    "ostark/craft-async-queue": "^3.1.0",
+    "percipioglobal/craft-password-policy": "^4.0.0",
     "vlucas/phpdotenv": "^5.4.0"
   },
   "require-dev": {
@@ -16,7 +16,8 @@
   "config": {
     "allow-plugins": {
       "craftcms/plugin-installer": true,
-      "yiisoft/yii2-composer": true
+      "yiisoft/yii2-composer": true,
+      "treeware/plant": true
     },
     "sort-packages": true,
     "optimize-autoloader": true,
