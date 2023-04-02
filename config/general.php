@@ -37,6 +37,8 @@ return GeneralConfig::create()
     ->limitAutoSlugsToAscii(true)
     // Loginadresse des Redaktionssystems
     ->cpTrigger('redaktion')
+    // Cookies auf lax stellen
+    ->sameSiteCookieValue('Lax')
     
     // Aliases _nicht_ mit getenv() aus Sicherheitsgründen
     // https://craftcms.stackexchange.com/questions/36986/use-of-appenv-compared-to-getenv-since-craft-3-4-18
