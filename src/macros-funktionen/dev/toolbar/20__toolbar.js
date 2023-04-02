@@ -52,6 +52,7 @@ document.addEventListener('keydown', (event) => {
 
 function devToolsUmschalten(isOn) {
     body.setAttribute('data-dev', isOn);
-    docCookies.setItem('isDevTools', isOn, new Date(2099, 1, 1), 'lax', window.location.hostname, true);
+    // docCookies.setItem(name, value[, end, path, domain, secure, samesite])
+    docCookies.setItem('isDevTools', isOn, new Date(2099, 1, 1), null, window.location.hostname, true, 'lax');
     isDevToolsAnzeigen = isOn;
 }
