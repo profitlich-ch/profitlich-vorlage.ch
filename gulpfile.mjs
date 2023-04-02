@@ -56,16 +56,16 @@ function setDateien() {
             src: 'src/**/*.*',
         },
         scss: {
-            src: (modus == 'dev') ? ['src/scss/**/*.scss', 'src/macros-funktionen/**/*.scss'] : ['src/scss/**/*.scss', 'src/macros-funktionen/**/*.scss', '!src/scss/dev/**/*.scss'],
+            src: (modus == 'dev') ? ['src/scss/**/*.scss', 'src/macros-funktionen/**/*.scss'] : ['src/scss/**/*.scss', 'src/macros-funktionen/**/*.scss', '!src/scss/macros-funktionen/dev/**/*.scss'],
             dest: 'web/css',
         },
         jsDefer: {
-            src: (modus == 'dev') ? ['src/js/defer/**/*.js', 'src/macros-funktionen/**/*.js', 'src/bausteine/**/_*.js'] : ['src/js/defer/**/*.js', 'src/macros-funktionen/**/*.js', 'src/bausteine/**/_*.js', '!src/js/defer/dev/**/*.*'],
+            src: (modus == 'dev') ? ['src/js/defer/**/*.js', 'src/macros-funktionen/**/*.js', 'src/bausteine/**/_*.js'] : ['src/js/defer/**/*.js', 'src/macros-funktionen/**/*.js', 'src/bausteine/**/_*.js', '!src/macros-funktionen/dev/**/*.*'],
             dest: 'web/js',
         },
         
         jsInline: {
-            src: (modus == 'dev') ? ['src/js/config.js', 'src/js/inline/**/*.js'] : ['src/js/config.js', 'src/js/inline/**/*.js', '!src/js/inline/dev/**/*.*'],
+            src: ['src/js/config.js', 'src/js/inline/**/*.js'],
             dest: 'templates/js',
         },
         jsBausteine: {
