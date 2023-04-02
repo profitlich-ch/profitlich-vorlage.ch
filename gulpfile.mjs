@@ -3,7 +3,6 @@
 // dev oder staging oder production
 // staging lädt auf den Stagingserver
 // production lädt auf den Produtivserver, lässt alle dev Inhalte weg (JS, CSS) und komprimiert JS
-const modus = 'staging';
 
 const { src, dest, task, watch, series, parallel } = gulp;
 
@@ -27,6 +26,7 @@ import log from 'fancy-log';
 import path from 'path';
 import postcss from 'gulp-postcss';
 import postcssEasingGradients from 'postcss-easing-gradients';
+import prompt from 'gulp-prompt';
 import rename from 'gulp-rename';
 import replace from 'gulp-replace';
 import sassGlob from 'gulp-sass-glob';
@@ -37,11 +37,7 @@ import terser from 'gulp-terser';
 
 const sass = gulpSass(dartSass);
 
-// Dateipfade
-const dateien = { 
-    src: {
-        src: 'src/**/*.*',
-    },
+const config = { 
     configToScss: {
         src: 'src/config.json',
         dest: 'src/scss',
@@ -49,76 +45,86 @@ const dateien = {
     configToJs: {
         src: 'src/config.json',
         dest: 'src/js',
-    },
-    scss: {
-        src: (modus == 'dev') ? ['src/scss/**/*.scss', 'src/macros-funktionen/**/*.scss'] : ['src/scss/**/*.scss', 'src/macros-funktionen/**/*.scss', '!src/scss/dev/**/*.scss'],
-        dest: 'web/css',
-    },
-    jsDefer: {
-        src: (modus == 'dev') ? ['src/js/defer/**/*.js', 'src/macros-funktionen/**/*.js', 'src/bausteine/**/_*.js'] : ['src/js/defer/**/*.js', 'src/macros-funktionen/**/*.js', 'src/bausteine/**/_*.js', '!src/js/defer/dev/**/*.*'],
-        dest: 'web/js',
-    },
-    
-    jsInline: {
-        src: (modus == 'dev') ? ['src/js/config.js', 'src/js/inline/**/*.js'] : ['src/js/config.js', 'src/js/inline/**/*.js', '!src/js/inline/dev/**/*.*'],
-        dest: 'templates/js',
-    },
-    jsBausteine: {
-        src: ['src/bausteine/**/*.js', '!src/bausteine/**/_*.js'],
-        dest: 'web/bausteine',
-    },
-    // https://stackoverflow.com/questions/28876469/multiple-file-extensions-within-the-same-directory-using-gulp
-    templatesTwig: {
-        src: 'src/templates/**/*.twig',
-        dest: 'templates',
-    },
-    bausteineTwig: {
-        src: 'src/bausteine/**/*.+(twig|js)',
-        dest: 'templates/_bausteine',
-    },
-    bausteineAssets: {
-        src: ['src/bausteine/**/*.+(svg|jpg|jpeg|gif|png|html)', '!src/bausteine/**/_*.*'],
-        dest: 'web/bausteine',
-    },
-    // http://glivera-team.github.io/svg/2019/03/15/svg-sprites-2.en.html
-    sprites: {
-        src: 'src/bausteine/**/_*.svg',
-        dest: 'web/sprites',
-    },
-    macrosFunktionen: {
-        src: 'src/macros-funktionen/**/*.twig',
-        dest: 'templates/macros-funktionen',
-    },
-    medien: {
-        src: 'src/medien/**/*.*',
-        dest: 'web/medien',
-    },
-    medienBackup: {
-        src: 'src/medien/**/*.*',
-        dest: 'backup/src/medien',
-    },
-    mockup: {
-        src: 'src/mockup/**/*.*',
-        dest: 'web/mockup',
-    },
-    fonts: {
-        src: 'src/fonts/**/*.*',
-        dest: 'web/fonts',
-    },
-    uploadWeb: {
-        src: ['web/**/**.*', '!web/assets/**/**.*', '!web/cpresources/**/**.*', '!web/assets/**/**.*', '!web/index.php'],
-        destStaging: '/web',
-        destProduction: '/web',
-    },
-    uploadTemplates: {
-        src: 'templates/**/*.*',
-        destStaging: '/templates',
-        destProduction: '/templates',
-    },
-    craftCustomConfig: {
-        src: 'config/custom.php',
-        dest: 'config',
-    },
+    }
+}
+
+// Dateipfade
+var dateien;
+function setDateien() {
+    dateien = { 
+        src: {
+            src: 'src/**/*.*',
+        },
+        scss: {
+            src: (modus == 'dev') ? ['src/scss/**/*.scss', 'src/macros-funktionen/**/*.scss'] : ['src/scss/**/*.scss', 'src/macros-funktionen/**/*.scss', '!src/scss/dev/**/*.scss'],
+            dest: 'web/css',
+        },
+        jsDefer: {
+            src: (modus == 'dev') ? ['src/js/defer/**/*.js', 'src/macros-funktionen/**/*.js', 'src/bausteine/**/_*.js'] : ['src/js/defer/**/*.js', 'src/macros-funktionen/**/*.js', 'src/bausteine/**/_*.js', '!src/js/defer/dev/**/*.*'],
+            dest: 'web/js',
+        },
+        
+        jsInline: {
+            src: (modus == 'dev') ? ['src/js/config.js', 'src/js/inline/**/*.js'] : ['src/js/config.js', 'src/js/inline/**/*.js', '!src/js/inline/dev/**/*.*'],
+            dest: 'templates/js',
+        },
+        jsBausteine: {
+            src: ['src/bausteine/**/*.js', '!src/bausteine/**/_*.js'],
+            dest: 'web/bausteine',
+        },
+        // https://stackoverflow.com/questions/28876469/multiple-file-extensions-within-the-same-directory-using-gulp
+        templatesTwig: {
+            src: 'src/templates/**/*.twig',
+            dest: 'templates',
+        },
+        bausteineTwig: {
+            src: 'src/bausteine/**/*.+(twig|js)',
+            dest: 'templates/_bausteine',
+        },
+        bausteineAssets: {
+            src: ['src/bausteine/**/*.+(svg|jpg|jpeg|gif|png|html)', '!src/bausteine/**/_*.*'],
+            dest: 'web/bausteine',
+        },
+        // http://glivera-team.github.io/svg/2019/03/15/svg-sprites-2.en.html
+        sprites: {
+            src: 'src/bausteine/**/_*.svg',
+            dest: 'web/sprites',
+        },
+        macrosFunktionen: {
+            src: 'src/macros-funktionen/**/*.twig',
+            dest: 'templates/macros-funktionen',
+        },
+        medien: {
+            src: 'src/medien/**/*.*',
+            dest: 'web/medien',
+        },
+        medienBackup: {
+            src: 'src/medien/**/*.*',
+            dest: 'backup/src/medien',
+        },
+        mockup: {
+            src: 'src/mockup/**/*.*',
+            dest: 'web/mockup',
+        },
+        fonts: {
+            src: 'src/fonts/**/*.*',
+            dest: 'web/fonts',
+        },
+        uploadWeb: {
+            src: ['web/**/**.*', '!web/assets/**/**.*', '!web/cpresources/**/**.*', '!web/assets/**/**.*', '!web/index.php'],
+            destStaging: '/web',
+            destProduction: '/web',
+        },
+        uploadTemplates: {
+            src: 'templates/**/*.*',
+            destStaging: '/templates',
+            destProduction: '/templates',
+        },
+        craftCustomConfig: {
+            src: 'config/custom.php',
+            dest: 'config',
+        },
+    }
 }
 
 // Variable für Import aus Dotenv
@@ -134,26 +140,42 @@ function dotenvTask() {
 
 // Variablen aus config.json in SCSS umwandeln
 function configToScssTask() {
-    return src(dateien.configToScss.src)
+    return src(config.configToScss.src)
 
     .pipe(jsonCss({
         keepObjects: true
     }))
 
     .pipe(dest
-        (dateien.configToScss.dest)
+        (config.configToScss.dest)
     )   
 }
 
 // Variablen aus config.json in JS umwandeln
 function configToJsTask() {
-    return src(dateien.configToJs.src)
+    return src(config.configToJs.src)
 
-    .pipe(jsonToJs({nameVariableSufix: ''}))
+    .pipe(jsonToJs())
 
     .pipe(dest
-        (dateien.configToJs.dest)
+        (config.configToJs.dest)
     )   
+}
+
+// Modus per prompt setzen
+var modus;
+function modusTask() {
+    return src('.')
+	
+    .pipe(prompt.prompt({
+		type: 'list',
+		name: 'modus',
+		message: 'Wohin sollen die Dateien?',
+        choices: ['dev', 'staging', 'production']
+	}, function(res){
+		modus = res.modus;
+        setDateien();
+	}));
 }
 
 // Variablendateien config.scss und .js löschen, env.json löschen
@@ -436,12 +458,6 @@ function uploadWebTask() {
 };
 
 
-// Aufräumen
-function aufraeumenTask() {
-    return deleteAsync('./dist');
-}
-
-
 // CSS injizieren
 function injizierenTask() {
     return src('dist/**/*.{html,twig}')
@@ -487,28 +503,31 @@ function browsersyncReload(callback){
 }
 
 // Änderungen beobachten
-const watchTask = gulp.watch(
-    [dateien.src.src, '!src/scss/config.scss', '!src/js/config.js'],
-    gulp.series(
-        dotenvTask,
-        configToScssTask,
-        configToJsTask,
-        gulp.parallel(
-            templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosFunktionenTask, scssTask, jsDeferTask, jsInlineTask, medienTask, mockupTask, fontsTask, spritesTask, staticAssetsVersionTask
-        ),
-        injizierenTask,
-        // browsersyncReload,
-        uploadTemplatesTask,
-        uploadWebTask,
-        configLoeschenTask
-    )
-);
+function watchTask() {
+    const watchVariable = gulp.watch(
+        [dateien.src.src, '!src/scss/config.scss', '!src/js/config.js'],
+        gulp.series(
+            dotenvTask,
+            configToScssTask,
+            configToJsTask,
+            gulp.parallel(
+                templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosFunktionenTask, scssTask, jsDeferTask, jsInlineTask, medienTask, mockupTask, fontsTask, spritesTask, staticAssetsVersionTask
+            ),
+            injizierenTask,
+            // browsersyncReload,
+            uploadTemplatesTask,
+            uploadWebTask,
+            configLoeschenTask
+        )
+    );
+}
 
 task('build',
     series(
         dotenvTask,
         configToScssTask,
         configToJsTask,
+        modusTask,
         parallel(
             templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosFunktionenTask, scssTask, jsDeferTask, jsInlineTask, medienTask, mockupTask, fontsTask, spritesTask, staticAssetsVersionTask
         ),
@@ -516,7 +535,8 @@ task('build',
         // browsersyncServe,
         uploadTemplatesTask,
         uploadWebTask,
-        configLoeschenTask
+        configLoeschenTask,
+        watchTask
     )
 );
 
