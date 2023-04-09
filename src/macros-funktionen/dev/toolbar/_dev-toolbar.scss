@@ -1,17 +1,17 @@
 // Raster
-$farbe--dev: rgba(0, 220, 30, 1.0);
+$farbe--dev-toolbar: rgba(0, 220, 30, 1.0);
 $farbe--raster: rgba(0, 0, 255, 0.5);
 $farbe--raster-mitte: rgba(0, 0, 0, 0.2);
 
 
-@mixin dev-raster($layout, $spalten, $spaltenabstand, $seitenrand-links, $seitenrand-rechts) {
+@mixin dev-toolbar-raster($layout, $spalten, $spaltenabstand, $seitenrand-links, $seitenrand-rechts) {
 
     $spaltenabstand: groesse($layout, $spaltenabstand);
     $seitenrand-links: groesse($layout, $seitenrand-links);
     $seitenrand-rechts: groesse($layout, $seitenrand-rechts);
 
     body[data-dev='true'] {
-        .dev::before {
+        .dev-toolbar::before {
             background: linear-gradient(90deg, $farbe--raster-mitte 0.5px, transparent 0.5px) 0 0,
                         linear-gradient(90deg, $farbe--raster 0.5px, transparent 0.5px) calc($spaltenabstand / 2) 0,
                         linear-gradient(90deg, $farbe--raster 0.5px, transparent 0.5px) calc($spaltenabstand / 2 * -1) 0;
@@ -22,7 +22,7 @@ $farbe--raster-mitte: rgba(0, 0, 0, 0.2);
     }
 }
 
-.dev {
+.dev-toolbar {
     background-color: $farbe--dev;
     display: none;
     font-size: 12px;
@@ -50,6 +50,6 @@ $farbe--raster-mitte: rgba(0, 0, 0, 0.2);
 
 @each $layout, $breite in $layouts {
     @include mediaquery($layout) {
-        @include dev-raster($layout, map-get($spalten, $layout), map-get($spaltenabstaende, $layout), map-deep-get($seitenraender, $layout, 'left'), map-deep-get($seitenraender, $layout, 'right'));
+        @include dev-toolbar-raster($layout, map-get($spalten, $layout), map-get($spaltenabstaende, $layout), map-deep-get($seitenraender, $layout, 'left'), map-deep-get($seitenraender, $layout, 'right'));
     }
 }
