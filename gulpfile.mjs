@@ -92,7 +92,7 @@ function setDateien() {
         },
         macrosFunktionen: {
             src: 'src/macros-funktionen/**/*.twig',
-            dest: 'templates/macros-funktionen',
+            dest: 'templates/_macros-funktionen',
         },
         medien: {
             src: 'src/medien/**/*.*',
