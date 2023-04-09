@@ -410,11 +410,11 @@ function fontsTask() {
 function uploadTemplatesTask() {
     if (modus =='staging' || modus =='production') {
         var env = JSON.parse(fs.readFileSync("env.json"));
+        var ftpModus = modus.toUpperCase();
         var ftpVerbindung = ftp.create({
-            // Es darf kein Leerzeichen hinter dem Doppelpunkt stehen
-            host:env.FTP_HOST,
-            user:env.FTP_USER,
-            pass:env.FTP_PASSWORD,
+            host:env['FTP_HOST_' + ftpModus],
+            user:env['FTP_USER_' + ftpModus],
+            pass:env['FTP_PASSWORD_' + ftpModus],
             parallel: 1
         });
         return src( dateien.uploadTemplates.src, {
@@ -435,10 +435,11 @@ function uploadTemplatesTask() {
 function uploadWebTask() {
     if (modus =='staging' || modus =='production') {
         var env = JSON.parse(fs.readFileSync("env.json"));
+        var ftpModus = modus.toUpperCase();
         var ftpVerbindung = ftp.create({
-            host:env.FTP_HOST,
-            user:env.FTP_USER,
-            pass:env.FTP_PASSWORD,
+            host:env['FTP_HOST_' + ftpModus],
+            user:env['FTP_USER_' + ftpModus],
+            pass:env['FTP_PASSWORD_' + ftpModus],
             parallel: 1
         });
         return src( dateien.uploadWeb.src, {
