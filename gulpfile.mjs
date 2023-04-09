@@ -56,7 +56,7 @@ function setDateien() {
             src: 'src/**/*.*',
         },
         scss: {
-            src: (modus == 'dev') ? ['src/scss/**/*.scss', 'src/macros-funktionen/**/*.scss'] : ['src/scss/**/*.scss', 'src/macros-funktionen/**/*.scss', '!src/scss/macros-funktionen/dev/**/*.scss'],
+            src: 'src/scss/**/*.scss',
             dest: 'web/css',
         },
         jsDefer: {
