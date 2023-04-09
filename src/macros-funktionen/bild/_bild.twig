@@ -35,12 +35,12 @@
 {% endif %}
 
 {% if seitenverhaeltnis == false %}
-    {% set hoehe = (bild.getHeight() / bild.getWidth()) | round(2) %}
-    {% set paddingBottom = (bild.getHeight() / bild.getWidth() * 100) | round(2) ~ "%" %}
+    {% set hoehe = (bild.getHeight() / bild.getWidth()) | round(4) %}
+    {% set paddingBottom = (bild.getHeight() / bild.getWidth() * 100) | round(4) ~ "%" %}
 {% else %}
     {% set seitenverhaeltnisArray = seitenverhaeltnis|split(':') %}
-    {% set hoehe = (seitenverhaeltnisArray[1] / seitenverhaeltnisArray[0]) | round(2) %}
-    {% set paddingBottom = (seitenverhaeltnisArray[1] / seitenverhaeltnisArray[0] * 100) | round(2) ~ "%" %}
+    {% set hoehe = (seitenverhaeltnisArray[1] / seitenverhaeltnisArray[0]) | round(4) %}
+    {% set paddingBottom = (seitenverhaeltnisArray[1] / seitenverhaeltnisArray[0] * 100) | round(4) ~ "%" %}
 {% endif %}
 
 {% switch fokuspunkt %}
