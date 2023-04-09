@@ -147,3 +147,10 @@ package-lock.json
 /web/js/
 /web/bausteine/
 /templates/
+
+# Favicon in web
+/web/*.png
+/web/*.svg
+/web/*.ico
+/web/site.webmanifest
+/web/browserconfig.xml

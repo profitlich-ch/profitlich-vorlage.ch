@@ -110,6 +110,10 @@ function setDateien() {
             src: 'src/fonts/**/*.*',
             dest: 'web/fonts',
         },
+        favicon: {
+            src: 'src/favicon/**/*.*',
+            dest: 'web',
+        },
         uploadWeb: {
             src: ['web/**/**.*', '!web/assets/**/**.*', '!web/cpresources/**/**.*', '!web/assets/**/**.*', '!web/index.php'],
             destStaging: '/web',
@@ -404,6 +408,15 @@ function fontsTask() {
     );
 }
 
+// Favicon kopieren
+function faviconTask() {
+    return src(dateien.favicon.src)
+
+    .pipe(dest
+        (dateien.favicon.dest)
+    );
+}
+
 // FTP
 // https://medium.com/sliit-foss/automate-a-ftp-upload-with-gulp-js-4fde363cf9e8
 // https://www.riklewis.com/2019/09/saving-time-with-ftp-in-gulp/
@@ -512,7 +525,7 @@ function watchTask() {
             configToScssTask,
             configToJsTask,
             gulp.parallel(
-                templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosFunktionenTask, scssTask, jsDeferTask, jsInlineTask, medienTask, mockupTask, fontsTask, spritesTask, staticAssetsVersionTask
+                templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosFunktionenTask, scssTask, jsDeferTask, jsInlineTask, medienTask, mockupTask, fontsTask, faviconTask, spritesTask, staticAssetsVersionTask
             ),
             injizierenTask,
             // browsersyncReload,
@@ -530,7 +543,7 @@ task('build',
         configToJsTask,
         modusTask,
         parallel(
-            templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosFunktionenTask, scssTask, jsDeferTask, jsInlineTask, medienTask, mockupTask, fontsTask, spritesTask, staticAssetsVersionTask
+            templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosFunktionenTask, scssTask, jsDeferTask, jsInlineTask, medienTask, mockupTask, fontsTask, faviconTask, spritesTask, staticAssetsVersionTask
         ),
         injizierenTask,
         // browsersyncServe,
