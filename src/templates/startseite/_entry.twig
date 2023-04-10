@@ -1,4 +1,4 @@
-{% import "macros-funktionen/bild/_bild.twig" as macroBild %}
+{% import "_macros-funktionen/bild/_bild.twig" as macroBild %}
 {% extends "_layout.twig" %}
 
 
@@ -11,7 +11,7 @@
 
 {% block content %}
     {% set bild = entry.bild.one() %}
-    <style> 
+    <style nonce="{{ cspNonce('style-src') }}"> 
         .test__bild {
             height: 100vh;
         }

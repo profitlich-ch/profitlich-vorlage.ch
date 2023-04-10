@@ -175,12 +175,28 @@ function modusTask() {
 		type: 'list',
 		name: 'modus',
 		message: 'Wohin sollen die Dateien?',
-        choices: ['dev', 'staging', 'production']
-	}, function(res){
-		modus = res.modus;
-        setDateien();
+        choices: ['dev', 'staging', 'production'],
+        chainFunction: modusBestaetigung
+	}, (res) => {
 	}));
 }
+var modusBestaetigung = function(options, response) {
+    if (response.modus == 'production') {
+        prompt.prompt({
+            type: 'confirm',
+            name: 'modus',
+            message: 'Wirklich Modus production aktivieren?'
+        }, (res) => {
+            modus = response.modus;
+            setDateien();
+            return;
+        })
+    } else {
+        modus = response.modus;
+        setDateien();
+        return;
+    }
+};
 
 // Variablendateien config.scss und .js löschen, env.json löschen
 function configLoeschenTask() {

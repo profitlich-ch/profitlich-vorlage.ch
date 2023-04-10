@@ -18,11 +18,12 @@
  */
 
 use craft\helpers\App;
+use modules\uniqueids\Module;
 
 return [
     'id' => App::env('CRAFT_APP_ID') ?: 'CraftCMS',
     'modules' => [
-        'my-module' => \modules\Module::class,
+        'uniqueids' => Module::class,
     ],
-    //'bootstrap' => ['my-module'],
+    'bootstrap' => ['uniqueids'],
 ];

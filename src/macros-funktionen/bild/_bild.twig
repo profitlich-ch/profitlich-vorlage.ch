@@ -67,13 +67,19 @@
 {# mit/ohne preload #}
     
 {% set style = [
-    hintergrundfarbe == 'blur' ? 'background-image: url("' ~ blurhash(bild) ~ '")',
+    hintergrundfarbe == 'blur' ? 'background-image: url(' ~ blurhash(bild) ~ ')',
     hintergrundfarbe == 'blur' ? 'background-size: 100% 100%',
     hintergrundfarbe != false and hintergrundfarbe != 'blur' ? 'background-color:' ~ hintergrundfarbe,
     objectFit ? "height: 100%" : "padding-bottom:" ~ paddingBottom,
 ] %}
 
-<div class="{{ class ~ '-bild' ~ ' macro-bild' }}" style="{{ style | join(';') }}">
+{% set uniqueId = uniqueid() %}
+<div class="{{ class ~ '-bild' ~ ' macro-bild' }}" id="macro-bild--{{ uniqueId }}">
+    <style nonce="{{ cspNonce('style-src') }}">
+        #macro-bild--{{ uniqueId }} {
+            {{ style | join(';') }}
+        }
+    </style>
     <picture class="macro-bild__picture" data-hoehe="{{ hoehe }}">
 
         {% if objectFit == 'cover' %}
@@ -199,7 +205,7 @@
                 sizes: sizesAuto
             }
         } %}
-        <img {{ attr(imgAttribute) }} style="{{ objectFitVariable }}">
+        <img {{ attr(imgAttribute) }} style="{{ objectFitVariable }}"">
     </picture>
 </div>
 
