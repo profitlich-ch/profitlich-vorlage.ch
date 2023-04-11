@@ -56,7 +56,7 @@ function setDateien() {
             src: 'src/**/*.*',
         },
         scss: {
-            src: (modus == 'dev') ? ['src/scss/**/*.scss', 'src/macros-funktionen/**/*.scss'] : ['src/scss/**/*.scss', 'src/macros-funktionen/**/*.scss', '!src/scss/macros-funktionen/dev/**/*.scss'],
+            src: 'src/scss/**/*.scss',
             dest: 'web/css',
         },
         jsDefer: {
@@ -92,7 +92,7 @@ function setDateien() {
         },
         macrosFunktionen: {
             src: 'src/macros-funktionen/**/*.twig',
-            dest: 'templates/macros-funktionen',
+            dest: 'templates/_macros-funktionen',
         },
         medien: {
             src: 'src/medien/**/*.*',
@@ -109,6 +109,10 @@ function setDateien() {
         fonts: {
             src: 'src/fonts/**/*.*',
             dest: 'web/fonts',
+        },
+        favicon: {
+            src: 'src/favicon/**/*.*',
+            dest: 'web',
         },
         uploadWeb: {
             src: ['web/**/**.*', '!web/assets/**/**.*', '!web/cpresources/**/**.*', '!web/assets/**/**.*', '!web/index.php'],
@@ -404,17 +408,26 @@ function fontsTask() {
     );
 }
 
+// Favicon kopieren
+function faviconTask() {
+    return src(dateien.favicon.src)
+
+    .pipe(dest
+        (dateien.favicon.dest)
+    );
+}
+
 // FTP
 // https://medium.com/sliit-foss/automate-a-ftp-upload-with-gulp-js-4fde363cf9e8
 // https://www.riklewis.com/2019/09/saving-time-with-ftp-in-gulp/
 function uploadTemplatesTask() {
     if (modus =='staging' || modus =='production') {
         var env = JSON.parse(fs.readFileSync("env.json"));
+        var ftpModus = modus.toUpperCase();
         var ftpVerbindung = ftp.create({
-            // Es darf kein Leerzeichen hinter dem Doppelpunkt stehen
-            host:env.FTP_HOST,
-            user:env.FTP_USER,
-            pass:env.FTP_PASSWORD,
+            host:env['FTP_HOST_' + ftpModus],
+            user:env['FTP_USER_' + ftpModus],
+            pass:env['FTP_PASSWORD_' + ftpModus],
             parallel: 1
         });
         return src( dateien.uploadTemplates.src, {
@@ -435,10 +448,11 @@ function uploadTemplatesTask() {
 function uploadWebTask() {
     if (modus =='staging' || modus =='production') {
         var env = JSON.parse(fs.readFileSync("env.json"));
+        var ftpModus = modus.toUpperCase();
         var ftpVerbindung = ftp.create({
-            host:env.FTP_HOST,
-            user:env.FTP_USER,
-            pass:env.FTP_PASSWORD,
+            host:env['FTP_HOST_' + ftpModus],
+            user:env['FTP_USER_' + ftpModus],
+            pass:env['FTP_PASSWORD_' + ftpModus],
             parallel: 1
         });
         return src( dateien.uploadWeb.src, {
@@ -511,7 +525,7 @@ function watchTask() {
             configToScssTask,
             configToJsTask,
             gulp.parallel(
-                templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosFunktionenTask, scssTask, jsDeferTask, jsInlineTask, medienTask, mockupTask, fontsTask, spritesTask, staticAssetsVersionTask
+                templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosFunktionenTask, scssTask, jsDeferTask, jsInlineTask, medienTask, mockupTask, fontsTask, faviconTask, spritesTask, staticAssetsVersionTask
             ),
             injizierenTask,
             // browsersyncReload,
@@ -529,7 +543,7 @@ task('build',
         configToJsTask,
         modusTask,
         parallel(
-            templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosFunktionenTask, scssTask, jsDeferTask, jsInlineTask, medienTask, mockupTask, fontsTask, spritesTask, staticAssetsVersionTask
+            templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosFunktionenTask, scssTask, jsDeferTask, jsInlineTask, medienTask, mockupTask, fontsTask, faviconTask, spritesTask, staticAssetsVersionTask
         ),
         injizierenTask,
         // browsersyncServe,

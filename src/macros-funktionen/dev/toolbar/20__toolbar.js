@@ -12,8 +12,8 @@ if(docCookies.getItem('isDevTools')) {
 
 function devToolsInitialisieren() {
     devDiv = document.createElement('div');
-        devDiv.classList.add('dev');
-        devDiv.setAttribute('id', 'dev');
+        devDiv.classList.add('dev-toolbar');
+        devDiv.setAttribute('id', 'dev-toolbar');
     document.body.prepend(devDiv);
     
     var observer = new MutationObserver(function(mutations) {
