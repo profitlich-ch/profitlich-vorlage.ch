@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ craft.app.language }}">
 	<head>
-		<meta charset="utf-8"/>
+		<meta charset="utf-8">
 		<title>
 			{% if craft.app.request.segment(1) %}
 				{% block seitentitel %}{% endblock %}
@@ -18,7 +18,7 @@
 		{# https://web.dev/defer-non-critical-css/ #}
 		<link rel="preload" href="/css/style.{{ staticAssetsVersion }}.css" as="style">
 		<link rel="stylesheet" href="/css/style.{{ staticAssetsVersion }}.css" media="print" onload="this.media='all'">
-		<noscript><link rel="stylesheet" href="/css/style.{{ staticAssetsVersion }}.css"/></noscript>
+		<noscript><link rel="stylesheet" href="/css/style.{{ staticAssetsVersion }}.css"></noscript>
 
         {% if devMode %}
             <link rel="stylesheet" href="/css/dev.{{ staticAssetsVersion }}.css">
