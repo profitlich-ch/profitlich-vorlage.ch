@@ -16,17 +16,9 @@ function devToolsInitialisieren() {
         devDiv.setAttribute('id', 'dev-toolbar');
     document.body.prepend(devDiv);
     
-    var observer = new MutationObserver(function(mutations) {
-        devAnzeigeAktualisieren();
-    });
-    observer.observe(body, { 
-        attributes: true, 
-        attributeFilter: ['data-layout']
-    });
-
-    window.onresize = devAnzeigeAktualisieren;
+    document.addEventListener('eventLayoutaenderung', devAnzeigeAktualisieren);
+    
     isDevToolsGeladen = true;
-
     devToolsUmschalten(true);
     devAnzeigeAktualisieren();
 }

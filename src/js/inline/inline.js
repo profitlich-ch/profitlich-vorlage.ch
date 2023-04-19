@@ -6,32 +6,32 @@
 // leading edge, instead of the trailing.
 
 // var myEfficientFn = debounce(function() {
-	// All the taxing stuff you do
+// All the taxing stuff you do
 // }, 250);
 // window.addEventListener('resize', myEfficientFn);
 
 function debounce(func, wait, immediate) {
-	var timeout;
-	return function() {
-		var context = this, args = arguments;
-		var later = function() {
-			timeout = null;
-			if (!immediate) func.apply(context, args);
-		};
-		var callNow = immediate && !timeout;
-		clearTimeout(timeout);
-		timeout = setTimeout(later, wait);
-		if (callNow) func.apply(context, args);
-	};
+    var timeout;
+    return function () {
+        var context = this, args = arguments;
+        var later = function () {
+            timeout = null;
+            if (!immediate) func.apply(context, args);
+        };
+        var callNow = immediate && !timeout;
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+        if (callNow) func.apply(context, args);
+    };
 };
 
 // E-Mailadressen anzeigen
 var emlArray = document.getElementsByClassName("eml");
-for(var i = (emlArray.length - 1); i >= 0; i--) {
+for (var i = (emlArray.length - 1); i >= 0; i--) {
     var obj = emlArray[i];
     var eml = obj.getAttribute('data-eml');
-    var emlText = eml+'@domain.tld';
-    var emlAddress = 'mailto:'+emlText;
+    var emlText = eml + '@domain.tld';
+    var emlAddress = 'mailto:' + emlText;
     obj.setAttribute('href', emlAddress);
     obj.innerHTML = emlText;
 }

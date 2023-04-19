@@ -19,6 +19,15 @@ function layoutAendern() {
         if (!matchmedia || matchmedia.matches) layoutAktuell = layout;
     }
     document.body.setAttribute('data-layout', layoutAktuell);
+
+    // Event erstellen
+    let event = new CustomEvent('eventLayoutaenderung', {
+        detail: {
+            layout: layoutAktuell
+        }
+    });
+    // dispatch the event
+    document.dispatchEvent(event);
 }
 
 // Beim Laden der Seite initial aufrufen
