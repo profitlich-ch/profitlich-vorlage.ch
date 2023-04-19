@@ -66,8 +66,8 @@
         
 {# mit/ohne preload #}
     
+    {# hintergrundfarbe == 'blur' ? 'background-image: url(' ~ blurhash(bild) ~ ')', #}
 {% set style = [
-    hintergrundfarbe == 'blur' ? 'background-image: url(' ~ blurhash(bild) ~ ')',
     hintergrundfarbe == 'blur' ? 'background-size: 100% 100%',
     hintergrundfarbe != false and hintergrundfarbe != 'blur' ? 'background-color:' ~ hintergrundfarbe,
     objectFit ? "height: 100%" : "padding-bottom:" ~ paddingBottom,
@@ -201,11 +201,17 @@
             alt: bildbeschreibung,
             class: "#{class}-img macro-bild__img #{lazyloadVariable}",
             'object-position': cssObjectPosition,
+            id:  "macro-bild__img--#{ uniqueId }",
             data: {
                 sizes: sizesAuto
             }
         } %}
-        <img {{ attr(imgAttribute) }} style="{{ objectFitVariable }}"">
+        <img {{ attr(imgAttribute) }}>
+        <style nonce="{{ cspNonce('style-src') }}">
+            #macro-bild--{{ uniqueId }} {
+                {{ objectFitVariable }}
+            }
+        </style>
     </picture>
 </div>
 

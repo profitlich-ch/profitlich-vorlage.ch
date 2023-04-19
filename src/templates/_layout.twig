@@ -30,7 +30,7 @@
             <link rel="stylesheet" href="/css/dev.{{ staticAssetsVersion }}.css" nonce="{{ cspNonce('style-src') }}">
         {% endif %}
 
-        <script src="/js/defer.{{ staticAssetsVersion }}.js" defer nonce="{{ cspNonce('script-src') }}"></>
+        <script src="/js/defer.{{ staticAssetsVersion }}.js" defer nonce="{{ cspNonce('script-src') }}"></script>
 		<script nonce="{{ cspNonce('script-src') }}">
 			{{ source("/js/inline.js") }}
 		</script>
