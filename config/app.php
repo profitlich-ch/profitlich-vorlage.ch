@@ -20,6 +20,7 @@
 use craft\helpers\App;
 use modules\uniqueids\Module;
 
+
 return [
     'id' => App::env('CRAFT_APP_ID') ?: 'CraftCMS',
     'modules' => [

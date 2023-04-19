@@ -5,7 +5,6 @@ use Craft;
 use craft\helpers\StringHelper;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
-use Twig\TwigFilter;
 
 // class Extension extends \Twig_Extension implements \Twig_Extension_GlobalsInterface
 class Extension extends AbstractExtension
