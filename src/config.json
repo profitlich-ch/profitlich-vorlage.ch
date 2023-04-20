@@ -1,7 +1,7 @@
 {
     "REAMDME": {
-        "1": "layouts – Breite des layouts in XD / einheiten – Feste Grössen px / mitwachsend vw / mediaqueries – Viewportbreite in px ab dem das Layout angewendet wird",
-        "2": "JS: Die config wird zur JS Datei gewandelt und im gulpfile in der Variable dateien jsInline geladen"
+        "Berechnung": "layouts – Breite des layouts in XD / einheiten – Feste Grössen px / mitwachsend vw / mediaqueries – Viewportbreite in px ab dem das Layout angewendet wird",
+        "JS": "Die config wird zur JS Datei gewandelt und im gulpfile in der Variable dateien jsInline geladen"
     },
 
     "maximalbreite": 1699,

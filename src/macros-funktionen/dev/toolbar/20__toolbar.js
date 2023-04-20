@@ -16,7 +16,7 @@ function devToolsInitialisieren() {
         devDiv.setAttribute('id', 'dev-toolbar');
     document.body.prepend(devDiv);
     
-    document.addEventListener('eventLayoutaenderung', devAnzeigeAktualisieren);
+    window.addEventListener('resize', devAnzeigeAktualisieren);
     
     isDevToolsGeladen = true;
     devToolsUmschalten(true);
