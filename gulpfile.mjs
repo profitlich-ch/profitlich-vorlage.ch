@@ -116,13 +116,11 @@ function setDateien() {
         },
         uploadWeb: {
             src: ['web/**/**.*', '!web/assets/**/**.*', '!web/cpresources/**/**.*', '!web/assets/**/**.*', '!web/index.php'],
-            destStaging: '/web',
-            destProduction: '/web',
+            dest: '/web'
         },
         uploadTemplates: {
             src: 'templates/**/*.*',
-            destStaging: '/templates',
-            destProduction: '/templates',
+            dest: '/templates'
         },
         craftCustomConfig: {
             src: 'config/custom.php',
@@ -425,6 +423,7 @@ function uploadTemplatesTask() {
         var env = JSON.parse(fs.readFileSync("env.json"));
         var ftpModus = modus.toUpperCase();
         var ftpVerbindung = ftp.create({
+            // Es darf kein Leerzeichen hinter dem Doppelpunkt stehen
             host:env['FTP_HOST_' + ftpModus],
             user:env['FTP_USER_' + ftpModus],
             pass:env['FTP_PASSWORD_' + ftpModus],
@@ -436,10 +435,10 @@ function uploadTemplatesTask() {
         } )
     
         .pipe(ftpVerbindung.newer
-            (dateien.uploadTemplates.destProduction)
+            (dateien.uploadTemplates.dest)
         ) 
         .pipe(ftpVerbindung.dest
-            (dateien.uploadTemplates.destProduction)
+            (dateien.uploadTemplates.dest)
         )
     } else {
         return src( dateien.uploadTemplates.src, { buffer: false } )
@@ -461,10 +460,10 @@ function uploadWebTask() {
         } )
     
         .pipe(ftpVerbindung.newer
-            (dateien.uploadWeb.destProduction)
+            (dateien.uploadWeb.dest)
         ) 
         .pipe(ftpVerbindung.dest
-            (dateien.uploadWeb.destProduction)
+            (dateien.uploadWeb.dest)
         )
     } else {
         return src( dateien.uploadWeb.src, { buffer: false } )

@@ -16,22 +16,28 @@
 
 		
 		{# https://web.dev/defer-non-critical-css/ #}
-		<link rel="preload" href="/css/style.{{ staticAssetsVersion }}.css" as="style">
-		<link rel="stylesheet" href="/css/style.{{ staticAssetsVersion }}.css" media="print" onload="this.media='all'">
-		<noscript><link rel="stylesheet" href="/css/style.{{ staticAssetsVersion }}.css"></noscript>
+		<link rel="preload" href="/css/style.{{ staticAssetsVersion }}.css" as="style" nonce="{{ cspNonce('style-src') }}">
+		<link id="cssOnload" rel="stylesheet" href="/css/style.{{ staticAssetsVersion }}.css" media="print" nonce="{{ cspNonce('style-src') }}">
+    <script nonce="{{ cspNonce('script-src') }}">
+        cssOnload = document.getElementById('cssOnload');
+        cssOnload.onload = function() {
+            cssOnload.setAttribute('media', 'all');
+        };
+    </script>
+		<noscript><link rel="stylesheet" href="/css/style.{{ staticAssetsVersion }}.css" nonce="{{ cspNonce('style-src') }}"></noscript>
 
         {% if devMode %}
-            <link rel="stylesheet" href="/css/dev.{{ staticAssetsVersion }}.css">
+            <link rel="stylesheet" href="/css/dev.{{ staticAssetsVersion }}.css" nonce="{{ cspNonce('style-src') }}">
         {% endif %}
 
-        <script src="/js/defer.{{ staticAssetsVersion }}.js" defer></script>
-		<script>
+        <script src="/js/defer.{{ staticAssetsVersion }}.js" defer nonce="{{ cspNonce('script-src') }}"></script>
+		<script nonce="{{ cspNonce('script-src') }}">
 			{{ source("/js/inline.js") }}
 		</script>
 
 		{# Webfonts #}
 
-		<style>
+		<style nonce="{{ cspNonce('style-src') }}">
 			{# FOUC #}
 			{# https://www.primative.net/blog/how-to-get-rid-of-the-flash-of-unstyled-content/ #}
 			.no-js {
@@ -41,6 +47,10 @@
 			body.preload * {
 				transition: transform 0s !important;
 			}
+            /* Body bis zum Laden des ganzen HTML unsichtbar machen */
+            body {
+                visibility: hidden;
+            }
 		</style>
 	</head>
 	{% if not craft.app.request.segment(1) %}
@@ -57,17 +67,14 @@
             menueBewegt: 'false',
             bodyScrolled: 'false'
         },
-        style: {
-            'visibility': 'hidden'
-        },
     } %}
 	<body class="body body--{{ seitenname }} no-js preload" {{ attr(bodyDataTags) }}>
 
 		{# Firefox Hack gegen FOUC: https://www.primative.net/blog/how-to-get-rid-of-the-flash-of-unstyled-content/ #}
-		<script>0</script>
+		<script nonce="{{ cspNonce('script-src') }}">0</script>
 
 		{# FOUC #}
-		<script>
+		<script nonce="{{ cspNonce('script-src') }}">
 			document.querySelector('body').classList.remove('no-js');
 		</script>
 
@@ -92,7 +99,7 @@
             <main class="main"> {% block content %}{% endblock %}</main>
         </div>
 
-		<script>
+		<script nonce="{{ cspNonce('script-src') }}">
 			{# FOUC #}
 			let domReady = (cb) => {
 			document.readyState === 'interactive' || document.readyState === 'complete'

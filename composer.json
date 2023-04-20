@@ -1,5 +1,6 @@
 {
   "require": {
+    "born05/craft-csp": "^2.1",
     "craftcms/cms": "^4.3.1",
     "dodecastudio/craft-blurhash": "^2.0",
     "ostark/craft-async-queue": "^3.1.0",
@@ -11,7 +12,7 @@
   },
   "autoload": {
     "psr-4": {
-      "modules\\": "modules/"
+        "modules\\uniqueids\\": "modules/uniqueids/"
     }
   },
   "config": {
