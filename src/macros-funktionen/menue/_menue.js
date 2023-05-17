@@ -1,112 +1,48 @@
-var menueAktiv = false;
-var seite = document.getElementById('seite');
-var hamburger = document.getElementById('hamburger')
-
-// Alle Elemente finden, die tatsächlich sticky sind
-var stickyElemente = [];
-function stickyElementeFinden() {
-    var stickyElementeAlle = document.querySelectorAll('[data-sticky]');
-    if (stickyElementeAlle) {
-        for (let i = 0; i < stickyElementeAlle.length; i++) {
-            if (window.getComputedStyle(stickyElementeAlle[i]).position == 'sticky') {
-                stickyElemente.push(stickyElementeAlle[i]);
-            }
-        }
+class Menue {
+    constructor() {
+      this.menueAktiv = false;
+      this.hamburger = document.getElementById('hamburger');
+      this.y = 0;
+  
+      this.initialize();
     }
-}
-stickyElementeFinden();
-
-var y = 0;
-const stickyElementeArray = [];
-const nebeninformationDesktop = document.getElementById('projekt__nebeninformation--desktop');
-function menueToggle() {
-    if (menueAktiv == false) {
-        // Scrolltrigger anhalten, bevor die Seite fixiert wird
-        ScrollTrigger.getAll().forEach(element => element.disable(false) );
-        if (typeof scrolltrigger != 'undefined') {
-            scrolltrigger.disable(false);
-        }
-        if (typeof stickyElemente != 'undefined') {
-            for (let i = 0; i < stickyElemente.length; i++) {
-                // Bestehende top Position in Array speichern, um sie beim Deaktivieren des Menüs wiederherzustellen
-                var stickyElementStyles = window.getComputedStyle(stickyElemente[i]);
-                stickyElementeArray[i] = [];
-                stickyElementeArray[i].top = stickyElementStyles.top;
-                
-                // Element statt sticky neu fixed positionieren
-                // Dafür muss der top-Wert auf den tatsächlichen Abstand zum viewport gesetzt werden
-                var stickyElementTop = stickyElemente[i].getBoundingClientRect().top;
-                var stickyElementWidth = stickyElemente[i].getBoundingClientRect().width;
-                stickyElemente[i].style.top = stickyElementTop + 'px';
-                stickyElemente[i].style.width = stickyElementWidth + 'px';
-                stickyElemente[i].style.position = 'fixed';
-            }
-        }
-        menueAktiv = true;
-        // Klick ausserhalb des Menüs
-        document.body.addEventListener('click', menueBodyClick);
-        // Hover ausserhalb des Menüs
-        seite.addEventListener('mouseenter', menueSeiteHover);
-        seite.addEventListener('mouseleave', menueSeiteHover);
-        
-        scrollbar = window.innerWidth - document.documentElement.clientWidth;
-        y = window.scrollY;
-        document.body.setAttribute('data-menue-aktiv', menueAktiv);
-        var marginOriginal = parseFloat(window.getComputedStyle(hamburger).marginRight);
-        hamburger.style.marginRight = marginOriginal + scrollbar + 'px';
-        document.body.style.paddingRight = scrollbar + 'px';
-        document.body.style.top = -y + 'px';
-    } else {
-        if (typeof stickyElemente != 'undefined') {
-            for (let i = 0; i < stickyElemente.length; i++) {
-                stickyElemente[i].style.top = stickyElementeArray[i].top;
-                stickyElemente[i].style.position = 'sticky';
-            }
-        }
-        menueAktiv = false;
-        document.body.removeEventListener('click', menueBodyClick);
-        seite.removeEventListener('mouseenter', menueSeiteHover);
-        seite.removeEventListener('mouseleave', menueSeiteHover);
-        document.body.setAttribute('data-menue-aktiv', menueAktiv);
-        menueSeiteHover(false);
-        hamburger.style.marginRight = '';
+  
+    initialize() {
+      this.hamburger.addEventListener('click', this.menueToggle.bind(this));
+      document.body.addEventListener('click', this.menueBodyClick.bind(this));
+    }
+  
+    menueToggle(event) {
+      event.preventDefault();
+      event.stopPropagation();
+  
+      if (!this.menueAktiv) {
+        this.menueAktiv = true;
+        document.body.addEventListener('click', this.menueBodyClick.bind(this));
+        const scrollbar = window.innerWidth - document.documentElement.clientWidth;
+        this.y = window.scrollY;
+        document.body.setAttribute('data-menue-aktiv', this.menueAktiv);
+        const marginOriginal = parseFloat(window.getComputedStyle(this.hamburger).marginRight);
+        // Weitere Aktionen für menueAktiv == true
+      } else {
+        this.menueAktiv = false;
+        document.body.removeEventListener('click', this.menueBodyClick.bind(this));
+        document.body.setAttribute('data-menue-aktiv', this.menueAktiv);
+        this.hamburger.style.marginRight = '';
         document.body.style.paddingRight = '';
         document.body.style.top = '';
-        window.scrollTo(0, y);
-        // Scrolltrigger erst wieder aktivieren, nachdem die Seite wieder unfixiert und an der richtigen Scrollposition ist
-        ScrollTrigger.getAll().forEach(element => element.enable(false) );
+        window.scrollTo(0, this.y);
+      }
     }
-}
-
-function menueBodyClick(event) {
-    if (menueAktiv == true) {
-        if (!event.target.closest('.header__menue')) {
-            menueToggle();
+  
+    menueBodyClick(event) {
+      if (this.menueAktiv) {
+        if (!event.target.closest('.menue')) {
+          this.menueToggle(event);
         }
+      }
     }
-}
-
-function menueSeiteHover(event) {
-    if (event.type == 'mouseenter') {
-        document.body.setAttribute('data-seite-hover', 'true');
-    } else {
-        document.body.setAttribute('data-seite-hover', 'false');
-    }
-}
-
-// Hamburgermenü aktivieren
-hamburger.addEventListener('click', event => {
-    event.preventDefault();
-    event.stopPropagation();
-    menueToggle();
-});
-
-var menue = document.getElementById('menue');
-menue.addEventListener('click', event => {
-    if (menueAktiv == true) {
-        const { target } = event;
-        if (target.matches('.menue__link')) {
-            menueToggle();
-        }
-    }
-});
+  }
+  
+  const menue = new Menue();
+  

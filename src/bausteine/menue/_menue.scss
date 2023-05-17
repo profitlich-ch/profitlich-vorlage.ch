@@ -1,0 +1,59 @@
+.menue {
+    z-index: 1000;
+}
+
+
+@include mediaquery(smartphone) {
+
+    $layout: smartphone;
+
+    .menue {
+        @include abstand($layout, padding, alle, 0, 0, 6, 0);
+        background-color: map-get($farben, gruenSheen);
+        position: fixed;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        height: calc(var(--vh, 1vh) * 100);
+        right: 0;
+        top: 0;
+        transition: 0.5s;
+        transform: translate(100%);
+        width: 100%;
+        z-index: 10;
+
+        .body[data-menue-aktiv="true"] & {
+            transform: translate(0);
+            transition: 0.5s;
+        }
+
+        &__hamburger {
+            $hamburger-breite: groesse($layout, 13);
+            $hamburger-hoehe: groesse($layout, 9);
+            $hamburger-strichstaerke: groesse($layout, 1);
+            $hamburger-farbe: black;
+            $hamburger-farbe-aktiv: black;
+            @include hamburger($hamburger-breite, $hamburger-hoehe, $hamburger-strichstaerke, $hamburger-farbe, $hamburger-farbe-aktiv);
+            @include abstand($layout, margin, alle, 0, 0, 0, 0);
+            @include abstand($layout, padding, alle, 13, 13, 13, 13);
+            display: flex;
+            height: calc(var(--vh, 1vh) * 100);
+            flex-direction: column-reverse;
+            position: fixed;
+            right: groesse($layout, 0);
+            top: groesse($layout, 0);
+            z-index: 100;
+        }
+
+        .body[data-menue-aktiv="true"] & {
+            transform: translate(0);
+            transition: 0.5s;
+        }
+
+        &__link {
+            @include schriftart($layout, 36, 45);
+            padding-left: spalten($layout, 1, 13, 0, -0.5);
+        }
+    }
+}
+
