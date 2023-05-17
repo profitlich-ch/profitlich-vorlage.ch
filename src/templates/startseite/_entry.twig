@@ -6,11 +6,11 @@
 	Startseite
 {% endblock %}
 {% block metaDescription %}
-	<meta name="description" content="{{ entry.einstellungenMetaDescription }}">
+	{# <meta name="description" content="{{ entry.einstellungenMetaDescription }}"> #}
 {% endblock %}
 
 {% block content %}
-    {% set bild = entry.bild.one() %}
+    {# {% set bild = entry.bild.one() %}
     <style nonce="{{ cspNonce('style-src') }}"> 
         .test__bild {
             height: 100vh;
@@ -18,6 +18,6 @@
     </style>
     <div class="test__bild">
         {{ macroBild.bild(bild, 'test__bild', bild.alt, '1:1', 'blur', 'cover') }}
-    </div>
+    </div> #}
 
 {% endblock %}
