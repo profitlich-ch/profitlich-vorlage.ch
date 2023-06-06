@@ -21,16 +21,6 @@ body {
     // Font Smoothing
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased; 
-
-    // font-family: 'AkzidenzGrotesk', sans-serif;
-
-    &[data-menue-aktiv="true"] {
-        position: fixed;
-        right: 0;
-        top: 0;
-        width: 100%;
-    }
-
 }
 
 #seite {
