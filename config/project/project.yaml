@@ -1,4 +1,4 @@
-dateModified: 1681936015
+dateModified: 1686059191
 email:
   fromEmail: dev@profitlich.ch
   fromName: 'Profitlich DEV'
@@ -36,10 +36,6 @@ meta:
     e814380a-f915-44b8-92b3-a767fa94f64a: 'Profitlich DEV' # Profitlich DEV
 plugins:
   async-queue:
-    edition: standard
-    enabled: true
-    schemaVersion: 1.0.0
-  blur-hash:
     edition: standard
     enabled: true
     schemaVersion: 1.0.0

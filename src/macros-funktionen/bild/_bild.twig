@@ -65,8 +65,6 @@
 {% endswitch %}
         
 {# mit/ohne preload #}
-    
-    {# hintergrundfarbe == 'blur' ? 'background-image: url(' ~ blurhash(bild) ~ ')', #}
 {% set style = [
     hintergrundfarbe == 'blur' ? 'background-size: 100% 100%',
     hintergrundfarbe != false and hintergrundfarbe != 'blur' ? 'background-color:' ~ hintergrundfarbe,
