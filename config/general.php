@@ -39,6 +39,8 @@ return GeneralConfig::create()
     ->cpTrigger('redaktion')
     // Cookies auf lax stellen
     ->sameSiteCookieValue('Lax')
+    // https://craftcms.stackexchange.com/questions/23145/craft-not-loading-custom-404-template-for-errors
+    ->errorTemplatePrefix('_errors/')
     
     // Aliases _nicht_ mit getenv() aus Sicherheitsgründen
     // https://craftcms.stackexchange.com/questions/36986/use-of-appenv-compared-to-getenv-since-craft-3-4-18
