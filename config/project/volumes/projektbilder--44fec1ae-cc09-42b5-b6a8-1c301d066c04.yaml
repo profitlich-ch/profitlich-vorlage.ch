@@ -35,10 +35,10 @@ fieldLayouts:
             fieldUid: 8bbd43fa-8e18-4619-abf3-43ab1cbec209 # Alt Text (Bildbeschreibung)
             instructions: null
             label: null
-            required: false
+            required: true
             tip: null
             type: craft\fieldlayoutelements\CustomField
-            uid: d8ac6ff8-8255-4821-bb38-bdd2140b7ff8
+            uid: 2c913a42-e62b-4419-bb45-3707f1ddee8c
             userCondition: null
             warning: null
             width: 100
@@ -52,4 +52,4 @@ sortOrder: 2
 titleTranslationKeyFormat: null
 titleTranslationMethod: site
 transformFs: ''
-transformSubpath: ''
+transformSubpath: projektbilder
