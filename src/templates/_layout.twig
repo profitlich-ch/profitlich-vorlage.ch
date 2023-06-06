@@ -68,7 +68,11 @@
             "body-scrolled": 'false'
         },
     } %}
-    <body class="body body--{{ seitenname }} no-js preload" {{ attr(bodyDataTags) }}>
+    <body class="body body--{{ seitenname }}
+     {% if entry is not defined or entry is null %}
+        body--404
+    {% endif %}
+    no-js preload" {{ attr(bodyDataTags) }}>
 
         {# Firefox Hack gegen FOUC: https://www.primative.net/blog/how-to-get-rid-of-the-flash-of-unstyled-content/ #}
         <script nonce="{{ cspNonce('script-src') }}">0</script>
