@@ -80,7 +80,19 @@
             {{ style | join(';') }}
         }
     </style>
-    <picture class="macro-bild__picture" data-hoehe="{{ hoehe }}">
+    {% if bild.getFormat() == 'svg' %}
+        {% set imgAttribute = {
+            src: bild.url,
+            alt: bildbeschreibung,
+            class: "#{class}-img macro-bild__img #{lazyloadVariable}",
+            id:  "macro-bild__img--#{ uniqueId }",
+            data: {
+                sizes: sizesAuto
+            }
+        } %}
+        <img {{ attr(imgAttribute) }}>
+    {% else %}
+        <picture class="macro-bild__picture" data-hoehe="{{ hoehe }}">
 
         {% if objectFit == 'cover' %}
             {# Sources für objectfit: cover und landscape #}
