@@ -92,137 +92,138 @@
     {% else %}
         <picture class="macro-bild__picture" data-hoehe="{{ hoehe }}">
 
-        {% if objectFit == 'cover' %}
-            {# Sources für objectfit: cover und landscape #}
-            {% do bild.setTransform({
-                format: 'webp',
-                quality: 75
-            }) %}
-            {{ tag('source', {
-                type: 'image/webp',
-                media: '(orientation: landscape)',
-                srcset: bild.getSrcset(srcSet)
-            }) }}
-            {% do bild.setTransform({
-                format: 'jpg',
-                quality: 75
-            }) %}
-            {{ tag('source', {
-                format: 'jpg',
-                type: 'image/jpeg',
-                media: '(orientation: landscape)',
-                srcset: bild.getSrcset(srcSet)
-            }) }}
-            {# Sources für objectfit: cover und portrait #}
-            {% do bild.setTransform({
-                format: 'webp',
-                width: 100,
-                height: 150,
-                mode: 'crop',
-                quality: 75
-            }) %}
-            {{ tag('source', {
-                type: 'image/webp',
-                media: '(orientation: portrait)',
-                srcset: bild.getSrcset(srcSet)
-            }) }}
-            {% do bild.setTransform({
-                format: 'jpg',
-                width: 100,
-                height: 150,
-                mode: 'crop',
-                quality: 75
-            }) %}
-            {{ tag('source', {
-                format: 'jpg',
-                type: 'image/jpeg',
-                media: '(orientation: portrait)',
-                srcset: bild.getSrcset(srcSet)
-            }) }}
-        {# Sources für Zuschneidung #}
-        {% elseif seitenverhaeltnis %}
-            {% do bild.setTransform({
-                format: 'webp',
-                width: 100,
-                height: (100 * hoehe) | round(0),
-                mode: 'crop',
-                quality: 75
-            }) %}
-            {{ tag('source', {
-                type: 'image/webp',
-                srcset: bild.getSrcset(srcSet)
-            }) }}
-            {% do bild.setTransform({
-                format: 'jpg',
-                width: 100,
-                height: (100 * hoehe) | round(0),
-                mode: 'crop',
-                quality: 75
-            }) %}
-            {{ tag('source', {
-                format: 'jpg',
-                type: 'image/jpeg',
-                srcset: bild.getSrcset(srcSet)
-            }) }}
-        {# Sources für Unbeschnitten #}
-        {% else %}
-            {% do bild.setTransform({
-                format: 'webp',
-                quality: 75
-            }) %}
-            {{ tag('source', {
-                type: 'image/webp',
-                srcset: bild.getSrcset(srcSet)
-            }) }}
-            {% do bild.setTransform({
-                format: 'jpg',
-                quality: 75
-            }) %}
-            {{ tag('source', {
-                format: 'jpg',
-                type: 'image/jpeg',
-                srcset: bild.getSrcset(srcSet)
-            }) }}
-        {% endif %}
+            {% if objectFit == 'cover' %}
+                {# Sources für objectfit: cover und landscape #}
+                {% do bild.setTransform({
+                    format: 'webp',
+                    quality: 75
+                }) %}
+                {{ tag('source', {
+                    type: 'image/webp',
+                    media: '(orientation: landscape)',
+                    srcset: bild.getSrcset(srcSet)
+                }) }}
+                {% do bild.setTransform({
+                    format: 'jpg',
+                    quality: 75
+                }) %}
+                {{ tag('source', {
+                    format: 'jpg',
+                    type: 'image/jpeg',
+                    media: '(orientation: landscape)',
+                    srcset: bild.getSrcset(srcSet)
+                }) }}
+                {# Sources für objectfit: cover und portrait #}
+                {% do bild.setTransform({
+                    format: 'webp',
+                    width: 100,
+                    height: 150,
+                    mode: 'crop',
+                    quality: 75
+                }) %}
+                {{ tag('source', {
+                    type: 'image/webp',
+                    media: '(orientation: portrait)',
+                    srcset: bild.getSrcset(srcSet)
+                }) }}
+                {% do bild.setTransform({
+                    format: 'jpg',
+                    width: 100,
+                    height: 150,
+                    mode: 'crop',
+                    quality: 75
+                }) %}
+                {{ tag('source', {
+                    format: 'jpg',
+                    type: 'image/jpeg',
+                    media: '(orientation: portrait)',
+                    srcset: bild.getSrcset(srcSet)
+                }) }}
+            {# Sources für Zuschneidung #}
+            {% elseif seitenverhaeltnis %}
+                {% do bild.setTransform({
+                    format: 'webp',
+                    width: 100,
+                    height: (100 * hoehe) | round(0),
+                    mode: 'crop',
+                    quality: 75
+                }) %}
+                {{ tag('source', {
+                    type: 'image/webp',
+                    srcset: bild.getSrcset(srcSet)
+                }) }}
+                {% do bild.setTransform({
+                    format: 'jpg',
+                    width: 100,
+                    height: (100 * hoehe) | round(0),
+                    mode: 'crop',
+                    quality: 75
+                }) %}
+                {{ tag('source', {
+                    format: 'jpg',
+                    type: 'image/jpeg',
+                    srcset: bild.getSrcset(srcSet)
+                }) }}
+            {# Sources für Unbeschnitten #}
+            {% else %}
+                {% do bild.setTransform({
+                    format: 'webp',
+                    quality: 75
+                }) %}
+                {{ tag('source', {
+                    type: 'image/webp',
+                    srcset: bild.getSrcset(srcSet)
+                }) }}
+                {% do bild.setTransform({
+                    format: 'jpg',
+                    quality: 75
+                }) %}
+                {{ tag('source', {
+                    format: 'jpg',
+                    type: 'image/jpeg',
+                    srcset: bild.getSrcset(srcSet)
+                }) }}
+            {% endif %}
 
-        {# Image Tag vorbereiten #}
-        {# Sources für Zuschneidung #}
-        {% if seitenverhaeltnis %}
-            {% do bild.setTransform({
-                width: 400,
-                height: (400 * hoehe) | round(0),
-                mode: 'crop',
-                quality: 75
-            }) %}
-        {# Sources für Unbeschnitten #}
-        {% else %}
-            {% do bild.setTransform({
-                width: 400,
-                quality: 75
-            }) %}
-        {% endif %}
+            {# Image Tag vorbereiten #}
+            {# Sources für Zuschneidung #}
+            {% if seitenverhaeltnis %}
+                {% do bild.setTransform({
+                    width: 400,
+                    height: (400 * hoehe) | round(0),
+                    mode: 'crop',
+                    quality: 75
+                }) %}
+            {# Sources für Unbeschnitten #}
+            {% else %}
+                {% do bild.setTransform({
+                    width: 400,
+                    quality: 75
+                }) %}
+            {% endif %}
 
-        {# Image Tag #}
-        {% set objectFitVariable = objectFit ? "object-fit:" ~ objectFit ~ ";" : "" %}
-        {% set imgAttribute = {
-            src: bild.url,
-            width: bild.width,
-            height: bild.height,
-            alt: bildbeschreibung,
-            class: "#{class}-img macro-bild__img #{lazyloadVariable}",
-            'object-position': cssObjectPosition,
-            id:  "macro-bild__img--#{ uniqueId }",
-            data: {
-                sizes: sizesAuto
-            }
-        } %}
-        <img {{ attr(imgAttribute) }}>
-        <style nonce="{{ cspNonce('style-src') }}">
-            #macro-bild__img--{{ uniqueId }} {
-                {{ objectFitVariable }}
-            }
-        </style>
-    </picture>
+            {# Image Tag #}
+            {% set objectFitVariable = objectFit ? "object-fit:" ~ objectFit ~ ";" : "" %}
+            {% set imgAttribute = {
+                src: bild.url,
+                width: bild.width,
+                height: bild.height,
+                alt: bildbeschreibung,
+                class: "#{class}-img macro-bild__img #{lazyloadVariable}",
+                'object-position': cssObjectPosition,
+                id:  "macro-bild__img--#{ uniqueId }",
+                data: {
+                    sizes: sizesAuto
+                }
+            } %}
+            <img {{ attr(imgAttribute) }}>
+            <style nonce="{{ cspNonce('style-src') }}">
+                #macro-bild__img--{{ uniqueId }} {
+                    {{ objectFitVariable }}
+                }
+            </style>
+        </picture>
+    {% endif %}
 </div>
 
 
