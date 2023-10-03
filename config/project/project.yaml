@@ -1,8 +1,16 @@
-dateModified: 1681936015
+dateModified: 1696330576
 email:
   fromEmail: dev@profitlich.ch
-  fromName: 'Profitlich DEV'
-  transportType: craft\mail\transportadapters\Sendmail
+  fromName: 'Profitlich GmbH'
+  replyToEmail: info@profitlich.ch
+  template: ''
+  transportSettings:
+    host: smtp.gmail.com
+    password: $GMAIL_PASSWORD
+    port: '587'
+    useAuthentication: '1'
+    username: $GMAIL_USER
+  transportType: craft\mail\transportadapters\Smtp
 fs:
   lokal:
     hasUrls: true
@@ -29,7 +37,9 @@ meta:
     83248dab-03cb-497d-bc03-612d85e02528: Sources # Sources
     be5b62b1-1f10-4c40-bcbb-a1505bd9708f: Sources # Sources
     c81f04dd-a4dc-4e6f-a97b-5ce6004b8cf8: 'Profitlich DEV' # Profitlich DEV
+    c9004b70-8ede-4500-b44d-1638afd790aa: New # New
     cd1d5e4f-4839-4d0a-b222-592fbe90251b: Sources # Sources
+    d9d672c4-8aa3-4a45-bb07-6e3471e03007: 'Contact Form' # Contact Form
     e5d84a5c-c412-463f-96ae-d8172dc9a07a: Sources # Sources
     e12099b2-b84e-462a-a130-4307bada0915: Sources # Sources
     e248402f-324f-4fc3-b3db-118021402a18: Sources # Sources
@@ -39,14 +49,15 @@ plugins:
     edition: standard
     enabled: true
     schemaVersion: 1.0.0
-  blur-hash:
-    edition: standard
-    enabled: true
-    schemaVersion: 1.0.0
   content-security-policy:
     edition: standard
     enabled: true
     schemaVersion: 1.0.0
+  formie:
+    edition: standard
+    enabled: true
+    licenseKey: 7WBMXNIZ91Y7JDN27WTVNKWR
+    schemaVersion: 2.0.10
   password-policy:
     edition: standard
     enabled: true
@@ -62,8 +73,9 @@ system:
   edition: pro
   live: true
   name: 'Profitlich DEV'
-  schemaVersion: 4.4.0.4
-  timeZone: America/Los_Angeles
+  retryDuration: null
+  schemaVersion: 4.5.3.0
+  timeZone: Europe/Zurich
 users:
   allowPublicRegistration: false
   defaultGroup: null

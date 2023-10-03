@@ -8,7 +8,7 @@
     // Wenn es keine $mediaquery in der map gibt, gebe einen Fehler aus
     @if not $queries {
         @error "No value could be retrieved from `#{$mediaquery}`. "
-        + "Please make sure it is defined in `$breakpoints` map.";
+        + "Please make sure it is defined in `$mediaqueries` map.";
     }
 
     // Include the media mixin with $queries

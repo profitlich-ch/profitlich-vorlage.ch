@@ -1,0 +1,127 @@
+.menue {
+
+    &__menue {
+        background-color: black;
+    }
+
+    &__link {
+        color: white;
+        font-family: 'Gilroy ExtraBold', sans-serif;
+        font-weight: 800;
+        text-decoration: none;
+
+        &:hover {
+            color: map-get($farben, hellblau-text);
+        }
+    }
+}
+
+@include mediaquery(smartphone) {
+
+    $layout: smartphone;
+
+    .menue {
+        @include abstand($layout, margin, alle, 0, 10, 0, 10);
+        align-items: center;
+        display: flex;
+        height: groesse($layout, 140);
+        justify-content: center;
+        position: relative;
+
+        &__menue {
+            @include abstand($layout, padding, alle, (54 * 2), 0, 0, 54);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            position: fixed;
+            right: 0;
+            top: 0;
+            transform: translate(100%);
+            transition: 0.5s;
+            width: 100%;
+            z-index: 90;
+
+            .body[data-menue-aktiv="true"] & {
+                transform: translate(0);
+                transition: 0.5s;
+            }
+        }
+
+        &__hamburger {
+            $hamburger-breite: groesse($layout, 36);
+            $hamburger-hoehe: groesse($layout, 27);
+            $hamburger-strichstaerke: groesse($layout, 5);
+            $hamburger-farbe: black;
+            $hamburger-farbe-aktiv: white;
+            @include hamburger($hamburger-breite, $hamburger-hoehe, $hamburger-strichstaerke, $hamburger-farbe, $hamburger-farbe-aktiv);
+            @include abstand($layout, padding, alle, 20, 20, 20, 20);
+            padding-right: groesse($layout, 40);
+            position: fixed;
+            right: 0;
+            top: groesse($layout, 35.5);
+            z-index: 120;
+        }
+
+        &__link {
+            @include schriftart($layout, 60, 60);
+        }
+    }
+}
+
+@include mediaquery(desktop) {
+
+    $layout: desktop;
+
+    .menue {
+        @include abstand($layout, margin, alle, 0, 20, 0, 20);
+        align-items: center;
+        display: flex;
+        height: groesse($layout, 245);
+        justify-content: center;
+        position: relative;
+
+        &__menue {
+            @include abstand($layout, padding, top, 88);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            position: fixed;
+            right: 0;
+            top: 0;
+            width: groesse($layout, 550);
+            z-index: 130;
+            transform: translate(100%);
+            transition: 0.5s;
+
+            .body[data-menue-aktiv="true"] & {
+                transform: translate(0);
+                transition: 0.5s;
+            }
+
+            .body[data-seite-hover="true"] & {
+                transform: translate(groesse($layout, 30));
+                transition: 0.5s
+            }
+        }
+
+        &__hamburger {
+            $hamburger-breite: groesse($layout, 60);
+            $hamburger-hoehe: groesse($layout, 48);
+            $hamburger-strichstaerke: groesse($layout, 8);
+            $hamburger-farbe: black;
+            $hamburger-farbe-aktiv: black;
+            @include hamburger($hamburger-breite, $hamburger-hoehe, $hamburger-strichstaerke, $hamburger-farbe, $hamburger-farbe-aktiv);
+            @include abstand($layout, margin, alle, -20, -10, 0, 0);
+            @include abstand($layout, padding, alle, 20, 20, 20, 20);
+            position: fixed;
+            right: groesse($layout, 228);
+            top: groesse($layout, 40 + 56);
+            z-index: 120;
+        }
+
+        &__link {
+            @include schriftart($layout, 70, 70);
+            margin-left: spalten($layout, 0.82, 3.5, 0, 0);
+        }
+    }
+}

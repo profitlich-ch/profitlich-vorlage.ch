@@ -2,6 +2,7 @@ const body = document.body;
 var isDevToolsGeladen = false;
 var isDevToolsAnzeigen = false;
 var devDiv;
+var devDivText;
 
 if(docCookies.getItem('isDevTools')) {
     var isDevToolsCookie = docCookies.getItem('isDevTools');
@@ -15,8 +16,19 @@ function devToolsInitialisieren() {
         devDiv.classList.add('dev-toolbar');
         devDiv.setAttribute('id', 'dev-toolbar');
     document.body.prepend(devDiv);
+        
+    devDivText = document.createElement('div');
+        devDivText.classList.add('dev-toolbar__text');
+        devDivText.setAttribute('id', 'dev-toolbar__text');
+    devDiv.append(devDivText);
+        
+    let devDivRaster = document.createElement('div');
+        devDivRaster.classList.add('dev-toolbar__raster');
+        devDivRaster.setAttribute('id', 'dev-toolbar__raster');
+    devDiv.append(devDivRaster);
     
-    document.addEventListener('eventLayoutaenderung', devAnzeigeAktualisieren);
+    
+    window.addEventListener('resize', devAnzeigeAktualisieren);
     
     isDevToolsGeladen = true;
     devToolsUmschalten(true);
@@ -27,7 +39,7 @@ function devAnzeigeAktualisieren() {
     if (isDevToolsAnzeigen === true) {
         windowHeight = window.innerHeight;
         windowWidth = window.innerWidth;
-        devDiv.textContent = document.body.getAttribute('data-layout') + ' @ ' + windowWidth + '×' + windowHeight;
+        devDivText.textContent = document.body.getAttribute('data-layout') + ' @ ' + windowWidth + '×' + windowHeight;
     }
 }
 

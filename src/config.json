@@ -1,7 +1,7 @@
 {
     "REAMDME": {
-        "1": "layouts – Breite des layouts in XD / einheiten – Feste Grössen px / mitwachsend vw / mediaqueries – Viewportbreite in px ab dem das Layout angewendet wird",
-        "2": "JS: Die config wird zur JS Datei gewandelt und im gulpfile in der Variable dateien jsInline geladen"
+        "Berechnung": "layouts – Breite des layouts in XD / einheiten – Feste Grössen px / mitwachsend vw / mediaqueries – Viewportbreite in px ab dem das Layout angewendet wird",
+        "JS": "Die config wird zur JS Datei gewandelt und im gulpfile in der Variable dateien jsInline geladen"
     },
 
     "maximalbreite": 1699,
@@ -20,7 +20,7 @@
         "desktop": "vw"
     },
     
-    "mediaqueries": {
+    "breakpoints": {
         "smartphone": 0,
         "tabletHoch": 768,
         "tabletQuer": 1024,
@@ -28,21 +28,15 @@
     },
 
     "farben": {
-        "rotbraun1": "#9B645A",
-        "rotbraun2": "#AD7A6E",
-        "braun1": "#86735D",
-        "braun2": "#93826E",
-        "braun3": "#F4F2F0",
-        "schwarz1": "#484848",
         "hintergrund": "white"
     },
 
     "seitenraender": {
         "smartphone": {
-            "top": 90,
-            "right": 40,
+            "top": 0,
+            "right": 10,
             "bottom": 0,
-            "left": 40
+            "left": 10
         },
         "tabletHoch": {
             "top": 90,
@@ -58,14 +52,14 @@
         },
         "desktop": {
             "top": 0,
-            "right": 310,
+            "right": 20,
             "bottom": 0,
-            "left": 100
+            "left": 20
         }
     },
 
     "spalten": {
-        "smartphone": 5,
+        "smartphone": 4,
         "tabletHoch": 5,
         "tabletQuer": 5,
         "desktop": 10
@@ -75,7 +69,7 @@
         "smartphone": 10,
         "tabletHoch": 16,
         "tabletQuer": 22,
-        "desktop": 30,
+        "desktop": 20,
         "gross": 30
     }
 }
