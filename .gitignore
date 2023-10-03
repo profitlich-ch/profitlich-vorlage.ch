@@ -117,10 +117,6 @@ package-lock.json
 
 # Inspiriert von https://github.com/nystudio107/craft-scripts/blob/master/example.gitignore
 # Inspiriert von https://github.com/nystudio107/craft-scripts/blob/master/example.gitignore
-# CRAFT ENVIRONMENT
-# .env.php
-# .env.sh
-# .env
 
 # COMPOSER
 /vendor
@@ -130,6 +126,7 @@ package-lock.json
 # CRAFT STORAGE
 /craft/storage/*
 /storage/*/*
+
 # ASSETS
 /public/assets/
 /web/assets/
@@ -147,6 +144,10 @@ package-lock.json
 /web/js/
 /web/bausteine/
 /templates/
+
+# CONFIG
+/src/js/config.js
+/src/scss/config.scss
 
 # Favicon
 /web/android-chrome*
