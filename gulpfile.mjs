@@ -60,7 +60,7 @@ function setDateien() {
             dest: 'web/css',
         },
         jsDefer: {
-            src: (modus == 'dev') ? ['src/js/defer/**/*.js', 'src/macros-funktionen/**/*.js', 'src/dev/**/*.js', 'src/bausteine/**/_*.js'] : ['src/js/defer/**/*.js', 'src/macros-funktionen/**/*.js', 'src/bausteine/**/_*.js', '!src/dev/**/*.*'],
+            src: (modus == 'dev') ? ['src/js/defer/**/*.js', 'src/macros-funktionen/**/*.js', 'src/bausteine/**/_*.js', 'src/dev/**/*.js', 'src/bausteine/**/*.dev.js'] : ['src/js/defer/**/*.js', 'src/macros-funktionen/**/*.js', 'src/bausteine/**/_*.js'],
             dest: 'web/js',
         },
         jsConfig: {
@@ -72,11 +72,11 @@ function setDateien() {
             dest: 'templates/js',
         },
         jsBausteine: {
-            src: ['src/bausteine/**/*.js', '!src/bausteine/**/_*.js'],
+            src: ['src/bausteine/**/*.js', '!src/bausteine/**/_*.js', '!src/bausteine/**/*.dev.js'],
             dest: 'web/bausteine',
         },
         jsBausteineDefer: {
-            src: ['src/bausteine/**/_*.js'],
+            src: ['src/bausteine/**/_*.js', '!src/bausteine/**/*.dev.js'],
             dest: 'web/js',
         },
         // https://stackoverflow.com/questions/28876469/multiple-file-extensions-within-the-same-directory-using-gulp
