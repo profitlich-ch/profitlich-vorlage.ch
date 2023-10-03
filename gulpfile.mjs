@@ -115,7 +115,7 @@ function setDateien() {
             dest: 'web',
         },
         uploadWeb: {
-            src: ['web/**/**.*', '!web/assets/**/**.*', '!web/cpresources/**/**.*', '!web/assets/**/**.*', '!web/index.php'],
+            src: ['web/**/**.*', '!web/assets/**/**.*', '!web/cpresources/**/**.*', '!web/index.php'],
             dest: '/web'
         },
         uploadTemplates: {
