@@ -1,4 +1,5 @@
 {% import "_macros-funktionen/bild/_bild.twig" as macroBild %}
+{% import "_macros-funktionen/video/_video.twig" as macroVideo %}
 {% extends "_layout.twig" %}
 
 
@@ -10,14 +11,7 @@
 {% endblock %}
 
 {% block content %}
-    {# {% set bild = entry.bild.one() %}
-    <style nonce="{{ cspNonce('style-src') }}"> 
-        .test__bild {
-            height: 100vh;
-        }
-    </style>
-    <div class="test__bild">
-        {{ macroBild.bild(bild, 'test__bild', bild.alt, '1:1', 'blur', 'cover') }}
-    </div> #}
+    {% set video = entry.bild.one() %}
+    {{ macroVideo.video(video, 'video', 'Beschreibung') }}
 
 {% endblock %}

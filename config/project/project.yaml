@@ -1,4 +1,4 @@
-dateModified: 1696330576
+dateModified: 1696365667
 email:
   fromEmail: dev@profitlich.ch
   fromName: 'Profitlich GmbH'
@@ -50,6 +50,10 @@ plugins:
     enabled: true
     schemaVersion: 1.0.0
   content-security-policy:
+    edition: standard
+    enabled: true
+    schemaVersion: 1.0.0
+  embeddedassets:
     edition: standard
     enabled: true
     schemaVersion: 1.0.0
