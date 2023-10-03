@@ -11,7 +11,7 @@ $farbe--dev-raster-mitte: rgba(0, 0, 0, 0.2);
     $seitenrand-rechts: groesse($layout, $seitenrand-rechts);
 
     body[data-dev='true'] {
-        .dev-toolbar::before {
+        .dev-toolbar__raster::before {
             background: linear-gradient(90deg, $farbe--dev-raster-mitte 0.5px, transparent 0.5px) 0 0,
                         linear-gradient(90deg, $farbe--dev-raster 0.5px, transparent 0.5px) calc($spaltenabstand / 2) 0,
                         linear-gradient(90deg, $farbe--dev-raster 0.5px, transparent 0.5px) calc($spaltenabstand / 2 * -1) 0;
@@ -34,14 +34,22 @@ $farbe--dev-raster-mitte: rgba(0, 0, 0, 0.2);
     z-index: 9999999;
     
     body[data-dev='true'] & {
-        display: flex;
-
+        display: flex;   
+    }
+    
+    &__raster {
+        width: 100%;
+        height: 100%;
+        left: 0;
+        pointer-events: none;
+        position: fixed;
+        top: 0;
+        
         &::before {
             content: "";
             height: 100%;
             left: 0;
-            pointer-events: none;
-            position: fixed;
+            position: absolute;
             top: 0;
             width: 100%;
         }
