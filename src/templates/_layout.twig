@@ -30,10 +30,10 @@
             <link rel="stylesheet" href="/css/dev.{{ staticAssetsVersion }}.css" nonce="{{ cspNonce('style-src') }}">
         {% endif %}
 
-        <script src="/js/defer.{{ staticAssetsVersion }}.js" defer nonce="{{ cspNonce('script-src') }}"></script>
         <script nonce="{{ cspNonce('script-src') }}">
-            {{ source("/js/inline.js") }}
+            {{ source("/js/config.js") }}
         </script>
+        <script src="/js/defer.{{ staticAssetsVersion }}.js" defer nonce="{{ cspNonce('script-src') }}"></script>
 
         {# Webfonts #}
 
@@ -95,6 +95,10 @@
             </header>
             <main class="main"> {% block content %}{% endblock %}</main>
         </div>
+        <script nonce="{{ cspNonce('script-src') }}">
+            {{ source("/js/inline.js") }}
+        </script>
+        <script src="/js/defer-bausteine.{{ staticAssetsVersion }}.js" defer nonce="{{ cspNonce('script-src') }}"></script>
         <script nonce="{{ cspNonce('script-src') }}">
             {# FOUC #}
             let domReady = (cb) => {
