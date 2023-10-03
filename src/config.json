@@ -20,7 +20,7 @@
         "desktop": "vw"
     },
     
-    "mediaqueries": {
+    "breakpoints": {
         "smartphone": 0,
         "tabletHoch": 768,
         "tabletQuer": 1024,
