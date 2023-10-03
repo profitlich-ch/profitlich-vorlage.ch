@@ -4,7 +4,7 @@
 
 // media query change events
 var layoutAktuell;
-for (let [layout, minSize] of Object.entries(config.mediaqueries)) {
+for (let [layout, minSize] of Object.entries(config.breakpoints)) {
     if (minSize) {
         var matchmedia = window.matchMedia('(min-width: ' + minSize + 'px)');
         matchmedia.addEventListener('change', layoutAendern);
@@ -14,7 +14,7 @@ for (let [layout, minSize] of Object.entries(config.mediaqueries)) {
 // media query handler function
 function layoutAendern() {
     // let size = null;
-    for (let [layout, minSize] of Object.entries(config.mediaqueries)) {
+    for (let [layout, minSize] of Object.entries(config.breakpoints)) {
         var matchmedia = window.matchMedia('(min-width: ' + minSize + 'px)');
         if (!matchmedia || matchmedia.matches) layoutAktuell = layout;
     }
