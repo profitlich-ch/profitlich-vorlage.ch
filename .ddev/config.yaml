@@ -99,6 +99,7 @@ nodejs_version: "16"
 # would set the destination path for ddev import-files to <docroot>/custom/upload/dir
 # When mutagen is enabled this path is bind-mounted so that all the files
 # in the upload_dir don't have to be synced into mutagen
+upload_dirs: ["web/assets"]
 
 # working_dir:
 #   web: /var/www/html
