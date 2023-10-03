@@ -26,15 +26,19 @@ function debounce(func, wait, immediate) {
 };
 
 // E-Mailadressen anzeigen
-var emlArray = document.getElementsByClassName("eml");
-for (var i = (emlArray.length - 1); i >= 0; i--) {
-    var obj = emlArray[i];
-    var eml = obj.getAttribute('data-eml');
-    var emlText = eml + '@domain.tld';
-    var emlAddress = 'mailto:' + emlText;
-    obj.setAttribute('href', emlAddress);
-    obj.innerHTML = emlText;
+function emailAdressen() {
+    const emlArray = document.querySelectorAll('[data-eml]').forEach(adresse => {
+        let eml = adresse.getAttribute('data-eml');
+        let emlDomain = 'studioc-architekten.ch';
+        let emlText = eml+'@'+emlDomain;
+        let emlAddress = 'mailto:'+emlText;
+        adresse.setAttribute('href', emlAddress);
+        adresse.innerHTML = `
+            ${eml}<span class="mail-at">@</span>${emlDomain}
+        `;
+    });
 }
+emailAdressen();
 
 // 100vh Problem
 // https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
