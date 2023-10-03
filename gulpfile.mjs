@@ -306,9 +306,6 @@ function jsConfigTask() {
 function jsInlineTask() {
     return src(dateien.jsInline.src)
 
-    // Sourcemaps initialisieren
-    .pipe(sourcemaps.init())
-
     // Alle Dateien in einer zusammenfassen
     .pipe(concat('inline.js'))
 
@@ -318,9 +315,6 @@ function jsInlineTask() {
 
     // Komprimieren mit Terser wenn nicht im dev Modus
     .pipe(gulpif( modus != 'dev', terser() ))
-
-    // Sourcemaps schreiben
-    .pipe(sourcemaps.write('.'))
 
     // Dateien(en) schreiben
     .pipe(dest
