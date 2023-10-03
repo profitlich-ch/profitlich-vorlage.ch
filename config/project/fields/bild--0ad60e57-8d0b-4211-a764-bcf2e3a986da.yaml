@@ -11,9 +11,12 @@ settings:
   allowUploads: true
   allowedKinds:
     - image
+    - json
+  branchLimit: null
   defaultUploadLocationSource: 'volume:44fec1ae-cc09-42b5-b6a8-1c301d066c04' # Projektbilder
   defaultUploadLocationSubpath: null
   localizeRelations: false
+  maintainHierarchy: false
   maxRelations: null
   minRelations: null
   previewMode: full
@@ -34,10 +37,9 @@ settings:
         - class
         - craft\elements\conditions\assets\AssetCondition
   selectionLabel: null
-  showSiteMenu: false
+  showSiteMenu: true
   showUnpermittedFiles: false
   showUnpermittedVolumes: false
-  source: null
   sources: '*'
   targetSiteId: null
   validateRelatedElements: false
