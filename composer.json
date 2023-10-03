@@ -5,7 +5,7 @@
     "dodecastudio/craft-blurhash": "^2.0",
     "ostark/craft-async-queue": "^3.1.0",
     "percipioglobal/craft-password-policy": "^4.0.0",
-    "verbb/formie": "2.0.36",
+    "verbb/formie": "^2.0.36",
     "vlucas/phpdotenv": "^5.4.0"
   },
   "require-dev": {
