@@ -148,6 +148,10 @@ package-lock.json
 /web/bausteine/
 /templates/
 
+# CONFIG
+/src/js/config.js
+/src/scss/config.scss
+
 # Favicon
 /web/android-chrome*
 /web/apple-touch-icon*
