@@ -25,40 +25,41 @@ $grossAb: null;
     $grossAb: 999999px;
 }
 
-$breakpoints: (
-    smartphoneBis:   map-get($layouts, $tabletHoch) - 1px,
-    tabletHochAb:    map-get($layouts, $tabletHoch) + 0px,
-    tabletHochBis:   map-get($layouts, tabletQuer) - 1px,
-    tabletQuerAb:    map-get($layouts, tabletQuer) + 0px,
-    tabletQuerBis:   map-get($layouts, desktop) - 1px,
-    desktopAb:       map-get($layouts, desktop) + 0px,
-    desktopBis:      map-get($layouts, gross) - 1px,
-    grossAb:         map-get($layouts, gross) + 0px,
+$breakpointsVariablen: (
+    smartphoneBis:   map-get($breakpoints, $tabletHoch) - 1px,
+    tabletHochAb:    map-get($breakpoints, $tabletHoch) + 0px,
+    tabletHochBis:   map-get($breakpoints, tabletQuer) - 1px,
+    tabletQuerAb:    map-get($breakpoints, tabletQuer) + 0px,
+    tabletQuerBis:   map-get($breakpoints, desktop) - 1px,
+    desktopAb:       map-get($breakpoints, desktop) + 0px,
+    desktopBis:      map-get($breakpoints, gross) - 1px,
+    grossAb:         map-get($breakpoints, gross) + 0px,
 );
 
 // Gibt es kein Layout gross, soll die media query desktop keine max-width haben
 $mediaqueryDesktop: null;
 @if map-get($layouts, gross) {
-    $mediaqueryDesktop: (min-width: map-get($breakpoints, desktopAb), max-width: map-get($breakpoints, desktopBis));
+    $mediaqueryDesktop: (min-width: map-get($breakpointsVariablen, desktopAb), max-width: map-get($breakpointsVariablen, desktopBis));
 } @else {
-    $mediaqueryDesktop: (min-width: map-get($breakpoints, desktopAb));
+    $mediaqueryDesktop: (min-width: map-get($breakpointsVariablen, desktopAb));
 }
 
 $mediaqueries: (
-	smartphone:     (max-width: map-get($breakpoints, smartphoneBis)),
-	tablet:         (min-width: map-get($breakpoints, tabletHochAb), max-width: map-get($breakpoints, tabletQuerBis)),
-	tabletAb:       (min-width: map-get($breakpoints, tabletHochAb)),
-	tabletHochAb:   (max-width: map-get($breakpoints, tabletHochAb)),
-	tabletHoch:     (min-width: map-get($breakpoints, tabletHochAb), max-width: map-get($breakpoints, tabletHochBis)),
-	tabletHochBis:  (max-width: map-get($breakpoints, tabletHochBis)),
-	tabletQuerAb:   (max-width: map-get($breakpoints, tabletQuerAb)),
-	tabletQuer:     (min-width: map-get($breakpoints, tabletQuerAb), max-width: map-get($breakpoints, tabletQuerBis)),
-	tabletQuerBis:  (max-width: map-get($breakpoints, tabletQuerBis)),
-	desktopAb:      (min-width: map-get($breakpoints, desktopAb)),
+	smartphone:     (max-width: map-get($breakpointsVariablen, smartphoneBis)),
+	tablet:         (min-width: map-get($breakpointsVariablen, tabletHochAb), max-width: map-get($breakpointsVariablen, tabletQuerBis)),
+	tabletAb:       (min-width: map-get($breakpointsVariablen, tabletHochAb)),
+	tabletHochAb:   (max-width: map-get($breakpointsVariablen, tabletHochAb)),
+	tabletHoch:     (min-width: map-get($breakpointsVariablen, tabletHochAb), max-width: map-get($breakpointsVariablen, tabletHochBis)),
+	tabletHochBis:  (max-width: map-get($breakpointsVariablen, tabletHochBis)),
+	tabletQuerAb:   (max-width: map-get($breakpointsVariablen, tabletQuerAb)),
+	tabletQuer:     (min-width: map-get($breakpointsVariablen, tabletQuerAb), max-width: map-get($breakpointsVariablen, tabletQuerBis)),
+	tabletQuerBis:  (max-width: map-get($breakpointsVariablen, tabletQuerBis)),
+	desktopAb:      (min-width: map-get($breakpointsVariablen, desktopAb)),
 	desktop:        $mediaqueryDesktop,
-	desktopBis:     (max-width: map-get($breakpoints, desktopBis)),
-	gross:          (min-width: map-get($breakpoints, grossAb)),
+	desktopBis:     (max-width: map-get($breakpointsVariablen, desktopBis)),
+	gross:          (min-width: map-get($breakpointsVariablen, grossAb)),
 );
+
 
 
 // Versalien
