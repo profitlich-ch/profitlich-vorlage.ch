@@ -60,17 +60,24 @@ function setDateien() {
             dest: 'web/css',
         },
         jsDefer: {
-            src: (modus == 'dev') ? ['src/js/defer/**/*.js', 'src/macros-funktionen/**/*.js', 'src/bausteine/**/_*.js'] : ['src/js/defer/**/*.js', 'src/macros-funktionen/**/*.js', 'src/bausteine/**/_*.js', '!src/macros-funktionen/dev/**/*.*'],
+            src: (modus == 'dev') ? ['src/js/defer/**/*.js', 'src/macros-funktionen/**/*.js'] : ['src/js/defer/**/*.js', 'src/macros-funktionen/**/*.js', '!src/macros-funktionen/dev/**/*.*'],
             dest: 'web/js',
         },
-        
+        jsConfig: {
+            src: 'src/js/config.js',
+            dest: 'templates/js',
+        },
         jsInline: {
-            src: ['src/js/config.js', 'src/js/inline/**/*.js'],
+            src: 'src/js/inline/**/*.js',
             dest: 'templates/js',
         },
         jsBausteine: {
             src: ['src/bausteine/**/*.js', '!src/bausteine/**/_*.js'],
             dest: 'web/bausteine',
+        },
+        jsBausteineDefer: {
+            src: ['src/bausteine/**/_*.js'],
+            dest: 'web/js',
         },
         // https://stackoverflow.com/questions/28876469/multiple-file-extensions-within-the-same-directory-using-gulp
         templatesTwig: {
@@ -240,6 +247,58 @@ function jsDeferTask() {
     // Dateien(en) schreiben
     .pipe(dest
         (dateien.jsDefer.dest)
+    )
+}
+
+// JS Bausteine Defer kompilieren
+function jsBausteineDeferTask() {
+    return src(dateien.jsBausteineDefer.src)
+
+    // Sourcemaps initialisieren
+    .pipe(sourcemaps.init())
+
+    // Alle Dateien in einer zusammenfassen
+    .pipe(concat('defer-bausteine.js'))
+
+    .pipe(dest
+        (dateien.jsBausteineDefer.dest)
+    )
+
+    // Komprimieren mit Terser wenn nicht im dev Modus
+    .pipe(gulpif( modus != 'dev', terser() ))
+
+    // Sourcemaps schreiben
+    .pipe(sourcemaps.write('.'))
+
+    // Dateien(en) schreiben
+    .pipe(dest
+        (dateien.jsBausteineDefer.dest)
+    )
+}
+
+// JS Config kompilieren
+function jsConfigTask() {
+    return src(dateien.jsConfig.src)
+
+    // Sourcemaps initialisieren
+    .pipe(sourcemaps.init())
+
+    // Alle Dateien in einer zusammenfassen
+    .pipe(concat('config.js'))
+
+    .pipe(dest
+        (dateien.jsConfig.dest)
+    )
+
+    // Komprimieren mit Terser wenn nicht im dev Modus
+    .pipe(gulpif( modus != 'dev', terser() ))
+
+    // Sourcemaps schreiben
+    .pipe(sourcemaps.write('.'))
+
+    // Dateien(en) schreiben
+    .pipe(dest
+        (dateien.jsConfig.dest)
     )
 }
 
@@ -524,7 +583,7 @@ function watchTask() {
             configToScssTask,
             configToJsTask,
             gulp.parallel(
-                templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosFunktionenTask, scssTask, jsDeferTask, jsInlineTask, medienTask, mockupTask, fontsTask, faviconTask, spritesTask, staticAssetsVersionTask
+                templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosFunktionenTask, scssTask, jsDeferTask, jsBausteineDeferTask, jsConfigTask, jsInlineTask, medienTask, mockupTask, fontsTask, faviconTask, spritesTask, staticAssetsVersionTask
             ),
             injizierenTask,
             // browsersyncReload,
@@ -542,7 +601,7 @@ task('build',
         configToJsTask,
         modusTask,
         parallel(
-            templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosFunktionenTask, scssTask, jsDeferTask, jsInlineTask, medienTask, mockupTask, fontsTask, faviconTask, spritesTask, staticAssetsVersionTask
+            templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosFunktionenTask, scssTask, jsDeferTask, jsBausteineDeferTask, jsConfigTask, jsInlineTask, medienTask, mockupTask, fontsTask, faviconTask, spritesTask, staticAssetsVersionTask
         ),
         injizierenTask,
         // browsersyncServe,
