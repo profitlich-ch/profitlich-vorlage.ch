@@ -149,6 +149,9 @@ package-lock.json
 /src/js/config.js
 /src/scss/config.scss
 
+# DOTENV
+/env.json
+
 # Favicon
 /web/android-chrome*
 /web/apple-touch-icon*
