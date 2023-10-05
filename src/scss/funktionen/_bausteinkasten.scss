@@ -94,8 +94,18 @@ $mediaqueries: (
 // Berechnet die Breite (als Anteil von 100)
 // Standarmässig geht die Funktion davon aus, dass der gegebene Raum keine Spaltenabstände seitlich enthält;
 // mit der Variable $vonZusatzpaltenabstaende können welche angegeben werden.
-@function spalten($layout, $spalten, $vonSpalten, $vonZusatzpaltenabstaende:0, $zusatzspaltenabstaende:0, $invers:1) {
+// Die Variable $randabstand ist zu verwenden, wenn der zu berechnende Raum zusätzlich zu den Spalten Seitenränder enthält
+// Verschiedung fügt dem Ergebnis einen Wert hinzu, zum Beispiel einen Seitenrand
+// Mit invers wird die Breite als negatibve Zahl gerechnet, etwa für eine negative Verschiebung in einem Bühnensystem
+@function spalten($layout, $spalten, $vonSpalten, $vonZusatzpaltenabstaende:0, $zusatzspaltenabstaende:0, $randabstand:0, $verschiebung:0, $invers:false) {
     $spaltenabstand: groesse($layout, map-get($spaltenabstaende, $layout) );
+    $randabstand: groesse($layout, $randabstand);
+    $verschiebung: groesse($layout, $verschiebung);
+    @if ( $invers == false ) {
+        $invers: 1;
+    } @else {
+        $invers: -1;
+    }
 
     // Verfügbarer Raum
     // minus Spaltenabstände innerhalb des Raumes
@@ -111,17 +121,19 @@ $mediaqueries: (
         (
             (
                 // Raum
-                (100%)
+                100%
                 // Alle Spaltenabstände des Raumes
-                - $spaltenabstand * ($vonSpalten + $vonZusatzpaltenabstaende - 1)
+                - $randabstand - $spaltenabstand * ($vonSpalten + $vonZusatzpaltenabstaende - 1)
             )
             // Spaltenahl des Raumes
             / $vonSpalten
             // gewünschte Spalten
-            * $spalten
+            * ($spalten * $invers)
             // Spaltenabstände zwischen den gewünschten Spalten
-            + $spaltenabstand * ($spalten - 1 + $zusatzspaltenabstaende)
-        ) * $invers
+            + ($spaltenabstand * ($spalten - 1 + $zusatzspaltenabstaende) * $invers)
+            // 
+            + ($verschiebung * $invers)
+        )
     );
 }
 
