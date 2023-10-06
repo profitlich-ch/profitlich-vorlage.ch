@@ -1,6 +1,7 @@
 // Raster
 $farbe--dev-toolbar: rgba(0, 220, 30, 1.0);
 $farbe--dev-raster: rgba(0, 0, 255, 0.5);
+$farbe--dev-raster-flaechen: rgba(191, 255, 254, 0.5);
 $farbe--dev-raster-mitte: rgba(0, 0, 0, 0.2);
 
 
@@ -9,32 +10,60 @@ $farbe--dev-raster-mitte: rgba(0, 0, 0, 0.2);
     $spaltenabstand: groesse($layout, $spaltenabstand);
     $seitenrand-links: groesse($layout, $seitenrand-links);
     $seitenrand-rechts: groesse($layout, $seitenrand-rechts);
-
+    
     body[data-dev='true'] {
-        .dev-toolbar__raster::before {
-            background: linear-gradient(90deg, $farbe--dev-raster-mitte 0.5px, transparent 0.5px) 0 0,
-                        linear-gradient(90deg, $farbe--dev-raster 0.5px, transparent 0.5px) calc($spaltenabstand / 2) 0,
-                        linear-gradient(90deg, $farbe--dev-raster 0.5px, transparent 0.5px) calc($spaltenabstand / 2 * -1) 0;
-            background-size: calc((100% - ($spalten * $spaltenabstand)) * calc(1 / $spalten) + $spaltenabstand) 1px;
+        .dev-toolbar__raster::after {
+            // Das Raster entsteht durch Wiederholung
+            // important, weil die spezifischeren bacckground Angaben die size sonst überschreiben
+            background-size: calc((100% - ($spalten * $spaltenabstand)) * calc(1 / $spalten) + $spaltenabstand) 1px !important;
             margin: 0 ($seitenrand-rechts - calc($spaltenabstand / 2)) 0 ($seitenrand-links - calc($spaltenabstand / 2));
+            // Das Raster berechnet sich ab der Mitte der Spalten
+            // Deshalb ist es links und rechts um einen halben Spaltenabstand breiter
             width: calc(100% - $seitenrand-rechts + calc($spaltenabstand / 2) - $seitenrand-links + calc($spaltenabstand / 2));
+        }
+    }
+    
+    body[data-dev='true'][data-dev-rasterart="linien"] {
+        .dev-toolbar__raster::after {
+            background:
+                // Mitte des Spaltenabstands
+                linear-gradient(90deg, transparent 0.5px, transparent 0.5px) 0 0,
+                // linke Spaltenlinie
+                // Position: von der Spaltenanbstandmitte um einen halben Spaltenabstand nach rechts
+                linear-gradient(90deg, $farbe--dev-raster 0.5px, transparent 0.5px) calc($spaltenabstand / 2) 0,
+                // rechte Spaltenlinie
+                linear-gradient(90deg, $farbe--dev-raster 0.5px, transparent 0.5px) calc($spaltenabstand / 2 * -1) 0;
+        }
+    }
+    
+    body[data-dev='true'][data-dev-rasterart="flaechen"] {
+        .dev-toolbar__raster::after {
+            background:
+                // linke Spaltenlinie
+                // Position: von der Spaltenanbstandmitte um einen halben Spaltenabstand nach rechts
+                linear-gradient(90deg, $farbe--dev-raster-flaechen calc(100% - $spaltenabstand), transparent 0.5px) calc($spaltenabstand / 2) 0,
         }
     }
 }
 
 .dev-toolbar {
-    background-color: $farbe--dev-toolbar;
     display: none;
     font-size: 12px;
     left: 0;
-    padding: 5px 10px;
     pointer-events: none;
-    position: fixed;
     top: 0;
-    z-index: 9999999;
     
     body[data-dev='true'] & {
-        display: flex;   
+        display: flex;
+    }
+    
+    &__text {
+        background-color: $farbe--dev-toolbar;
+        left: 0;
+        padding: 5px 10px;
+        position: fixed;
+        top: 0;
+        z-index: 9999999;
     }
     
     &__raster {
@@ -44,14 +73,17 @@ $farbe--dev-raster-mitte: rgba(0, 0, 0, 0.2);
         pointer-events: none;
         position: fixed;
         top: 0;
+
+        body[data-dev-rasterart='linien'] & {
+            z-index: 9999999;
+        }
         
-        &::before {
+        &::after {
             content: "";
             height: 100%;
             left: 0;
             position: absolute;
             top: 0;
-            width: 100%;
         }
     }
 }

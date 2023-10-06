@@ -1,12 +1,14 @@
 const body = document.body;
 var isDevToolsGeladen = false;
 var isDevToolsAnzeigen = false;
+var rasterart = 'linien';
 var devDiv;
 var devDivText;
 
-if(docCookies.getItem('isDevTools')) {
-    var isDevToolsCookie = docCookies.getItem('isDevTools');
-    if (isDevToolsCookie == 'true') {
+if(docCookies.getItem('devTools')) {
+    var devToolsArray = docCookies.getItem('devTools').split(',');
+    if (devToolsArray[0] == 'true') {
+        rasterart = devToolsArray[1];
         devToolsInitialisieren();
     }
 }
@@ -31,7 +33,7 @@ function devToolsInitialisieren() {
     window.addEventListener('resize', devAnzeigeAktualisieren);
     
     isDevToolsGeladen = true;
-    devToolsUmschalten(true);
+    devToolsUmschalten(true, rasterart);
     devAnzeigeAktualisieren();
 }
 
@@ -47,16 +49,20 @@ var down = {};
 document.addEventListener('keydown', (event) => {
     if (event.key === 'Control') {
         isDevToolsAnzeigen = body.getAttribute('data-dev') == 'true' ? 'false' : 'true';
-        devToolsUmschalten(isDevToolsAnzeigen);
+        if (isDevToolsAnzeigen == 'true') {
+            rasterart = rasterart == 'linien' ? 'flaechen' : 'linien';
+        }
+        devToolsUmschalten(isDevToolsAnzeigen, rasterart);
         if (isDevToolsGeladen === false) {
             devToolsInitialisieren();
         }
     }
 });
 
-function devToolsUmschalten(isOn) {
+function devToolsUmschalten(isOn, rasterart) {
     body.setAttribute('data-dev', isOn);
+    body.setAttribute('data-dev-rasterart', rasterart);
     // docCookies.setItem(name, value[, end, path, domain, secure, samesite])
-    docCookies.setItem('isDevTools', isOn, new Date(2099, 1, 1), null, window.location.hostname, true, 'lax');
+    docCookies.setItem('devTools', isOn + ',' + rasterart, new Date(2099, 1, 1), null, window.location.hostname, true, 'lax');
     isDevToolsAnzeigen = isOn;
 }
