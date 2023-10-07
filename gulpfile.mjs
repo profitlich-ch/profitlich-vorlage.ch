@@ -12,6 +12,7 @@ import autoprefixer from 'autoprefixer';
 import browsersync from 'browser-sync';
 import cleanCSS from 'gulp-clean-css';
 import concat from 'gulp-concat';
+import critical from 'critical';
 import dartSass from 'sass';
 import dotenv from 'gulp-dotenv';
 import fs from 'fs';
@@ -128,10 +129,6 @@ function setDateien() {
         uploadTemplates: {
             src: 'templates/**/*.*',
             dest: '/templates'
-        },
-        uploadConfig: {
-            src: ['config/custom.php'],
-            dest: '/config'
         },
         craftCustomConfig: {
             src: 'config/custom.php',
@@ -457,6 +454,15 @@ function medienTask() {
     );
 }
 
+// Critical CSS inlinen
+function criticalTask() {
+    return src(dateien.medien.src)
+
+    .pipe(dest
+        (dateien.medien.dest)
+    );
+}
+
 // Medien Backup auf NAS
 function medienBackupTask() {
     del('backup/src');
@@ -547,21 +553,21 @@ function uploadWebTask() {
         return src( dateien.uploadWeb.src, { buffer: false } )
     }
 };
-function uploadSonstigesTask() {
+function uploadCustomConfigTask() {
     if (modus =='staging' || modus =='production') {
-        return src( dateien.uploadConfig.src, {
+        return src( dateien.craftCustomConfig.src, {
             buffer: false,
             dot: true
         } )
     
         .pipe(ftpVerbindung.newer
-            (dateien.uploadConfig.dest)
+            (dateien.craftCustomConfig.dest)
         ) 
         .pipe(ftpVerbindung.dest
-            (dateien.uploadConfig.dest)
+            (dateien.craftCustomConfig.dest)
         )
     } else {
-        return src( dateien.uploadConfig.src, { buffer: false } )
+        return src( dateien.craftCustomConfig.src, { buffer: false } )
     }
 };
 
@@ -626,7 +632,7 @@ function watchTask() {
             uploadSetupTask,
             uploadTemplatesTask,
             uploadWebTask,
-            uploadSonstigesTask,
+            uploadCustomConfigTask,
             configLoeschenTask
         )
     );
@@ -647,7 +653,7 @@ task('build',
         uploadSetupTask,
         uploadTemplatesTask,
         uploadWebTask,
-        uploadSonstigesTask,
+        uploadCustomConfigTask,
         configLoeschenTask,
         watchTask
     )
