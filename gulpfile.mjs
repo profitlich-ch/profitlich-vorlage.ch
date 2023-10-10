@@ -61,7 +61,7 @@ function setDateien() {
             dest: 'web/css',
         },
         jsDefer: {
-            src: (modus == 'dev') ? ['src/js/defer/**/*.js', 'src/macros-funktionen/**/*.js', 'src/bausteine/**/_*.js', 'src/dev/**/*.js'] : ['src/js/defer/**/*.js', 'src/macros-funktionen/**/*.js', 'src/bausteine/**/_*.js'],
+            src: (modus != 'production') ? ['src/js/defer/**/*.js', 'src/macros-funktionen/**/*.js', 'src/bausteine/**/_*.js', 'src/dev/**/*.js'] : ['src/js/defer/**/*.js', 'src/macros-funktionen/**/*.js', 'src/bausteine/**/_*.js'],
             dest: 'web/js',
         },
         jsConfig: {
