@@ -18,12 +18,12 @@
         {# https://web.dev/defer-non-critical-css/ #}
         <link rel="preload" href="/css/style.{{ staticAssetsVersion }}.css" as="style" nonce="{{ cspNonce('style-src') }}">
         <link id="cssOnload" rel="stylesheet" href="/css/style.{{ staticAssetsVersion }}.css" media="print" nonce="{{ cspNonce('style-src') }}">
-    <script nonce="{{ cspNonce('script-src') }}">
-        cssOnload = document.getElementById('cssOnload');
-        cssOnload.onload = function() {
-            cssOnload.setAttribute('media', 'all');
-        };
-    </script>
+        <script nonce="{{ cspNonce('script-src') }}">
+            cssOnload = document.getElementById('cssOnload');
+            cssOnload.onload = function() {
+                cssOnload.setAttribute('media', 'all');
+            };
+        </script>
         <noscript><link rel="stylesheet" href="/css/style.{{ staticAssetsVersion }}.css" nonce="{{ cspNonce('style-src') }}"></noscript>
 
         {% if devMode %}
