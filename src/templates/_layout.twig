@@ -44,7 +44,7 @@
                 visibility: visible;
             }
             {# Transition erst nach dem Laden der Seite anwenden #}
-            body.preload * {
+            body[data-preloading="true"] * {
                 transition: transform 0s !important;
             }
             /* Body bis zum Laden des ganzen HTML unsichtbar machen */
@@ -65,14 +65,15 @@
         data: {
             "menue-aktiv": 'false',
             "menue-bewegt": 'false',
-            "body-scrolled": 'false'
+            "body-scrolled": 'false',
+            "preloading": 'true'
         },
     } %}
     <body class="body body--{{ seitenname }}
      {% if entry is not defined or entry is null %}
         body--404
     {% endif %}
-    no-js preload" {{ attr(bodyDataTags) }}>
+    no-js" {{ attr(bodyDataTags) }}>
 
         {# Firefox Hack gegen FOUC: https://www.primative.net/blog/how-to-get-rid-of-the-flash-of-unstyled-content/ #}
         <script nonce="{{ cspNonce('script-src') }}">0</script>
@@ -112,7 +113,7 @@
             });
             {# Preload beenden #}
             setTimeout(function(){
-                document.body.classList.remove('preload');
+                document.body.setAttribute('preloading', 'false');
             }, 500);
         </script>
     </body>
