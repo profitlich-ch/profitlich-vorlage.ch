@@ -1,108 +1,54 @@
-class StickyMenu {
-    constructor() {
-      this.menuActive = false;
-      this.page = document.getElementById('seite');
-      this.hamburger = document.getElementById('hamburger');
-      this.stickyElements = [];
-      this.stickyElementsArray = [];
-      this.y = 0;
-  
-      this.init();
-    }
-  
-    init() {
-      this.stickyElementsFind();
-      this.hamburger.addEventListener('click', event => {
-        event.preventDefault();
-        event.stopPropagation();
-        this.toggleMenu();
+class MenuToggle {
+  constructor(hamburger, menue) {
+    this.hamburger = hamburger;
+    this.menue = menue;
+    this.isActive = false;
+
+    // Add event listener zum hamburger
+    this.hamburger.addEventListener('click', this.toggleMenue.bind(this));
+
+    // Add event listener zum menue items
+    this.menue.querySelectorAll('.menue__link').forEach(link => {
+      link.addEventListener('click', () => {
+        this.toggleMenue();
       });
-  
-      const menu = document.getElementById('menue__menue');
-      menu.addEventListener('click', event => {
-        if (this.menuActive) {
-          const { target } = event;
-          if (target.matches('.menue__link')) {
-            this.toggleMenu();
-          }
-        }
-      });
-    }
-  
-    stickyElementsFind() {
-      const stickyElementsAll = document.querySelectorAll('[data-sticky]');
-      Array.from(stickyElementsAll).forEach(element => {
-        if (window.getComputedStyle(element).position === 'sticky') {
-          this.stickyElements.push(element);
-        }
-      });
-    }
-  
-    toggleMenu() {
-      if (!this.menuActive) {
-        if (this.stickyElements.length > 0) {
-          this.stickyElements.forEach((stickyElement, index) => {
-            const stickyElementStyles = window.getComputedStyle(stickyElement);
-            this.stickyElementsArray[index] = {
-              top: stickyElementStyles.top,
-              width: stickyElementStyles.width
-            };
-  
-            const stickyElementTop = stickyElement.getBoundingClientRect().top;
-            const stickyElementWidth = stickyElement.getBoundingClientRect().width;
-            stickyElement.style.top = stickyElementTop + 'px';
-            stickyElement.style.width = stickyElementWidth + 'px';
-            stickyElement.style.position = 'fixed';
-          });
-        }
-  
-        this.menuActive = true;
-        document.body.addEventListener('click', this.handleBodyClick.bind(this));
-        this.page.addEventListener('mouseenter', this.handlePageHover.bind(this));
-        this.page.addEventListener('mouseleave', this.handlePageHover.bind(this));
-  
-        const scrollbar = window.innerWidth - document.documentElement.clientWidth;
-        this.y = window.scrollY;
-        document.body.setAttribute('data-menue-aktiv', this.menuActive);
-        const marginOriginal = parseFloat(window.getComputedStyle(this.hamburger).marginRight);
-        this.hamburger.style.marginRight = marginOriginal + scrollbar + 'px';
-        document.body.style.paddingRight = scrollbar + 'px';
-        document.body.style.top = -this.y + 'px';
-      } else {
-        if (this.stickyElements.length > 0) {
-          this.stickyElements.forEach((stickyElement, index) => {
-            stickyElement.style.top = this.stickyElementsArray[index].top;
-            stickyElement.style.position = 'sticky';
-          });
-        }
-  
-        this.menuActive = false;
-        document.body.removeEventListener('click', this.handleBodyClick.bind(this));
-        this.page.removeEventListener('mouseenter', this.handlePageHover.bind(this));
-        this.page.removeEventListener('mouseleave', this.handlePageHover.bind(this));
-        document.body.setAttribute('data-menue-aktiv', this.menuActive);
-        this.handlePageHover(false);
+    });
+  }
+
+  toggleMenue() {
+      if (this.isActive) {
+        this.isActive = false;
+        document.body.removeEventListener('click', this.onBodyClick.bind(this));
+        document.body.setAttribute('data-menue-aktiv', this.isActive);
         this.hamburger.style.marginRight = '';
         document.body.style.paddingRight = '';
         document.body.style.top = '';
         window.scrollTo(0, this.y);
-      }
-    }
-  
-    handleBodyClick(event) {
-      if (this.menuActive && !event.target.closest('.menue__menue')) {
-        this.toggleMenu();
-      }
-    }
-  
-    handlePageHover(event) {
-      if (event && event.type === 'mouseenter') {
-        document.body.setAttribute('data-seite-hover', 'true');
       } else {
-        document.body.setAttribute('data-seite-hover', 'false');
+        this.isActive = true;
+        document.body.addEventListener('click', this.onBodyClick.bind(this));
+        this.scrollbar = window.innerWidth - document.documentElement.clientWidth;
+        this.y = window.scrollY;
+        document.body.setAttribute('data-menue-aktiv', this.isActive);
+        const marginOriginal = parseFloat(window.getComputedStyle(this.hamburger).marginRight);
+        this.hamburger.style.marginRight = `${marginOriginal + this.scrollbar}px`;
+        document.body.style.paddingRight = `${this.scrollbar}px`;
+        document.body.style.top = `-${this.y}px`;
       }
+    }
+
+  onBodyClick(event) {
+    if (!event.target.closest('.header') && !event.target.closest('.menue__hamburger')) {
+      this.toggleMenue();
     }
   }
-  
-  new StickyMenu();
-  
+
+  onMenueItemClick(event) {
+    const target = event.target;
+    if (target.matches('.menue__link')) {
+      this.toggleMenue();
+    }
+  }
+}
+
+const menuToggle = new MenuToggle(document.getElementById('hamburger'), document.getElementById('menue'));

@@ -1,0 +1,35 @@
+<button class="menue__hamburger" id="hamburger" type="button" aria-label="Menüknopf">
+	<span class="hamburger-box">
+		<span class="hamburger-inner"></span>
+	</span>
+</button>
+<nav class="menue" id="menue">
+	<a href="/" aria-label="Startseite" class="menue__logo-link menue__logo-link--desktop">
+		<h1 class="menue__logo">
+			Reiner<br>
+			Zufall
+		</h1>
+	</a>
+	<a href="/" aria-label="Startseite" class="menue__logo menue__logo--startseite menue__logo--mobile">
+		{{ svg('@webroot/bausteine/menue/menue__logo-mobile.svg', sanitize=true, namespace=true) | attr({
+            class: 'menue__logo-svg'
+        }) }}
+	</a>
+	<a class="menue__hymne">
+		<svg class="menue__hymne-svg">
+			<use xlink:href="/sprites/sprite.svg#menue__hymne"></use>
+		</svg>
+	</a>
+	<div
+		class="menue__links">
+		{# {% for menue in entries %}
+            <a class="menue__link menue__link--{{ menue.level }} menue__link--{{ menue.slug }}" href="/{{ menue.slug }}" {% if menue.slug == craft.app.request.getPathInfo() %} data-menue-aktiv="true" {% endif %}>
+                {{ menue.title }}
+            </a>
+        {% endfor %} #}
+		<a class="menue__link" data-menue-aktiv="true">Stiftung</a>
+		<a class="menue__link">Haussanierung</a>
+		<a class="menue__link">Spenden</a>
+	</div>
+</nav>
+<script src="/bausteine/menue/menue.{{ staticAssetsVersion }}.js" defer nonce="{{ cspNonce('script-src') }}"></script>
