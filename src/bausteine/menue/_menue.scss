@@ -1,127 +1,142 @@
 .menue {
+    font-family: Filson Pro, sans-serif;
+    font-weight: 400;
 
-    &__menue {
-        background-color: black;
+    &__logo {
+        color: black;
+        font-family: Clarendon;
+    }
+
+    &__links {
+        align-items: flex-start;
+        color: black;
     }
 
     &__link {
-        color: white;
-        font-family: 'Gilroy ExtraBold', sans-serif;
-        font-weight: 800;
-        text-decoration: none;
+        cursor: pointer;
+        
+
+        &[data-menue-aktiv="true"] {
+            color: map-get($farben, rot);
+        }
 
         &:hover {
-            color: map-get($farben, hellblau-text);
+            color: map-get($farben, rot);
         }
     }
 }
+
 
 @include mediaquery(smartphone) {
 
     $layout: smartphone;
 
     .menue {
-        @include abstand($layout, margin, alle, 0, 10, 0, 10);
-        align-items: center;
-        display: flex;
-        height: groesse($layout, 140);
-        justify-content: center;
-        position: relative;
+        @include abstand($layout, padding, alle, 0, 26, 0, 26);
+        background-color: map-get($farben, hellbraun);
+        display: none;
+        height: calc(var(--vh, 1vh) * 100);
+        left: 0;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
 
-        &__menue {
-            @include abstand($layout, padding, alle, (54 * 2), 0, 0, 54);
+        .body[data-menue-aktiv="true"] & {
             display: flex;
             flex-direction: column;
-            height: 100%;
-            position: fixed;
-            right: 0;
-            top: 0;
-            transform: translate(100%);
-            transition: 0.5s;
-            width: 100%;
-            z-index: 90;
-
-            .body[data-menue-aktiv="true"] & {
-                transform: translate(0);
-                transition: 0.5s;
-            }
         }
 
         &__hamburger {
-            $hamburger-breite: groesse($layout, 36);
-            $hamburger-hoehe: groesse($layout, 27);
-            $hamburger-strichstaerke: groesse($layout, 5);
+            $hamburger-breite: 36px;
+            $hamburger-hoehe: 29px;
+            $hamburger-strichstaerke: 5px;
             $hamburger-farbe: black;
-            $hamburger-farbe-aktiv: white;
+            $hamburger-farbe-aktiv: black;
             @include hamburger($hamburger-breite, $hamburger-hoehe, $hamburger-strichstaerke, $hamburger-farbe, $hamburger-farbe-aktiv);
-            @include abstand($layout, padding, alle, 20, 20, 20, 20);
-            padding-right: groesse($layout, 40);
+            @include abstand($layout, padding, alle, 10, 10, 10, 10);
+            background-color: transparent;
             position: fixed;
-            right: 0;
-            top: groesse($layout, 35.5);
-            z-index: 120;
+            right: groesse($layout, 26 - 10);
+            top: groesse($layout, 26 - 10);
+            z-index: 1001;
+        }
+
+        &__links {
+            @include abstand($layout, margin, top, 191);
+            @include schriftart($layout, 46, 52);
+            display: flex;
+            flex-direction: column;
         }
 
         &__link {
-            @include schriftart($layout, 60, 60);
+            text-decoration: none;
+        }
+    }
+
+    .hamburger {
+
+        &-box {
+            height: 35px;
+            right: 0;
+            width: 37px;
         }
     }
 }
+
 
 @include mediaquery(desktop) {
 
     $layout: desktop;
 
     .menue {
-        @include abstand($layout, margin, alle, 0, 20, 0, 20);
-        align-items: center;
-        display: flex;
-        height: groesse($layout, 245);
-        justify-content: center;
-        position: relative;
+        height: 100%;
+        width: 100%;
 
-        &__menue {
-            @include abstand($layout, padding, top, 88);
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            position: fixed;
-            right: 0;
-            top: 0;
-            width: groesse($layout, 550);
-            z-index: 130;
-            transform: translate(100%);
-            transition: 0.5s;
-
-            .body[data-menue-aktiv="true"] & {
-                transform: translate(0);
-                transition: 0.5s;
+        &__logo-text {
+            @include schriftart($layout, 28, 32, 400);
+            position: absolute;
+            top: groesse($layout, 68);
+            right: groesse($layout, 576);
+            z-index: 1;
+            
+            .body--startseite & {
+                position: fixed;
             }
+        }
+        
+        &__logo {
+            @include schriftart($layout, 70, 59, 400);
+            text-decoration: none;
+            position: absolute;
+            top: groesse($layout, 50);
+            right: groesse($layout, 92);
+            z-index: 1;
+            
+            .body--startseite & {
+                position: fixed;
+            }
+        }
+        
+        &__links {
+            left: groesse($layout, 55);
+            position: fixed;
+            top: groesse($layout, 50);
+            z-index: 1;
+        }
 
-            .body[data-seite-hover="true"] & {
-                transform: translate(groesse($layout, 30));
-                transition: 0.5s
+        &__link {
+            @include schriftart($layout, 34, 36);
+            display: inherit;
+            text-decoration: none;
+
+            &--aktiv {
+                font-weight: 500;
             }
         }
 
         &__hamburger {
-            $hamburger-breite: groesse($layout, 60);
-            $hamburger-hoehe: groesse($layout, 48);
-            $hamburger-strichstaerke: groesse($layout, 8);
-            $hamburger-farbe: black;
-            $hamburger-farbe-aktiv: black;
-            @include hamburger($hamburger-breite, $hamburger-hoehe, $hamburger-strichstaerke, $hamburger-farbe, $hamburger-farbe-aktiv);
-            @include abstand($layout, margin, alle, -20, -10, 0, 0);
-            @include abstand($layout, padding, alle, 20, 20, 20, 20);
-            position: fixed;
-            right: groesse($layout, 228);
-            top: groesse($layout, 40 + 56);
-            z-index: 120;
-        }
-
-        &__link {
-            @include schriftart($layout, 70, 70);
-            margin-left: spalten($layout, 0.82, 3.5, 0, 0);
+            display: none;
         }
     }
 }

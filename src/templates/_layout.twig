@@ -82,19 +82,11 @@
         <script nonce="{{ cspNonce('script-src') }}">
             document.querySelector('body').classList.remove('no-js');
         </script>
-        <nav class="menue__menue" id="menue__menue">
-            <a href="/projekte" class="menue__link">Projekte</a>
-            <a href="/angebot" class="menue__link">Angebot</a>
-        </nav>
         <div class="seite" id="seite">
-            <header class="menue" id="menue">
-                <button class="menue__hamburger" id="hamburger" type="button" aria-label="Menü öffnen">
-                    <span class="hamburger-box">
-                        <span class="hamburger-inner"></span>
-                    </span>
-                </button>
+             <header class="header" id="header">
+                {% include '/_bausteine/menue/_menue.twig' %}
             </header>
-            <main class="main"> {% block content %}{% endblock %}</main>
+            <main class="main">{% block content %}{% endblock %}</main>
         </div>
         <script nonce="{{ cspNonce('script-src') }}">
             {{ source("/js/inline.js") }}

@@ -12,7 +12,6 @@ import autoprefixer from 'autoprefixer';
 import browsersync from 'browser-sync';
 import cleanCSS from 'gulp-clean-css';
 import concat from 'gulp-concat';
-import critical from 'critical';
 import dartSass from 'sass';
 import dotenv from 'gulp-dotenv';
 import fs from 'fs';
@@ -61,7 +60,7 @@ function setDateien() {
             dest: 'web/css',
         },
         jsDefer: {
-            src: (modus != 'production') ? ['src/js/defer/**/*.js', 'src/macros-funktionen/**/*.js', 'src/bausteine/**/_*.js', 'src/dev/**/*.js'] : ['src/js/defer/**/*.js', 'src/macros-funktionen/**/*.js', 'src/bausteine/**/_*.js'],
+            src: (modus == 'dev') ? ['src/js/defer/**/*.js', 'src/macros-funktionen/**/*.js', 'src/dev/**/*.js'] : ['src/js/defer/**/*.js', 'src/macros-funktionen/**/*.js'],
             dest: 'web/js',
         },
         jsConfig: {
@@ -178,37 +177,14 @@ function modusTask() {
     return src('.')
 	
     .pipe(prompt.prompt({
-        type: 'list',
+		type: 'list',
 		name: 'modus',
 		message: 'Wohin sollen die Dateien?',
         choices: ['dev', 'staging', 'production']
 	}, function(res){
-        modus = res.modus;
-	}))
-}
-
-var modusBestaetigt = false;
-function modusConfirmTask() {
-    if (modus == 'production') {
-        return src('.')
-        .pipe(prompt.prompt({
-            type: 'confirm',
-            name: 'confirm',
-            default: false,
-            message: 'Wirklich?'
-        }, function(res){
-            if (res.confirm == true) {
-                modusBestaetigt = true;
-                setDateien();
-            } else {
-                
-            }
-        }));
-    } else {
-        modusBestaetigt = true;
+		modus = res.modus;
         setDateien();
-        return src('.')
-    }
+	}));
 }
 
 // Variablendateien config.scss und .js löschen, env.json löschen
@@ -330,6 +306,9 @@ function jsConfigTask() {
 function jsInlineTask() {
     return src(dateien.jsInline.src)
 
+    // Sourcemaps initialisieren
+    .pipe(sourcemaps.init())
+
     // Alle Dateien in einer zusammenfassen
     .pipe(concat('inline.js'))
 
@@ -339,6 +318,9 @@ function jsInlineTask() {
 
     // Komprimieren mit Terser wenn nicht im dev Modus
     .pipe(gulpif( modus != 'dev', terser() ))
+
+    // Sourcemaps schreiben
+    .pipe(sourcemaps.write('.'))
 
     // Dateien(en) schreiben
     .pipe(dest
@@ -454,15 +436,6 @@ function medienTask() {
     );
 }
 
-// Critical CSS inlinen
-function criticalTask() {
-    return src(dateien.medien.src)
-
-    .pipe(dest
-        (dateien.medien.dest)
-    );
-}
-
 // Medien Backup auf NAS
 function medienBackupTask() {
     del('backup/src');
@@ -501,26 +474,20 @@ function faviconTask() {
     );
 }
 
-// FTP Setup Task
-var ftpVerbindung;
-function uploadSetupTask() {
-    var env = JSON.parse(fs.readFileSync("env.json"));
-    var ftpModus = modus.toUpperCase();
-    ftpVerbindung = ftp.create({
-        // Es darf kein Leerzeichen hinter dem Doppelpunkt stehen
-        host:env['FTP_HOST_' + ftpModus],
-        user:env['FTP_USER_' + ftpModus],
-        pass:env['FTP_PASSWORD_' + ftpModus],
-        parallel: 1
-    });
-    return src('.')
-}
-
 // FTP
 // https://medium.com/sliit-foss/automate-a-ftp-upload-with-gulp-js-4fde363cf9e8
 // https://www.riklewis.com/2019/09/saving-time-with-ftp-in-gulp/
 function uploadTemplatesTask() {
     if (modus =='staging' || modus =='production') {
+        var env = JSON.parse(fs.readFileSync("env.json"));
+        var ftpModus = modus.toUpperCase();
+        var ftpVerbindung = ftp.create({
+            // Es darf kein Leerzeichen hinter dem Doppelpunkt stehen
+            host:env['FTP_HOST_' + ftpModus],
+            user:env['FTP_USER_' + ftpModus],
+            pass:env['FTP_PASSWORD_' + ftpModus],
+            parallel: 1
+        });
         return src( dateien.uploadTemplates.src, {
             buffer: false,
             dot: true
@@ -538,6 +505,14 @@ function uploadTemplatesTask() {
 };
 function uploadWebTask() {
     if (modus =='staging' || modus =='production') {
+        var env = JSON.parse(fs.readFileSync("env.json"));
+        var ftpModus = modus.toUpperCase();
+        var ftpVerbindung = ftp.create({
+            host:env['FTP_HOST_' + ftpModus],
+            user:env['FTP_USER_' + ftpModus],
+            pass:env['FTP_PASSWORD_' + ftpModus],
+            parallel: 1
+        });
         return src( dateien.uploadWeb.src, {
             buffer: false,
             dot: true
@@ -551,23 +526,6 @@ function uploadWebTask() {
         )
     } else {
         return src( dateien.uploadWeb.src, { buffer: false } )
-    }
-};
-function uploadCustomConfigTask() {
-    if (modus =='staging' || modus =='production') {
-        return src( dateien.craftCustomConfig.src, {
-            buffer: false,
-            dot: true
-        } )
-    
-        .pipe(ftpVerbindung.newer
-            (dateien.craftCustomConfig.dest)
-        ) 
-        .pipe(ftpVerbindung.dest
-            (dateien.craftCustomConfig.dest)
-        )
-    } else {
-        return src( dateien.craftCustomConfig.src, { buffer: false } )
     }
 };
 
@@ -629,10 +587,8 @@ function watchTask() {
             ),
             injizierenTask,
             // browsersyncReload,
-            uploadSetupTask,
             uploadTemplatesTask,
             uploadWebTask,
-            uploadCustomConfigTask,
             configLoeschenTask
         )
     );
@@ -644,16 +600,13 @@ task('build',
         configToScssTask,
         configToJsTask,
         modusTask,
-        modusConfirmTask,
         parallel(
             templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosFunktionenTask, scssTask, jsDeferTask, jsBausteineDeferTask, jsConfigTask, jsInlineTask, medienTask, mockupTask, fontsTask, faviconTask, spritesTask, staticAssetsVersionTask
         ),
         injizierenTask,
         // browsersyncServe,
-        uploadSetupTask,
         uploadTemplatesTask,
         uploadWebTask,
-        uploadCustomConfigTask,
         configLoeschenTask,
         watchTask
     )

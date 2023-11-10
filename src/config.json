@@ -4,72 +4,48 @@
         "JS": "Die config wird zur JS Datei gewandelt und im gulpfile in der Variable dateien jsInline geladen"
     },
 
-    "maximalbreite": 1699,
-
     "layouts": {
-        "smartphone": 428,
-        "tabletHoch": 768,
-        "tabletQuer": 1024,
-        "desktop": 1440
+        "smartphone": 421,
+        "desktop": 1920
     },
     
     "einheiten": {
         "smartphone": "px",
-        "tabletHoch": "vw",
-        "tabletQuer": "vw",
         "desktop": "vw"
     },
     
     "breakpoints": {
         "smartphone": 0,
-        "tabletHoch": 768,
-        "tabletQuer": 1024,
-        "desktop": 1440
+        "desktop": 800
     },
 
     "farben": {
-        "hintergrund": "white"
+        "hintergrund": "white",
+        "rot": "#E61512"
     },
 
     "seitenraender": {
         "smartphone": {
             "top": 0,
-            "right": 10,
+            "right": 26,
             "bottom": 0,
-            "left": 10
-        },
-        "tabletHoch": {
-            "top": 90,
-            "right": 40,
-            "bottom": 0,
-            "left": 40
-        },
-        "tabletQuer": {
-            "top": 90,
-            "right": 40,
-            "bottom": 0,
-            "left": 40
+            "left":26
         },
         "desktop": {
             "top": 0,
-            "right": 20,
+            "right": 140,
             "bottom": 0,
-            "left": 20
+            "left": 554
         }
     },
 
     "spalten": {
-        "smartphone": 4,
-        "tabletHoch": 5,
-        "tabletQuer": 5,
-        "desktop": 10
+        "smartphone": 1,
+        "desktop": 9
     },
 
     "spaltenabstaende": {
-        "smartphone": 10,
-        "tabletHoch": 16,
-        "tabletQuer": 22,
-        "desktop": 20,
-        "gross": 30
+        "smartphone": 1,
+        "desktop": 16
     }
 }
