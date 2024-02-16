@@ -177,14 +177,37 @@ function modusTask() {
     return src('.')
 	
     .pipe(prompt.prompt({
-		type: 'list',
+        type: 'list',
 		name: 'modus',
 		message: 'Wohin sollen die Dateien?',
         choices: ['dev', 'staging', 'production']
 	}, function(res){
-		modus = res.modus;
+        modus = res.modus;
+	}))
+}
+
+var modusBestaetigt = false;
+function modusConfirmTask() {
+    if (modus == 'production') {
+        return src('.')
+        .pipe(prompt.prompt({
+            type: 'confirm',
+            name: 'confirm',
+            default: false,
+            message: 'Wirklich?'
+        }, function(res){
+            if (res.confirm == true) {
+                modusBestaetigt = true;
+                setDateien();
+            } else {
+                
+            }
+        }));
+    } else {
+        modusBestaetigt = true;
         setDateien();
-	}));
+        return src('.')
+    }
 }
 
 // Variablendateien config.scss und .js löschen, env.json löschen
@@ -600,6 +623,7 @@ task('build',
         configToScssTask,
         configToJsTask,
         modusTask,
+        modusConfirmTask,
         parallel(
             templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosFunktionenTask, scssTask, jsDeferTask, jsBausteineDeferTask, jsConfigTask, jsInlineTask, medienTask, mockupTask, fontsTask, faviconTask, spritesTask, staticAssetsVersionTask
         ),
