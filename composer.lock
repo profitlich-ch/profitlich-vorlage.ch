@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4317f2b2bb44e4c00d2bff81c940cbf0",
+    "content-hash": "c39b6f9c391c0f20f248529d01899376",
     "packages": [
         {
             "name": "born05/craft-csp",
@@ -698,6 +698,65 @@
                 "yii2"
             ],
             "time": "2023-09-25T17:28:37+00:00"
+        },
+        {
+            "name": "craftpulse/craft-password-policy",
+            "version": "4.1.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/craftpulse/craft-password-policy/zipball/be47ce25527b9014e75c7c056540fea96394dc50",
+                "reference": "be47ce25527b9014e75c7c056540fea96394dc50",
+                "shasum": ""
+            },
+            "require": {
+                "craftcms/cms": "^4.0.0-beta.1",
+                "php": "^8.0.2"
+            },
+            "type": "craft-plugin",
+            "extra": {
+                "name": "Password Policy",
+                "handle": "password-policy",
+                "hasCpSettings": true,
+                "hasCpSection": false,
+                "developer": "percipiolondon",
+                "developerUrl": "https://percipio.london",
+                "documentationUrl": "https://github.com/percipioglobal/craft-password-policy/blob/v4/README.md",
+                "changelogUrl": "https://raw.githubusercontent.com/percipioglobal/craft-password-policy/v4/CHANGELOG.md",
+                "components": {
+                    "passwordService": "percipiolondon\\passwordpolicy\\services\\PasswordService"
+                },
+                "class": "percipiolondon\\passwordpolicy\\PasswordPolicy"
+            },
+            "autoload": {
+                "psr-4": {
+                    "percipiolondon\\passwordpolicy\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Percipio Global Ltd.",
+                    "homepage": "https://percipio.london"
+                }
+            ],
+            "description": "Enforce a password policy on your users.",
+            "keywords": [
+                "cms",
+                "craft",
+                "craft-plugin",
+                "craftcms",
+                "passwords",
+                "security",
+                "strong passwords"
+            ],
+            "support": {
+                "email": "support@percipio.london",
+                "docs": "https://github.com/percipioglobal/craft-password-policy/blob/v4/README.md",
+                "issues": "https://github.com/percipioglobal/craft-password-policy/issues"
+            },
+            "time": "2023-03-08T09:34:06+00:00"
         },
         {
             "name": "creocoder/yii2-nested-sets",
@@ -1839,65 +1898,6 @@
                 "random"
             ],
             "time": "2020-10-15T08:29:30+00:00"
-        },
-        {
-            "name": "percipioglobal/craft-password-policy",
-            "version": "4.1.0",
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/percipioglobal/craft-password-policy/zipball/be47ce25527b9014e75c7c056540fea96394dc50",
-                "reference": "be47ce25527b9014e75c7c056540fea96394dc50",
-                "shasum": ""
-            },
-            "require": {
-                "craftcms/cms": "^4.0.0-beta.1",
-                "php": "^8.0.2"
-            },
-            "type": "craft-plugin",
-            "extra": {
-                "name": "Password Policy",
-                "handle": "password-policy",
-                "hasCpSettings": true,
-                "hasCpSection": false,
-                "developer": "percipiolondon",
-                "developerUrl": "https://percipio.london",
-                "documentationUrl": "https://github.com/percipioglobal/craft-password-policy/blob/v4/README.md",
-                "changelogUrl": "https://raw.githubusercontent.com/percipioglobal/craft-password-policy/v4/CHANGELOG.md",
-                "components": {
-                    "passwordService": "percipiolondon\\passwordpolicy\\services\\PasswordService"
-                },
-                "class": "percipiolondon\\passwordpolicy\\PasswordPolicy"
-            },
-            "autoload": {
-                "psr-4": {
-                    "percipiolondon\\passwordpolicy\\": "src/"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Percipio Global Ltd.",
-                    "homepage": "https://percipio.london"
-                }
-            ],
-            "description": "Enforce a password policy on your users.",
-            "keywords": [
-                "cms",
-                "craft",
-                "craft-plugin",
-                "craftcms",
-                "passwords",
-                "security",
-                "strong passwords"
-            ],
-            "support": {
-                "email": "support@percipio.london",
-                "docs": "https://github.com/percipioglobal/craft-password-policy/blob/v4/README.md",
-                "issues": "https://github.com/percipioglobal/craft-password-policy/issues"
-            },
-            "time": "2023-03-08T09:34:06+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
