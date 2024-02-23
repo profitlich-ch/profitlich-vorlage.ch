@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c39b6f9c391c0f20f248529d01899376",
+    "content-hash": "696d27687f84ea9da2cd0d64693d9a9c",
     "packages": [
         {
             "name": "born05/craft-csp",
@@ -2735,11 +2735,11 @@
         },
         {
             "name": "spicyweb/craft-embedded-assets",
-            "version": "3.1.8",
+            "version": "3.2.0",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spicywebau/craft-embedded-assets/zipball/056a2c45bb4bf230b54e419d355b012f6f328e95",
-                "reference": "056a2c45bb4bf230b54e419d355b012f6f328e95",
+                "url": "https://api.github.com/repos/spicywebau/craft-embedded-assets/zipball/04618db82e23ddaffab6be874fe2c50f1be626a6",
+                "reference": "04618db82e23ddaffab6be874fe2c50f1be626a6",
                 "shasum": ""
             },
             "require": {
@@ -2754,7 +2754,7 @@
                 "schemaVersion": "1.0.0",
                 "class": "spicyweb\\embeddedassets\\Plugin",
                 "changelogUrl": "https://github.com/spicywebau/craft-embedded-assets/blob/3.x/CHANGELOG.md",
-                "downloadUrl": "https://github.com/spicywebau/craft-embedded-assets/archive/3.1.8.zip"
+                "downloadUrl": "https://github.com/spicywebau/craft-embedded-assets/archive/3.2.0.zip"
             },
             "autoload": {
                 "psr-4": {
@@ -2785,10 +2785,10 @@
             "support": {
                 "issues": "https://github.com/spicywebau/craft-embedded-assets/issues",
                 "source": "https://github.com/spicywebau/craft-embedded-assets",
-                "docs": "https://github.com/spicywebau/craft-embedded-assets/blob/3.1.8/README.md",
+                "docs": "https://github.com/spicywebau/craft-embedded-assets/blob/3.2.0/README.md",
                 "rss": "https://github.com/spicywebau/craft-embedded-assets/commits/3.x.atom"
             },
-            "time": "2023-09-02T06:53:52+00:00"
+            "time": "2023-12-06T06:51:22+00:00"
         },
         {
             "name": "symfony/console",
