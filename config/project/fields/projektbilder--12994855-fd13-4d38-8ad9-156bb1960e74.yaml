@@ -1,26 +1,22 @@
 columnSuffix: null
 contentColumnType: string
 fieldGroup: 25d2e79d-a04c-4824-a49f-c3baa6642d8a # Common
-handle: bild
+handle: projektbilder
 instructions: null
-name: Bild
+name: Projektbilder
 searchable: false
 settings:
   allowSelfRelations: false
   allowSubfolders: false
   allowUploads: true
-  allowedKinds:
-    - image
-    - json
-  branchLimit: null
+  allowedKinds: null
   defaultUploadLocationSource: 'volume:44fec1ae-cc09-42b5-b6a8-1c301d066c04' # Projektbilder
   defaultUploadLocationSubpath: null
   localizeRelations: false
-  maintainHierarchy: false
   maxRelations: null
   minRelations: null
   previewMode: full
-  restrictFiles: true
+  restrictFiles: false
   restrictLocation: false
   restrictedDefaultUploadSubpath: null
   restrictedLocationSource: 'volume:44fec1ae-cc09-42b5-b6a8-1c301d066c04' # Projektbilder
@@ -40,6 +36,7 @@ settings:
   showSiteMenu: true
   showUnpermittedFiles: false
   showUnpermittedVolumes: false
+  source: null
   sources: '*'
   targetSiteId: null
   validateRelatedElements: false

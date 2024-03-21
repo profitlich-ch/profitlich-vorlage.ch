@@ -1,6 +1,7 @@
 {
   "require": {
     "born05/craft-csp": "^2.1",
+    "craftcms/ckeditor": "3.8.2",
     "craftcms/cms": "^4.3.1",
     "craftpulse/craft-password-policy": "^4.1",
     "ostark/craft-async-queue": "^3.1.0",

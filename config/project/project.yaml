@@ -1,16 +1,8 @@
-dateModified: 1696365667
+dateModified: 1711035271
 email:
   fromEmail: dev@profitlich.ch
-  fromName: 'Profitlich GmbH'
-  replyToEmail: info@profitlich.ch
-  template: ''
-  transportSettings:
-    host: smtp.gmail.com
-    password: $GMAIL_PASSWORD
-    port: '587'
-    useAuthentication: '1'
-    username: $GMAIL_USER
-  transportType: craft\mail\transportadapters\Smtp
+  fromName: 'Profitlich DEV'
+  transportType: craft\mail\transportadapters\Sendmail
 fs:
   lokal:
     hasUrls: true
@@ -21,34 +13,26 @@ fs:
     url: '@assetBaseUrl'
 meta:
   __names__:
-    0ad60e57-8d0b-4211-a764-bcf2e3a986da: Bild # Bild
-    0d60cf4a-644b-4b66-a789-a72a76fcbb30: Sources # Sources
-    0dc0abd2-7f16-43dd-abe1-11f0d5bcc3ed: 'Meta Description' # Meta Description
+    0a064e6b-5fcd-4a2b-acb7-b46630ad5244: Farbe # Farbe
     0e793c4c-3298-4c14-a50e-fe050eeaee18: Startseite # Startseite
-    8bbd43fa-8e18-4619-abf3-43ab1cbec209: 'Alt Text (Bildbeschreibung)' # Alt Text (Bildbeschreibung)
-    025b1af6-65d4-4fce-9a68-7c6b8d558758: Einstellungen # Einstellungen
+    9e7d0f16-c377-4f3b-a734-ed1f646f1fed: Simple # Simple
     25d2e79d-a04c-4824-a49f-c3baa6642d8a: Common # Common
     44fec1ae-cc09-42b5-b6a8-1c301d066c04: Projektbilder # Projektbilder
-    62f62c0d-5d72-4158-ae43-c988a4d4a180: Sources # Sources
-    66d34452-89cc-4bff-b0af-797cf0f491a1: Sources # Sources
-    84b6361a-04e0-474f-b3df-a9a68f5813ec: 'Content Security Policy' # Content Security Policy
-    91c85d55-934f-4e3c-9e85-5d42c7cad42c: Actions # Actions
+    396abe4e-d4af-4c68-a2fb-7a3bce13f340: Bildbeschreibung # Bildbeschreibung
     10120e23-43ba-494f-ba6c-7241058df713: Startseite # Startseite
-    83248dab-03cb-497d-bc03-612d85e02528: Sources # Sources
-    be5b62b1-1f10-4c40-bcbb-a1505bd9708f: Sources # Sources
+    12994855-fd13-4d38-8ad9-156bb1960e74: Projektbilder # Projektbilder
     c81f04dd-a4dc-4e6f-a97b-5ce6004b8cf8: 'Profitlich DEV' # Profitlich DEV
-    c9004b70-8ede-4500-b44d-1638afd790aa: New # New
-    cd1d5e4f-4839-4d0a-b222-592fbe90251b: Sources # Sources
-    d9d672c4-8aa3-4a45-bb07-6e3471e03007: 'Contact Form' # Contact Form
-    e5d84a5c-c412-463f-96ae-d8172dc9a07a: Sources # Sources
-    e12099b2-b84e-462a-a130-4307bada0915: Sources # Sources
-    e248402f-324f-4fc3-b3db-118021402a18: Sources # Sources
+    d6ebc0e2-f57d-43d9-b5ad-e53f1b9394a5: Test # Test
     e814380a-f915-44b8-92b3-a767fa94f64a: 'Profitlich DEV' # Profitlich DEV
 plugins:
   async-queue:
     edition: standard
     enabled: true
     schemaVersion: 1.0.0
+  ckeditor:
+    edition: standard
+    enabled: true
+    schemaVersion: 3.0.0.0
   content-security-policy:
     edition: standard
     enabled: true
@@ -57,11 +41,6 @@ plugins:
     edition: standard
     enabled: true
     schemaVersion: 1.0.0
-  formie:
-    edition: standard
-    enabled: true
-    licenseKey: 7WBMXNIZ91Y7JDN27WTVNKWR
-    schemaVersion: 2.0.10
   password-policy:
     edition: standard
     enabled: true
@@ -77,9 +56,8 @@ system:
   edition: pro
   live: true
   name: 'Profitlich DEV'
-  retryDuration: null
   schemaVersion: 4.5.3.0
-  timeZone: Europe/Zurich
+  timeZone: America/Los_Angeles
 users:
   allowPublicRegistration: false
   defaultGroup: null
