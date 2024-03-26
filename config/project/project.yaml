@@ -1,26 +1,25 @@
-dateModified: 1711035271
+dateModified: 1711481953
 email:
   fromEmail: dev@profitlich.ch
   fromName: 'Profitlich DEV'
   transportType: craft\mail\transportadapters\Sendmail
 fs:
-  lokal:
+  bilder:
     hasUrls: true
-    name: Lokal
+    name: Bilder
     settings:
-      path: '@assetBasePath'
+      path: '@assetBasePath/bilder'
     type: craft\fs\Local
-    url: '@assetBaseUrl'
+    url: '@assetBaseUrl/bilder'
 meta:
   __names__:
-    0a064e6b-5fcd-4a2b-acb7-b46630ad5244: Farbe # Farbe
     0e793c4c-3298-4c14-a50e-fe050eeaee18: Startseite # Startseite
     9e7d0f16-c377-4f3b-a734-ed1f646f1fed: Simple # Simple
     25d2e79d-a04c-4824-a49f-c3baa6642d8a: Common # Common
-    44fec1ae-cc09-42b5-b6a8-1c301d066c04: Projektbilder # Projektbilder
+    44fec1ae-cc09-42b5-b6a8-1c301d066c04: Bilder # Bilder
     396abe4e-d4af-4c68-a2fb-7a3bce13f340: Bildbeschreibung # Bildbeschreibung
     10120e23-43ba-494f-ba6c-7241058df713: Startseite # Startseite
-    12994855-fd13-4d38-8ad9-156bb1960e74: Projektbilder # Projektbilder
+    12994855-fd13-4d38-8ad9-156bb1960e74: Bilder # Bilder
     c81f04dd-a4dc-4e6f-a97b-5ce6004b8cf8: 'Profitlich DEV' # Profitlich DEV
     d6ebc0e2-f57d-43d9-b5ad-e53f1b9394a5: Test # Test
     e814380a-f915-44b8-92b3-a767fa94f64a: 'Profitlich DEV' # Profitlich DEV
