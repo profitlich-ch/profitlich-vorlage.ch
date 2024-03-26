@@ -15,18 +15,22 @@ assignees: ''
 [ ] Projektspezifisches Admin-Passwort ist gesetzt
 
 # CMS
-[ ] Plugin Password Security ist installiert und konfiguriert  
-[ ] Loginadresse ist `/redaktion` statt `/admin`
+[ ] Update auf neuste Version
 
 # Backend
 [ ] Pflichtfelder sind gesetzt  
-[ ] Alle Asset Field Layouts haben ein Feld für einen Alt-Tags
+[ ] Alle Asset Field Layouts haben ein Feld für einen Alt-Tag
 
 # Code Qualität
 [ ] HTML Validierung ist durchgeführt  
 
 # Frontend
 [ ] Logo verlinkt auf Startseite  
+
+# Redaktion
+[] Slugs aller Einträge entsprechen dem Seitennamen
+[] Bilder werden angezeigt
+[] Asset Index ist bereinigt
 
 # Hosting
 [ ] SSL eingerichtet und 301 redirect von non-SSL auf SSL  
@@ -40,7 +44,7 @@ assignees: ''
 [ ] Jede Seite hat die korrekte Sprache, zum Beispiel `lang="de-CH"`  
 [ ] Jede Seite hat eine Meta Description  
 [ ] Jede Seite hat einen sinnvollen Titel als `h1`  
-[ ] Alle Bilder haben Alt-Tags  
+[ ] Alle Bilder haben Alt-Tags 
 [ ] Alle Seiten haben sinvolle und SEO-freundliche URLs  
 
 # Social Media und Strukturierte Daten
@@ -71,4 +75,3 @@ assignees: ''
 [ ] Onlinestatus-Check ist eingerichtet  
 [ ] Website ist in Google Search Console eingerichtet  
 [ ] Sitemap ist in Google Search Console angegeben
-[ ] robots.txt ist im Status index
