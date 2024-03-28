@@ -1,4 +1,4 @@
-dateModified: 1711481953
+dateModified: 1711653817
 email:
   fromEmail: dev@profitlich.ch
   fromName: 'Profitlich DEV'
@@ -22,6 +22,7 @@ meta:
     12994855-fd13-4d38-8ad9-156bb1960e74: Bilder # Bilder
     c81f04dd-a4dc-4e6f-a97b-5ce6004b8cf8: 'Profitlich DEV' # Profitlich DEV
     d6ebc0e2-f57d-43d9-b5ad-e53f1b9394a5: Test # Test
+    dffdb509-f1db-4d98-897e-971108a169e2: CKEditor # CKEditor
     e814380a-f915-44b8-92b3-a767fa94f64a: 'Profitlich DEV' # Profitlich DEV
 plugins:
   async-queue:

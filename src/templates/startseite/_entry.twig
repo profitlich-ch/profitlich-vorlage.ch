@@ -11,6 +11,14 @@
 {% endblock %}
 
 {% block content %}
-    {# {% set video = entry.bild.one() %}
-    {{ macroVideo.video(video, 'video', 'Beschreibung') }} #}
+    <div>
+        {# 
+            Der replace Filter sucht per Regex nach Mailadressen und zerlegt sie in folgende Bestandteile, die als data Attribute geschrieben werden:
+            - Name vor dem @ im mailto Link
+            - Domain nach dem @ im mailto Link
+            - Anklickbarer Text des Links
+            Vor und nach dem href gesetzte Attribute werden übernommen ($1 und $4)
+        #}
+        {{ entry.ckeditor|replace('/<a(.*)href="mailto:(.*)@(.*)(.*)">(.*)<\/a>/', '<a $1 $4 data-eml-name="$2" data-eml-domain="$3" data-eml-text="prefix-$5"><\/a>')|raw }}
+    </div>
 {% endblock %}
