@@ -27,15 +27,13 @@ function debounce(func, wait, immediate) {
 
 // E-Mailadressen anzeigen
 function emailAdressen() {
-    const emlArray = document.querySelectorAll('[data-eml]').forEach(adresse => {
-        let eml = adresse.getAttribute('data-eml');
-        let emlDomain = 'studioc-architekten.ch';
-        let emlText = eml+'@'+emlDomain;
-        let emlAddress = 'mailto:'+emlText;
-        adresse.setAttribute('href', emlAddress);
-        adresse.innerHTML = `
-            ${eml}<span class="mail-at">@</span>${emlDomain}
-        `;
+    const emlArray = document.querySelectorAll('[data-eml-named]').forEach(adresse => {
+        let emlName = adresse.getAttribute('data-eml-name');
+        let emlDomain = adresse.getAttribute('data-eml-domain');
+        let emlText = adresse.getAttribute('data-eml-text').replace('prefix-', '');
+        emlText = emlText.replace('@', '<span class="mail-at">@</span>');
+        adresse.setAttribute('href', emlName + '@' + emlDomain);
+        adresse.innerHTML = emlText;
     });
 }
 emailAdressen();
