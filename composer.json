@@ -1,12 +1,12 @@
 {
   "require": {
-    "born05/craft-csp": "^2.1",
-    "craftcms/ckeditor": "^3.8.2",
-    "craftcms/cms": "^4.3.1",
-    "craftpulse/craft-password-policy": "^4.1",
-    "ostark/craft-async-queue": "^3.1.0",
-    "spicyweb/craft-embedded-assets": "^4.0.0",
-    "vlucas/phpdotenv": "^5.4.0"
+    "cloudgrayau/csp": "1.2.0",
+    "craftcms/ckeditor": "^4.1.0",
+    "craftcms/cms": "^5.0.0",
+    "craftpulse/craft-password-policy": "5.0.0-beta1",
+    "ostark/craft-async-queue": "4.0.0",
+    "spicyweb/craft-embedded-assets": "5.1.0",
+    "vlucas/phpdotenv": "5.4.0"
   },
   "require-dev": {
     "yiisoft/yii2-shell": "^2.0.3"
@@ -25,7 +25,7 @@
     "sort-packages": true,
     "optimize-autoloader": true,
     "platform": {
-      "php": "8.0.2"
+      "php": "8.2"
     }
   },
   "scripts": {

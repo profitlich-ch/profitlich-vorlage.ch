@@ -16,28 +16,28 @@
 
         
         {# https://web.dev/defer-non-critical-css/ #}
-        <link rel="preload" href="/css/style.{{ staticAssetsVersion }}.css" as="style" nonce="{{ cspNonce('style-src') }}">
-        <link id="cssOnload" rel="stylesheet" href="/css/style.{{ staticAssetsVersion }}.css" media="print" nonce="{{ cspNonce('style-src') }}">
-        <script nonce="{{ cspNonce('script-src') }}">
+        <link rel="preload" href="/css/style.{{ staticAssetsVersion }}.css" as="style" nonce="{{ csp('style-src') }}">
+        <link id="cssOnload" rel="stylesheet" href="/css/style.{{ staticAssetsVersion }}.css" media="print" nonce="{{ csp('style-src') }}">
+        <script nonce="{{ csp('script-src') }}">
             cssOnload = document.getElementById('cssOnload');
             cssOnload.onload = function() {
                 cssOnload.setAttribute('media', 'all');
             };
         </script>
-        <noscript><link rel="stylesheet" href="/css/style.{{ staticAssetsVersion }}.css" nonce="{{ cspNonce('style-src') }}"></noscript>
+        <noscript><link rel="stylesheet" href="/css/style.{{ staticAssetsVersion }}.css" nonce="{{ csp('style-src') }}"></noscript>
 
         {% if getenv('CRAFT_ENVIRONMENT') != 'production' %}
-            <link rel="stylesheet" href="/css/dev.{{ staticAssetsVersion }}.css" nonce="{{ cspNonce('style-src') }}">
+            <link rel="stylesheet" href="/css/dev.{{ staticAssetsVersion }}.css" nonce="{{ csp('style-src') }}">
         {% endif %}
 
-        <script nonce="{{ cspNonce('script-src') }}">
+        <script nonce="{{ csp('script-src') }}">
             {{ source("/js/config.js") }}
         </script>
-        <script src="/js/defer.{{ staticAssetsVersion }}.js" defer nonce="{{ cspNonce('script-src') }}"></script>
+        <script src="/js/defer.{{ staticAssetsVersion }}.js" defer nonce="{{ csp('script-src') }}"></script>
 
         {# Webfonts #}
 
-        <style nonce="{{ cspNonce('style-src') }}">
+        <style nonce="{{ csp('style-src') }}">
             {# FOUC #}
             {# https://www.primative.net/blog/how-to-get-rid-of-the-flash-of-unstyled-content/ #}
             .no-js {
@@ -76,10 +76,10 @@
     no-js" {{ attr(bodyDataTags) }}>
 
         {# Firefox Hack gegen FOUC: https://www.primative.net/blog/how-to-get-rid-of-the-flash-of-unstyled-content/ #}
-        <script nonce="{{ cspNonce('script-src') }}">0</script>
+        <script nonce="{{ csp('script-src') }}">0</script>
 
         {# FOUC #}
-        <script nonce="{{ cspNonce('script-src') }}">
+        <script nonce="{{ csp('script-src') }}">
             document.querySelector('body').classList.remove('no-js');
         </script>
         <div class="seite" id="seite">
@@ -88,11 +88,11 @@
             </header>
             <main class="main">{% block content %}{% endblock %}</main>
         </div>
-        <script nonce="{{ cspNonce('script-src') }}">
+        <script nonce="{{ csp('script-src') }}">
             {{ source("/js/inline.js") }}
         </script>
-        <script src="/js/defer-bausteine.{{ staticAssetsVersion }}.js" defer nonce="{{ cspNonce('script-src') }}"></script>
-        <script nonce="{{ cspNonce('script-src') }}">
+        <script src="/js/defer-bausteine.{{ staticAssetsVersion }}.js" defer nonce="{{ csp('script-src') }}"></script>
+        <script nonce="{{ csp('script-src') }}">
             {# FOUC #}
             let domReady = (cb) => {
             document.readyState === 'interactive' || document.readyState === 'complete'

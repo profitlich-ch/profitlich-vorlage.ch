@@ -73,7 +73,7 @@
 
 {% set uniqueId = uniqueid() %}
 <div class="{{ class ~ '-bild' ~ ' macro-bild' }}" id="macro-bild--{{ uniqueId }}">
-    <style nonce="{{ cspNonce('style-src') }}">
+    <style nonce="{{ csp('style-src') }}">
         #macro-bild--{{ uniqueId }} {
             {{ style | join(';') }}
         }
@@ -217,7 +217,7 @@
                 }
             } %}
             <img {{ attr(imgAttribute) }}>
-            <style nonce="{{ cspNonce('style-src') }}">
+            <style nonce="{{ csp('style-src') }}">
                 #macro-bild__img--{{ uniqueId }} {
                     {{ objectFitVariable }}
                 }

@@ -1,5 +1,7 @@
 defaultPlacement: end
 enableVersioning: true
+entryTypes:
+  - 0e793c4c-3298-4c14-a50e-fe050eeaee18 # Startseite
 handle: startseite
 name: Startseite
 previewTargets:
