@@ -1,4 +1,5 @@
 color: null
+color: null
 fieldLayouts:
   8b195686-1317-4797-8d9f-8106393d5d59:
     tabs:
@@ -15,6 +16,7 @@ fieldLayouts:
             elementCondition: null
             id: null
             includeInCards: false
+            includeInCards: false
             inputType: null
             instructions: null
             label: null
@@ -23,6 +25,7 @@ fieldLayouts:
             name: null
             orientation: null
             placeholder: null
+            providesThumbs: false
             providesThumbs: false
             readonly: false
             requirable: false
@@ -41,8 +44,11 @@ fieldLayouts:
             fieldUid: dffdb509-f1db-4d98-897e-971108a169e2 # CKEditor
             handle: null
             includeInCards: false
+            handle: null
+            includeInCards: false
             instructions: null
             label: null
+            providesThumbs: false
             providesThumbs: false
             required: false
             tip: null
@@ -57,8 +63,11 @@ fieldLayouts:
             fieldUid: 12994855-fd13-4d38-8ad9-156bb1960e74 # Bilder
             handle: null
             includeInCards: false
+            handle: null
+            includeInCards: false
             instructions: null
             label: null
+            providesThumbs: false
             providesThumbs: false
             required: false
             tip: null
@@ -72,12 +81,13 @@ fieldLayouts:
         userCondition: null
 handle: startseite
 hasTitleField: true
-icon: null
+icon: ''
 name: Startseite
+showSlugField: true
 showSlugField: true
 showStatusField: true
 slugTranslationKeyFormat: null
 slugTranslationMethod: site
-titleFormat: null
+titleFormat: ''
 titleTranslationKeyFormat: null
 titleTranslationMethod: site
