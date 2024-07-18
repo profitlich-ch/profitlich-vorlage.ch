@@ -1,12 +1,12 @@
 {
   "require": {
-    "cloudgrayau/csp": "1.2.0",
+    "cloudgrayau/csp": "^1.2.0",
     "craftcms/ckeditor": "^4.1.0",
     "craftcms/cms": "^5.0.0",
-    "craftpulse/craft-password-policy": "5.0.0-beta1",
-    "ostark/craft-async-queue": "4.0.0",
-    "spicyweb/craft-embedded-assets": "5.1.0",
-    "vlucas/phpdotenv": "5.4.0"
+    "craftpulse/craft-password-policy": "^5.0.0-beta1",
+    "ostark/craft-async-queue": "^4.0.0",
+    "spicyweb/craft-embedded-assets": "^5.1.0",
+    "vlucas/phpdotenv": "^5.4.0"
   },
   "require-dev": {
     "yiisoft/yii2-shell": "^2.0.3"
