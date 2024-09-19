@@ -1,3 +1,5 @@
+altTranslationKeyFormat: null
+altTranslationMethod: site
 fieldLayouts:
   413aa4a6-e2a6-4c94-b2e0-08be3e37fc65:
     tabs:
@@ -9,9 +11,11 @@ fieldLayouts:
             autocomplete: false
             autocorrect: true
             class: null
+            dateAdded: '2024-09-19T16:36:19+00:00'
             disabled: false
             elementCondition: null
             id: null
+            includeInCards: false
             inputType: null
             instructions: null
             label: null
@@ -20,6 +24,7 @@ fieldLayouts:
             name: null
             orientation: null
             placeholder: null
+            providesThumbs: false
             readonly: false
             requirable: false
             size: null
@@ -32,10 +37,14 @@ fieldLayouts:
             warning: null
             width: 100
           -
+            dateAdded: '2024-09-19T16:36:19+00:00'
             elementCondition: null
             fieldUid: 396abe4e-d4af-4c68-a2fb-7a3bce13f340 # Bildbeschreibung
+            handle: null
+            includeInCards: false
             instructions: null
             label: null
+            providesThumbs: false
             required: true
             tip: null
             type: craft\fieldlayoutelements\CustomField
@@ -50,6 +59,7 @@ fs: bilder
 handle: bilder
 name: Bilder
 sortOrder: 2
+subpath: ''
 titleTranslationKeyFormat: null
 titleTranslationMethod: site
 transformFs: ''

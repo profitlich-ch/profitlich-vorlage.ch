@@ -1,5 +1,4 @@
 columnSuffix: lnhfbfqy
-contentColumnType: text
 handle: ckeditor
 instructions: null
 name: CKEditor
@@ -8,7 +7,7 @@ settings:
   availableTransforms: ''
   availableVolumes: '*'
   ckeConfig: 9e7d0f16-c377-4f3b-a734-ed1f646f1fed # Simple
-  columnType: text
+  createButtonLabel: null
   defaultTransform: null
   enableSourceEditingForNonAdmins: false
   purifierConfig: null
