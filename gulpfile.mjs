@@ -9,7 +9,6 @@ const { src, dest, task, watch, series, parallel } = gulp;
 import { deleteAsync } from 'del';
 
 import autoprefixer from 'autoprefixer';
-import browsersync from 'browser-sync';
 import cleanCSS from 'gulp-clean-css';
 import concat from 'gulp-concat';
 import dartSass from 'sass';
@@ -394,7 +393,7 @@ function bausteineTwigTask() {
 
 // Bausteine Assets kopieren
 function bausteineAssetsTask() {
-    return src(dateien.bausteineAssets.src)
+    return src(dateien.bausteineAssets.src, { encoding: false })
 
     .pipe(dest
         (dateien.bausteineAssets.dest)
@@ -447,26 +446,6 @@ function macrosFunktionenTask() {
 
     .pipe(dest
         (dateien.macrosFunktionen.dest)
-    );
-}
-
-// Medien kopieren
-function medienTask() {
-    return src(dateien.medien.src)
-
-    .pipe(dest
-        (dateien.medien.dest)
-    );
-}
-
-// Medien Backup auf NAS
-function medienBackupTask() {
-    del('backup/src');
-
-    return src(dateien.medienBackup.src)
-
-    .pipe(dest
-        (dateien.medienBackup.dest)
     );
 }
 
@@ -555,7 +534,7 @@ function uploadWebTask() {
 
 // CSS injizieren
 function injizierenTask() {
-    return src('dist/**/*.{html,twig}')
+    return src('templates/**/*.{html,twig}')
     .pipe(injectCSS())
     .pipe(dest('dist'));
 }
@@ -575,28 +554,6 @@ function staticAssetsVersionTask() {
     );
 }
 
-// Browsersync
-// https://coder-coder.com/quick-guide-to-browsersync-gulp-4/
-const url = 'profitlich-vorlage.ch.ddev.site';
-function browsersyncServe(callback){
-    if (modus =='dev') {
-        browsersync.init({
-            proxy: url,
-            host: url,
-            port: 3000,
-            notify: false
-        });
-        callback();
-    } else {
-        callback();
-    }
-}
-
-function browsersyncReload(callback){
-    browsersync.reload();
-    callback();
-}
-
 // Änderungen beobachten
 function watchTask() {
     const watchVariable = gulp.watch(
@@ -606,10 +563,9 @@ function watchTask() {
             configToScssTask,
             configToJsTask,
             gulp.parallel(
-                templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosFunktionenTask, scssTask, jsDeferTask, jsBausteineDeferTask, jsConfigTask, jsInlineTask, medienTask, mockupTask, fontsTask, faviconTask, spritesTask, staticAssetsVersionTask
+                templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosFunktionenTask, scssTask, jsDeferTask, jsBausteineDeferTask, jsConfigTask, jsInlineTask, mockupTask, fontsTask, faviconTask, spritesTask, staticAssetsVersionTask
             ),
             injizierenTask,
-            // browsersyncReload,
             uploadTemplatesTask,
             uploadWebTask,
             configLoeschenTask
@@ -625,10 +581,9 @@ task('build',
         modusTask,
         modusConfirmTask,
         parallel(
-            templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosFunktionenTask, scssTask, jsDeferTask, jsBausteineDeferTask, jsConfigTask, jsInlineTask, medienTask, mockupTask, fontsTask, faviconTask, spritesTask, staticAssetsVersionTask
+            templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosFunktionenTask, scssTask, jsDeferTask, jsBausteineDeferTask, jsConfigTask, jsInlineTask, mockupTask, fontsTask, faviconTask, spritesTask, staticAssetsVersionTask
         ),
         injizierenTask,
-        // browsersyncServe,
         uploadTemplatesTask,
         uploadWebTask,
         configLoeschenTask,
