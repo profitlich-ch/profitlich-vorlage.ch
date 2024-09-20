@@ -62,6 +62,10 @@ function setDateien() {
             src: (modus != 'production') ? ['src/js/defer/**/*.js', 'src/macros-funktionen/**/*.js', 'src/dev/**/*.js'] : ['src/js/defer/**/*.js', 'src/macros-funktionen/**/*.js'],
             dest: 'web/js',
         },
+        jsDev: {
+            src: 'src/dev/**/*.js',
+            dest: 'web/js',
+        },
         jsConfig: {
             src: 'src/js/config.js',
             dest: 'templates/js',
