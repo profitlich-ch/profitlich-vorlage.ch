@@ -67,7 +67,7 @@
 {# mit/ohne preload #}
 {% set style = [
     hintergrundfarbe == 'blur' ? 'background-size: 100% 100%',
-    hintergrundfarbe != false and hintergrundfarbe != 'blur' ? 'background-color:' ~ hintergrundfarbe,
+    hintergrundfarbe != false and bild.getFormat() != 'svg' and hintergrundfarbe != 'blur' ? 'background-color:' ~ hintergrundfarbe,
     objectFit ? "height: 100%" : "padding-bottom:" ~ paddingBottom,
 ] %}
 
