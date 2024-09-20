@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5fe976782d1a9265b8c2dd060b2aaeea",
+    "content-hash": "cce8cc43c1bd16101c88d277595b440b",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -45,12 +45,12 @@
             "time": "2022-12-07T17:46:57+00:00"
         },
         {
-            "name": "bacon/bacon-qr-code",
-            "version": "2.0.8",
+            "name": "born05/craft-csp",
+            "version": "3.0.0",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Bacon/BaconQrCode/zipball/8674e51bb65af933a5ffaf1c308a660387c35c22",
-                "reference": "8674e51bb65af933a5ffaf1c308a660387c35c22",
+                "url": "https://api.github.com/repos/born05/craft-csp/zipball/90cd48ec40b7dcec67b187041055435726ff786b",
+                "reference": "90cd48ec40b7dcec67b187041055435726ff786b",
                 "shasum": ""
             },
             "require": {
@@ -65,52 +65,6 @@
                 "hasCpSection": false,
                 "changelogUrl": "https://raw.githubusercontent.com/born05/craft-csp/craft4/CHANGELOG.md"
             },
-            "autoload": {
-                "psr-4": {
-                    "born05\\contentsecuritypolicy\\": "src/"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Born05",
-                    "homepage": "https://www.born05.com/"
-                }
-            ],
-            "description": "Content Security Policy (or CSP) generator using nonces.",
-            "keywords": [
-                "cms",
-                "content security policy",
-                "craft",
-                "craft-plugin",
-                "craftcms",
-                "csp"
-            ],
-            "support": {
-                "docs": "https://github.com/born05/craft-csp/blob/craft4/README.md",
-                "issues": "https://github.com/born05/craft-csp/issues"
-            },
-            "time": "2024-08-20T11:44:50+00:00"
-        },
-        {
-            "name": "born05/craft-csp",
-            "version": "3.0.0",
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/born05/craft-csp/zipball/90cd48ec40b7dcec67b187041055435726ff786b",
-                "reference": "90cd48ec40b7dcec67b187041055435726ff786b",
-                "shasum": ""
-            },
-            "require": {
-                "craftcms/cms": "^4.0.0-alpha|^5.0.0-beta.1",
-                "php": "^8.0.2"
-            },
-            "suggest": {
-                "ext-imagick": "to generate QR code images"
-            },
-            "type": "library",
             "autoload": {
                 "psr-4": {
                     "born05\\contentsecuritypolicy\\": "src/"
@@ -242,27 +196,17 @@
                 "php": ">=8.0"
             },
             "suggest": {
-                "ext-openssl": "Enabling the openssl extension allows you to access https URLs for repositories and packages",
-                "ext-zip": "Enabling the zip extension allows you to unzip archives",
-                "ext-zlib": "Allow gzip compression of HTTP requests"
+                "symfony/validator": "to validate addresses"
             },
-            "bin": [
-                "bin/composer"
-            ],
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "2.7-dev"
-                },
-                "phpstan": {
-                    "includes": [
-                        "phpstan/rules.neon"
-                    ]
+                    "dev-master": "2.x-dev"
                 }
             },
             "autoload": {
                 "psr-4": {
-                    "Composer\\": "src/Composer/"
+                    "CommerceGuys\\Addressing\\": "src"
                 }
             },
             "license": [
@@ -317,7 +261,7 @@
                 {
                     "name": "Jordi Boggiano",
                     "email": "j.boggiano@seld.be",
-                    "homepage": "https://seld.be"
+                    "homepage": "http://seld.be"
                 }
             ],
             "description": "Lets you find a path to the system CA bundle, and includes a fallback to the Mozilla CA bundle.",
@@ -333,11 +277,6 @@
         {
             "name": "composer/semver",
             "version": "3.4.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/composer/semver.git",
-                "reference": "4313d26ada5e0c4edfbd1dc481a92ff7bff91f12"
-            },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/composer/semver/zipball/4313d26ada5e0c4edfbd1dc481a92ff7bff91f12",
@@ -346,10 +285,6 @@
             },
             "require": {
                 "php": "^5.3.2 || ^7.0 || ^8.0"
-            },
-            "require-dev": {
-                "phpstan/phpstan": "^1.11",
-                "symfony/phpunit-bridge": "^3 || ^7"
             },
             "type": "library",
             "extra": {
@@ -362,7 +297,6 @@
                     "Composer\\Semver\\": "src"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -389,25 +323,6 @@
                 "semver",
                 "validation",
                 "versioning"
-            ],
-            "support": {
-                "irc": "ircs://irc.libera.chat:6697/composer",
-                "issues": "https://github.com/composer/semver/issues",
-                "source": "https://github.com/composer/semver/tree/3.4.3"
-            },
-            "funding": [
-                {
-                    "url": "https://packagist.com",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/composer",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/composer/composer",
-                    "type": "tidelift"
-                }
             ],
             "time": "2024-09-19T14:15:21+00:00"
         },
@@ -2963,7 +2878,9 @@
                 "shasum": ""
             },
             "require": {
-                "php": "^5.3 || ^7.0 || ^8.0"
+                "craftcms/cms": "^5.0.0",
+                "embed/embed": "^4.4.10",
+                "php": "^8.0.2"
             },
             "type": "craft-plugin",
             "extra": {
@@ -2976,7 +2893,7 @@
             },
             "autoload": {
                 "psr-4": {
-                    "Seld\\JsonLint\\": "src/Seld/JsonLint/"
+                    "spicyweb\\embeddedassets\\": "src/"
                 }
             },
             "license": [
@@ -2984,12 +2901,11 @@
             ],
             "authors": [
                 {
-                    "name": "Jordi Boggiano",
-                    "email": "j.boggiano@seld.be",
-                    "homepage": "https://seld.be"
+                    "name": "Spicy Web",
+                    "homepage": "https://spicyweb.com.au"
                 }
             ],
-            "description": "JSON Linter",
+            "description": "Manage YouTube videos, Instagram photos, Twitter posts and more as first class assets",
             "keywords": [
                 "assets",
                 "cms",
@@ -3014,8 +2930,8 @@
             "version": "3.1.0",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/phar-utils/zipball/ea2f4014f163c1be4c601b9b7bd6af81ba8d701c",
-                "reference": "ea2f4014f163c1be4c601b9b7bd6af81ba8d701c",
+                "url": "https://api.github.com/repos/Spomky-Labs/cbor-php/zipball/499d9bff0a6d59c4f1b813cc617fc3fd56d6dca4",
+                "reference": "499d9bff0a6d59c4f1b813cc617fc3fd56d6dca4",
                 "shasum": ""
             },
             "require": {
@@ -3028,14 +2944,9 @@
                 "ext-gmp": "GMP or BCMath extensions will drastically improve the library performance"
             },
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.x-dev"
-                }
-            },
             "autoload": {
                 "psr-4": {
-                    "Seld\\PharUtils\\": "src/"
+                    "CBOR\\": "src/"
                 }
             },
             "license": [
@@ -3043,50 +2954,15 @@
             ],
             "authors": [
                 {
-                    "name": "Jordi Boggiano",
-                    "email": "j.boggiano@seld.be"
-                }
-            ],
-            "description": "PHAR file format utilities, for when PHP phars you up",
-            "keywords": [
-                "phar"
-            ],
-            "time": "2022-08-31T10:31:18+00:00"
-        },
-        {
-            "name": "seld/signal-handler",
-            "version": "2.0.2",
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/signal-handler/zipball/04a6112e883ad76c0ada8e4a9f7520bbfdb6bb98",
-                "reference": "04a6112e883ad76c0ada8e4a9f7520bbfdb6bb98",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.2.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-main": "2.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Seld\\Signal\\": "src/"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
+                    "name": "Florent Morselli",
+                    "homepage": "https://github.com/Spomky"
+                },
                 {
-                    "name": "Jordi Boggiano",
-                    "email": "j.boggiano@seld.be",
-                    "homepage": "http://seld.be"
+                    "name": "All contributors",
+                    "homepage": "https://github.com/Spomky-Labs/cbor-php/contributors"
                 }
             ],
-            "description": "Simple unix signal handler that silently fails where signals are not supported for easy cross-platform development",
+            "description": "CBOR Encoder/Decoder for PHP",
             "keywords": [
                 "Concise Binary Object Representation",
                 "RFC7049",
@@ -4005,12 +3881,9 @@
         },
         {
             "name": "symfony/polyfill-php81",
-            "name": "symfony/polyfill-php81",
             "version": "v1.31.0",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-php81/zipball/4a4cfc2d253c21a5ad0e53071df248ed48c6ce5c",
-                "reference": "4a4cfc2d253c21a5ad0e53071df248ed48c6ce5c",
                 "url": "https://api.github.com/repos/symfony/polyfill-php81/zipball/4a4cfc2d253c21a5ad0e53071df248ed48c6ce5c",
                 "reference": "4a4cfc2d253c21a5ad0e53071df248ed48c6ce5c",
                 "shasum": ""
@@ -4118,18 +3991,13 @@
         {
             "name": "symfony/process",
             "version": "v6.4.8",
-            "name": "symfony/process",
-            "version": "v6.4.8",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/process/zipball/8d92dd79149f29e89ee0f480254db595f6a6a2c5",
-                "reference": "8d92dd79149f29e89ee0f480254db595f6a6a2c5",
                 "url": "https://api.github.com/repos/symfony/process/zipball/8d92dd79149f29e89ee0f480254db595f6a6a2c5",
                 "reference": "8d92dd79149f29e89ee0f480254db595f6a6a2c5",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.1"
                 "php": ">=8.1"
             },
             "type": "library",
