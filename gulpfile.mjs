@@ -62,6 +62,10 @@ function setDateien() {
             src: (modus != 'production') ? ['src/js/defer/**/*.js', 'src/macros-funktionen/**/*.js', 'src/dev/**/*.js'] : ['src/js/defer/**/*.js', 'src/macros-funktionen/**/*.js'],
             dest: 'web/js',
         },
+        jsDev: {
+            src: 'src/dev/**/*.js',
+            dest: 'web/js',
+        },
         jsConfig: {
             src: 'src/js/config.js',
             dest: 'templates/js',
@@ -269,6 +273,29 @@ function jsDeferTask() {
     // Dateien(en) schreiben
     .pipe(dest
         (dateien.jsDefer.dest)
+    )
+}
+
+// JS dev kompilieren
+function jsDevTask() {
+    return src(dateien.jsDev.src)
+
+    // Sourcemaps initialisieren
+    .pipe(sourcemaps.init())
+
+    // Alle Dateien in einer zusammenfassen
+    .pipe(concat('dev.js'))
+
+    .pipe(dest
+        (dateien.jsDev.dest)
+    )
+
+    // Sourcemaps schreiben
+    .pipe(sourcemaps.write('.'))
+
+    // Dateien(en) schreiben
+    .pipe(dest
+        (dateien.jsDev.dest)
     )
 }
 
@@ -563,7 +590,7 @@ function watchTask() {
             configToScssTask,
             configToJsTask,
             gulp.parallel(
-                templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosFunktionenTask, scssTask, jsDeferTask, jsBausteineDeferTask, jsConfigTask, jsInlineTask, mockupTask, fontsTask, faviconTask, spritesTask, staticAssetsVersionTask
+                templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosFunktionenTask, scssTask, jsDeferTask, jsDevTask, jsBausteineDeferTask, jsConfigTask, jsInlineTask, mockupTask, fontsTask, faviconTask, spritesTask, staticAssetsVersionTask
             ),
             injizierenTask,
             uploadTemplatesTask,
@@ -581,7 +608,7 @@ task('build',
         modusTask,
         modusConfirmTask,
         parallel(
-            templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosFunktionenTask, scssTask, jsDeferTask, jsBausteineDeferTask, jsConfigTask, jsInlineTask, mockupTask, fontsTask, faviconTask, spritesTask, staticAssetsVersionTask
+            templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosFunktionenTask, scssTask, jsDeferTask, jsDevTask, jsBausteineDeferTask, jsConfigTask, jsInlineTask, mockupTask, fontsTask, faviconTask, spritesTask, staticAssetsVersionTask
         ),
         injizierenTask,
         uploadTemplatesTask,

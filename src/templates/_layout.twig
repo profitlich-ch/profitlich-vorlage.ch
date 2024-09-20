@@ -28,16 +28,15 @@
         </script>
         <noscript><link rel="stylesheet" href="/css/style.{{ staticAssetsVersion }}.css" nonce="{{ cspNonce('style-src') }}"></noscript>
 
-        {% if getenv('CRAFT_ENVIRONMENT') != 'production' %}
-            <link rel="stylesheet" href="/css/dev.{{ staticAssetsVersion }}.css" nonce="{{ cspNonce('style-src') }}">
-        {% endif %}
-
         <script nonce="{{ cspNonce('script-src') }}">
             {{ source("/js/config.js") }}
         </script>
         <script src="/js/defer.{{ staticAssetsVersion }}.js" defer nonce="{{ cspNonce('script-src') }}"></script>
-
-        {# Webfonts #}
+        {# dev Mode CSS und JS #}
+        {% if devMode %}
+            <link rel="stylesheet" href="/css/dev.{{ staticAssetsVersion }}.css" nonce="{{ cspNonce('style-src') }}">
+            <script src="/js/dev.{{ staticAssetsVersion }}.js" defer nonce="{{ cspNonce('script-src') }}"></script>
+        {% endif %}
 
         <style nonce="{{ cspNonce('style-src') }}">
             {# FOUC #}
