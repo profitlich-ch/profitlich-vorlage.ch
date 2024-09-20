@@ -10,6 +10,8 @@
             PROJEKTNAME
         </title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        {# Nummern werden nicht automatisch zu Telefon-Links unmgewandelt #}
+        <meta name="format-detection" content="telephone=no" />
         {% block metaDescription %}{% endblock %}
 
         {% set staticAssetsVersion = craft.app.config.custom.staticAssetsVersion %}
