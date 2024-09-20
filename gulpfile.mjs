@@ -272,6 +272,29 @@ function jsDeferTask() {
     )
 }
 
+// JS dev kompilieren
+function jsDevTask() {
+    return src(dateien.jsDev.src)
+
+    // Sourcemaps initialisieren
+    .pipe(sourcemaps.init())
+
+    // Alle Dateien in einer zusammenfassen
+    .pipe(concat('dev.js'))
+
+    .pipe(dest
+        (dateien.jsDev.dest)
+    )
+
+    // Sourcemaps schreiben
+    .pipe(sourcemaps.write('.'))
+
+    // Dateien(en) schreiben
+    .pipe(dest
+        (dateien.jsDev.dest)
+    )
+}
+
 // JS Bausteine Defer kompilieren
 function jsBausteineDeferTask() {
     return src(dateien.jsBausteineDefer.src)
@@ -563,7 +586,7 @@ function watchTask() {
             configToScssTask,
             configToJsTask,
             gulp.parallel(
-                templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosFunktionenTask, scssTask, jsDeferTask, jsBausteineDeferTask, jsConfigTask, jsInlineTask, mockupTask, fontsTask, faviconTask, spritesTask, staticAssetsVersionTask
+                templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosFunktionenTask, scssTask, jsDeferTask, jsDevTask, jsBausteineDeferTask, jsConfigTask, jsInlineTask, mockupTask, fontsTask, faviconTask, spritesTask, staticAssetsVersionTask
             ),
             injizierenTask,
             uploadTemplatesTask,
@@ -581,7 +604,7 @@ task('build',
         modusTask,
         modusConfirmTask,
         parallel(
-            templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosFunktionenTask, scssTask, jsDeferTask, jsBausteineDeferTask, jsConfigTask, jsInlineTask, mockupTask, fontsTask, faviconTask, spritesTask, staticAssetsVersionTask
+            templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosFunktionenTask, scssTask, jsDeferTask, jsDevTask, jsBausteineDeferTask, jsConfigTask, jsInlineTask, mockupTask, fontsTask, faviconTask, spritesTask, staticAssetsVersionTask
         ),
         injizierenTask,
         uploadTemplatesTask,
