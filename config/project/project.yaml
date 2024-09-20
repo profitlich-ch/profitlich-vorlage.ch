@@ -1,46 +1,35 @@
-dateModified: 1711653817
+dateModified: 1726848584
 email:
   fromEmail: dev@profitlich.ch
   fromName: 'Profitlich DEV'
   transportType: craft\mail\transportadapters\Sendmail
 fs:
-  bilder:
+  lokal:
     hasUrls: true
-    name: Bilder
+    name: Lokal
     settings:
-      path: '@assetBasePath/bilder'
+      path: '@assetBasePath'
     type: craft\fs\Local
-    url: '@assetBaseUrl/bilder'
+    url: '@assetBaseUrl'
+graphql:
+  publicToken:
+    enabled: false
+    expiryDate: null
 meta:
   __names__:
+    0a064e6b-5fcd-4a2b-acb7-b46630ad5244: Farbe # Farbe
     0e793c4c-3298-4c14-a50e-fe050eeaee18: Startseite # Startseite
-    9e7d0f16-c377-4f3b-a734-ed1f646f1fed: Simple # Simple
-    25d2e79d-a04c-4824-a49f-c3baa6642d8a: Common # Common
-    44fec1ae-cc09-42b5-b6a8-1c301d066c04: Bilder # Bilder
+    6b8cfffa-f693-418b-bedc-62d6d047943e: 'Filipa 2' # Filipa 2
+    33e4e2e0-ac84-49fd-ad87-186f3ea0666b: 'Konflikt 2' # Konflikt 2
+    44fec1ae-cc09-42b5-b6a8-1c301d066c04: Projektbilder # Projektbilder
     396abe4e-d4af-4c68-a2fb-7a3bce13f340: Bildbeschreibung # Bildbeschreibung
+    7689ffd6-2bc9-4ccb-9f0e-705955ea7777: Felix # Felix
     10120e23-43ba-494f-ba6c-7241058df713: Startseite # Startseite
-    12994855-fd13-4d38-8ad9-156bb1960e74: Bilder # Bilder
+    12994855-fd13-4d38-8ad9-156bb1960e74: Projektbilder # Projektbilder
+    82491024-fe0a-4331-a632-7b4e1a03d628: 'Konflikt ;)' # Konflikt ;)
     c81f04dd-a4dc-4e6f-a97b-5ce6004b8cf8: 'Profitlich DEV' # Profitlich DEV
-    d6ebc0e2-f57d-43d9-b5ad-e53f1b9394a5: Test # Test
-    dffdb509-f1db-4d98-897e-971108a169e2: CKEditor # CKEditor
     e814380a-f915-44b8-92b3-a767fa94f64a: 'Profitlich DEV' # Profitlich DEV
 plugins:
-  async-queue:
-    edition: standard
-    enabled: true
-    schemaVersion: 1.0.0
-  ckeditor:
-    edition: standard
-    enabled: true
-    schemaVersion: 3.0.0.0
-  content-security-policy:
-    edition: standard
-    enabled: true
-    schemaVersion: 1.0.0
-  embeddedassets:
-    edition: standard
-    enabled: true
-    schemaVersion: 1.0.0
   password-policy:
     edition: standard
     enabled: true
@@ -56,7 +45,7 @@ system:
   edition: pro
   live: true
   name: 'Profitlich DEV'
-  schemaVersion: 4.5.3.0
+  schemaVersion: 5.3.0.2
   timeZone: America/Los_Angeles
 users:
   allowPublicRegistration: false

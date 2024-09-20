@@ -1,0 +1,11 @@
+columnSuffix: ctrdgacg
+contentColumnType: char(7)
+handle: farbe
+instructions: null
+name: Farbe
+searchable: false
+settings:
+  defaultColor: null
+translationKeyFormat: null
+translationMethod: none
+type: craft\fields\Color
