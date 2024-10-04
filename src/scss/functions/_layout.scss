@@ -1,0 +1,192 @@
+// Media queries get the breakpoints
+// Breakpints get the layouts
+// Depending on the project, only a part of the layout names are used,
+// so there needs to be an intervention in the breakpoints to deliver a number even if a layout is not present.
+// Example: There are only the layouts smartphone, tablet and desktop.
+// Then tabletPortrait must deliver the value of tablet
+
+$tabletPortrait: null;
+@if map-get($layouts, tabletPortrait) {
+    $tabletPortrait: tabletPortrait;
+// no tabletPortrait size is defined
+} @else {
+    @if map-get($layouts, tablet) {
+        $tabletPortrait: tablet;
+    // neither tablet size is defined
+    } @else {
+        $tabletPortrait: desktop;
+    }
+}
+
+$bigFrom: null;
+@if map-get($layouts, big) {
+    $bigFrom: big;
+} @else {
+    $bigFrom: 999999px;
+}
+
+$breakpointsVariablen: (
+    smartphoneTo:       map-get($breakpoints, $tabletPortrait) - 1px,
+    tabletPortraitFrom: map-get($breakpoints, $tabletPortrait) + 0px,
+    tabletPortraitTo:   map-get($breakpoints, tabletLandscape) - 1px,
+    tabletLandscapeFrom:map-get($breakpoints, tabletLandscape) + 0px,
+    tabletLandscapeTo:  map-get($breakpoints, desktop) - 1px,
+    desktopFrom:        map-get($breakpoints, desktop) + 0px,
+    desktopTo:          map-get($breakpoints, big) - 1px,
+    bigFrom:            map-get($breakpoints, big) + 0px,
+);
+
+// Gibt es kein Layout big, soll die media query desktop keine max-width haben
+$mediaqueryDesktop: null;
+@if map-get($layouts, big) {
+    $mediaqueryDesktop: (min-width: map-get($breakpointsVariablen, desktopFrom), max-width: map-get($breakpointsVariablen, desktopTo));
+} @else {
+    $mediaqueryDesktop: (min-width: map-get($breakpointsVariablen, desktopFrom));
+}
+
+$mediaqueries: (
+	smartphone:     (max-width: map-get($breakpointsVariablen, smartphoneTo)),
+	tablet:         (min-width: map-get($breakpointsVariablen, tabletPortraitFrom), max-width: map-get($breakpointsVariablen, tabletLandscapeTo)),
+	tabletAb:       (min-width: map-get($breakpointsVariablen, tabletPortraitFrom)),
+	tabletPortraitFrom:   (max-width: map-get($breakpointsVariablen, tabletPortraitFrom)),
+	tabletPortrait:     (min-width: map-get($breakpointsVariablen, tabletPortraitFrom), max-width: map-get($breakpointsVariablen, tabletPortraitTo)),
+	tabletPortraitTo:  (max-width: map-get($breakpointsVariablen, tabletPortraitTo)),
+	tabletLandscapeFrom:   (max-width: map-get($breakpointsVariablen, tabletLandscapeFrom)),
+	tabletLandscape:     (min-width: map-get($breakpointsVariablen, tabletLandscapeFrom), max-width: map-get($breakpointsVariablen, tabletLandscapeTo)),
+	tabletLandscapeTo:  (max-width: map-get($breakpointsVariablen, tabletLandscapeTo)),
+	desktopFrom:      (min-width: map-get($breakpointsVariablen, desktopFrom)),
+	desktop:        $mediaqueryDesktop,
+	desktopTo:     (max-width: map-get($breakpointsVariablen, desktopTo)),
+	big:          (min-width: map-get($breakpointsVariablen, bigFrom)),
+);
+
+
+// Bilder
+.bild {
+    width: 100%;
+}
+
+
+// Font family
+@mixin fontFamily($layout, $fontSize, $lineHeight, $bold:'false') {
+
+    font-size: size($layout, $fontSize);
+    line-height: size($layout, $lineHeight);
+
+    @if ($bold != 'false') {
+        font-weight: $bold;
+    }
+
+}
+
+
+// columns
+// Calculates the width (as a fraction of 100%)
+// Per default the function assumes that the given space does not contain column gaps;
+// with the variable $columnGapsAddedBasis they can be specified.
+// $columnGapsAddedBasis is to be used when the space to be calculated contains additional column gaps outside the $columnsBasis.
+// $columnGapsAdditional is to be used when additionally to the $columns column gaps are to be added (e.g left and/or right).
+// $shift is for adding a value to the result, for example a margin
+// $inverse is for calculating the width as a negative number, for example for a negative shift in a stage system
+@function columns($layout, $columns, $columnsBasis, $columnGapsAddedBasis:0, $columnGapsAdditional:0, $margin:0, $shift:0, $invers:false) {
+    $columns: size($layout, map-get($columns, $layout) );
+    $margin: size($layout, $margin);
+    $shift: size($layout, $shift);
+    @if ( $invers == false ) {
+        $invers: 1;
+    } @else {
+        $invers: -1;
+    }
+
+    // available space
+    // minus column gaps within the space
+    // equals space for content
+    // divided by number of columns in space
+    // equals width of each column
+    // times number of desired columns
+    // equals width of desired columns
+    // plus column gaps between desired columns
+    // equals width of desired columns including gaps
+    // plus additional column gaps
+    @return calc(
+        (
+            (
+                // available space
+                100%
+                // all column gaps in the given space
+                - $margin - $columns * ($columnsBasis + $columnGapsAddedBasis - 1)
+            )
+            // number of columns in the given space
+            / $columnsBasis
+            // desired columns
+            * ($columns * $invers)
+            // columns gaps between desired columns plus additional column gaps
+            // inverse to get a negative value
+            + ($columns * ($columns - 1 + $columnGapsAdditional) * $invers)
+            // Shift
+            + ($shift * $invers)
+        )
+    );
+}
+
+
+
+// Size
+// converts a number to a size in px or vw
+// depending on the unit set for the layout
+@function size($layout, $number) {
+    $number: $number;
+    $width: false;
+    $width: map-get($layouts, $layout);
+
+    @if ( map-get($units, $layout) == 'px' ) {
+        @return $number * 1px;
+    } @else {
+        @return decimal-round( calc($number / $width) * 100, 2) * 1vw;
+    }
+
+}
+
+
+// Distance
+@mixin marginPadding($layout, $mode, $position, $top: 0, $right: 0, $bottom: 0, $left: 0) {
+
+    // @include mode($layout, padding/margin, alle/top/right/bottom/left, 0, 0, 0, 0) 
+
+    @if ( map-get($units, $layout) == 'px' ) {
+        $top: $top + px;
+        $right: $right + px;
+        $bottom: $bottom + px;
+        $left: $left + px;
+    } @else {
+
+        @if type-of($top) == 'number'{
+            $top: size($layout, $top);
+        } 
+        @if type-of($right) == 'number'{
+            $right: size($layout, $right);
+        } 
+        @if type-of($bottom) == 'number'{
+            $bottom: size($layout, $bottom);
+        } 
+        @if type-of($left) == 'number'{
+            $left: size($layout, $left);
+        } 
+    }
+    
+    @if $position == alle {
+        #{$mode}: $top $right $bottom $left;
+    }
+    @if $position == top {
+        #{$mode}-top: $top;
+    }
+    @if $position == right {
+        #{$mode}-right: $top;
+    }
+    @if $position == bottom {
+        #{$mode}-bottom: $top;
+    }
+    @if $position == left {
+        #{$mode}-left: $top;
+    }
+}

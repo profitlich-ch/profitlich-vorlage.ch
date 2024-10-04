@@ -1,47 +1,47 @@
-// Raster
-$farbe--dev-toolbar: rgba(0, 220, 30, 1.0);
-$farbe--dev-raster: rgba(0, 0, 255, 0.5);
-$farbe--dev-raster-ribbons: rgba(191, 255, 254, 0.5);
-$farbe--dev-raster-mitte: rgba(0, 0, 0, 0.2);
+// grid
+$color--dev-toolbar: rgba(0, 220, 30, 1.0);
+$color--dev-grid: rgba(0, 0, 255, 0.5);
+$color--dev-grid-ribbons: rgba(191, 255, 254, 0.5);
+$color--dev-grid-center: rgba(0, 0, 0, 0.2);
 
 
-@mixin dev-toolbar-raster($layout, $spalten, $spaltenabstand, $seitenrand-links, $seitenrand-rechts) {
+@mixin dev-toolbar-grid($layout, $columns, $column-gap, $margin-left, $margin-right) {
 
-    $spaltenabstand: groesse($layout, $spaltenabstand);
-    $seitenrand-links: groesse($layout, $seitenrand-links);
-    $seitenrand-rechts: groesse($layout, $seitenrand-rechts);
+    $column-gap: size($layout, $column-gap);
+    $margin-left: size($layout, $margin-left);
+    $margin-right: size($layout, $margin-right);
     
     body[data-dev='true'] {
         .dev-toolbar__grid::after {
-            // Das Raster entsteht durch Wiederholung
-            // important, weil die spezifischeren bacckground Angaben die size sonst überschreiben
-            background-size: calc((100% - ($spalten * $spaltenabstand)) * calc(1 / $spalten) + $spaltenabstand) 1px !important;
-            margin: 0 ($seitenrand-rechts - calc($spaltenabstand / 2)) 0 ($seitenrand-links - calc($spaltenabstand / 2));
-            // Das Raster berechnet sich ab der Mitte der Spalten
-            // Deshalb ist es links und rechts um einen halben Spaltenabstand breiter
-            width: calc(100% - $seitenrand-rechts + calc($spaltenabstand / 2) - $seitenrand-links + calc($spaltenabstand / 2));
+            // the grid is made through repition
+            // 'important' because background settings are more specific than the grid settings
+            background-size: calc((100% - ($columns * $column-gap)) * calc(1 / $columns) + $column-gap) 1px !important;
+            margin: 0 ($margin-right - calc($column-gap / 2)) 0 ($margin-left - calc($column-gap / 2));
+            // The grid is calculated starting from the middle 
+            // Thats why its necessary to add the half of the column gap to the left and right side
+            width: calc(100% - $margin-right + calc($column-gap / 2) - $margin-left + calc($column-gap / 2));
         }
     }
     
     body[data-dev='true'][data-dev-grid="lines"] {
         .dev-toolbar__grid::after {
             background:
-                // Mitte des Spaltenabstands
+                // center of the column spacing
                 linear-gradient(90deg, transparent 0.5px, transparent 0.5px) 0 0,
-                // linke Spaltenlinie
-                // Position: von der Spaltenanbstandmitte um einen halben Spaltenabstand nach rechts
-                linear-gradient(90deg, $farbe--dev-raster 0.5px, transparent 0.5px) calc($spaltenabstand / 2) 0,
-                // rechte Spaltenlinie
-                linear-gradient(90deg, $farbe--dev-raster 0.5px, transparent 0.5px) calc($spaltenabstand / 2 * -1) 0;
+                // Left column line
+                // position: from the column spacing center to the right by half a column spacing
+                linear-gradient(90deg, $color--dev-grid 0.5px, transparent 0.5px) calc($column-gap / 2) 0,
+                // right column line
+                linear-gradient(90deg, $color--dev-grid 0.5px, transparent 0.5px) calc($column-gap / 2 * -1) 0;
         }
     }
     
     body[data-dev='true'][data-dev-grid="ribbons"] {
         .dev-toolbar__grid::after {
             background:
-                // linke Spaltenlinie
-                // Position: von der Spaltenanbstandmitte um einen halben Spaltenabstand nach rechts
-                linear-gradient(90deg, $farbe--dev-raster-ribbons calc(100% - $spaltenabstand), transparent 0.5px) calc($spaltenabstand / 2) 0,
+                // ceft column ribbon
+                // position: from the column spacing center to the right by half a column spacing
+                linear-gradient(90deg, $color--dev-grid-ribbons calc(100% - $column-gap), transparent 0.5px) calc($column-gap / 2) 0,
         }
     }
 }
@@ -58,7 +58,7 @@ $farbe--dev-raster-mitte: rgba(0, 0, 0, 0.2);
     }
     
     &__text {
-        background-color: $farbe--dev-toolbar;
+        background-color: $color--dev-toolbar;
         left: 0;
         padding: 5px 10px;
         position: fixed;
@@ -90,6 +90,6 @@ $farbe--dev-raster-mitte: rgba(0, 0, 0, 0.2);
 
 @each $layout, $breite in $layouts {
     @include mediaquery($layout) {
-        @include dev-toolbar-raster($layout, map-get($spalten, $layout), map-get($spaltenabstaende, $layout), map-deep-get($seitenraender, $layout, 'left'), map-deep-get($seitenraender, $layout, 'right'));
+        @include dev-toolbar-grid($layout, map-get($columns, $layout), map-get($column-gap, $layout), map-deep-get($margins, $layout, 'left'), map-deep-get($margins, $layout, 'right'));
     }
 }

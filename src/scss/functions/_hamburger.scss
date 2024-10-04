@@ -1,18 +1,18 @@
-@mixin hamburger($hamburger-breite, $hamburger-hoehe, $hamburger-strichstaerke, $hamburger-farbe, $hamburger-farbe-active) {
+@mixin hamburger($hamburger-breite, $hamburger-hoehe, $hamburger-line-width, $hamburger-color, $hamburger-color-active) {
 
     // Settings
     // ==================================================
     $hamburger-padding-x           : 15px !default;
     $hamburger-padding-y           : 15px !default;
-    $hamburger-linienabstand       : calc(($hamburger-hoehe - 3 * $hamburger-strichstaerke) / 2) !default;
-    $hamburger-farbe               : #000 !default;
+    $hamburger-line-gap            : calc(($hamburger-hoehe - 3 * $hamburger-line-width) / 2) !default;
+    $hamburger-color               : #000 !default;
     $hamburger-layer-border-radius : 0 !default;
     $hamburger-hover-opacity       : 1 !default;
-    $hamburger-active-layer-color  : $hamburger-farbe-active !default;
+    $hamburger-active-layer-color  : $hamburger-color-active !default;
     $hamburger-active-hover-opacity: $hamburger-hover-opacity !default;
-    $hamburger-animationsdauer: 0.195s;
-    $hamburger-kompressionsgeschwindigkeit: 0.12s;
-    $hamburger-drehgeschwindigkeit: $hamburger-animationsdauer - $hamburger-kompressionsgeschwindigkeit;
+    $hamburger-animation-timing: 0.195s;
+    $hamburger-compression-speed: 0.12s;
+    $hamburger-turn-speed: $hamburger-animation-timing - $hamburger-compression-speed;
 
     // To use CSS filters as the hover effect instead of opacity,
     // set $hamburger-hover-use-filter as true and
@@ -50,13 +50,13 @@
         .hamburger-inner::before,
         .hamburger-inner::after {
             background-color: $hamburger-active-layer-color;
-            transition: 0s $hamburger-kompressionsgeschwindigkeit linear;
+            transition: 0s $hamburger-compression-speed linear;
         }
     }
     
     .hamburger-box {
         width: $hamburger-breite;
-        height: calc($hamburger-strichstaerke * 3 + $hamburger-linienabstand * 2);
+        height: calc($hamburger-line-width * 3 + $hamburger-line-gap * 2);
         display: inline-block;
         position: relative;
     }
@@ -64,14 +64,14 @@
     .hamburger-inner {
         display: block;
         top: 50%;
-        margin-top: calc($hamburger-strichstaerke / -2);
+        margin-top: calc($hamburger-line-width / -2);
     
         &,
         &::before,
         &::after {
             width: $hamburger-breite;
-            height: $hamburger-strichstaerke;
-            background-color: $hamburger-farbe;
+            height: $hamburger-line-width;
+            background-color: $hamburger-color;
             border-radius: $hamburger-layer-border-radius;
             position: absolute;
             transition-property: transform;
@@ -86,11 +86,11 @@
         }
     
         &::before {
-            top: calc(($hamburger-linienabstand + $hamburger-strichstaerke) * -1);
+            top: calc(($hamburger-line-gap + $hamburger-line-width) * -1);
         }
     
         &::after {
-            bottom: calc(($hamburger-linienabstand + $hamburger-strichstaerke) * -1);
+            bottom: calc(($hamburger-line-gap + $hamburger-line-width) * -1);
         }
     }
 
@@ -115,38 +115,38 @@
     line-height: 0;
     
     .hamburger-inner {
-        transition-duration: $hamburger-drehgeschwindigkeit;
+        transition-duration: $hamburger-turn-speed;
         transition-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
 
         &::before {
-            transition: top $hamburger-drehgeschwindigkeit $hamburger-kompressionsgeschwindigkeit ease,
-                opacity $hamburger-drehgeschwindigkeit ease;
+            transition: top $hamburger-turn-speed $hamburger-compression-speed ease,
+                opacity $hamburger-turn-speed ease;
         }
 
         &::after {
-            transition: bottom $hamburger-drehgeschwindigkeit $hamburger-kompressionsgeschwindigkeit ease,
-                transform $hamburger-drehgeschwindigkeit cubic-bezier(0.55, 0.055, 0.675, 0.19);
+            transition: bottom $hamburger-turn-speed $hamburger-compression-speed ease,
+                transform $hamburger-turn-speed cubic-bezier(0.55, 0.055, 0.675, 0.19);
         }
     }
 
     body[data-menue-active='true'] & {
         .hamburger-inner {
             transform: rotate(45deg);
-            transition-delay: $hamburger-kompressionsgeschwindigkeit;
+            transition-delay: $hamburger-compression-speed;
             transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
 
             &::before {
                 top: 0;
                 opacity: 0;
-                transition: top $hamburger-drehgeschwindigkeit ease,
-                    opacity $hamburger-drehgeschwindigkeit $hamburger-kompressionsgeschwindigkeit ease;
+                transition: top $hamburger-turn-speed ease,
+                    opacity $hamburger-turn-speed $hamburger-compression-speed ease;
             }
 
             &::after {
                 bottom: 0;
                 transform: rotate(-90deg);
-                transition: bottom $hamburger-drehgeschwindigkeit ease,
-                    transform $hamburger-drehgeschwindigkeit $hamburger-kompressionsgeschwindigkeit cubic-bezier(0.215, 0.61, 0.355, 1);
+                transition: bottom $hamburger-turn-speed ease,
+                    transform $hamburger-turn-speed $hamburger-compression-speed cubic-bezier(0.215, 0.61, 0.355, 1);
             }
         }
     }

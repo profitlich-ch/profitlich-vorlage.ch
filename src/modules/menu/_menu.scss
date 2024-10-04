@@ -17,11 +17,11 @@
         
 
         &[data-menu-active="true"] {
-            color: map-get($colorn, rot);
+            color: map-get($colors, rot);
         }
 
         &:hover {
-            color: map-get($colorn, rot);
+            color: map-get($colors, rot);
         }
     }
 }
@@ -32,8 +32,8 @@
     $layout: smartphone;
 
     .menu {
-        @include abstand($layout, padding, alle, 0, 26, 0, 26);
-        background-color: map-get($colorn, hellbraun);
+        @include marginPadding($layout, padding, alle, 0, 26, 0, 26);
+        background-color: map-get($colors, hellbraun);
         display: none;
         height: calc(var(--vh, 1vh) * 100);
         left: 0;
@@ -54,17 +54,17 @@
             $hamburger-color: black;
             $hamburger-color-active: black;
             @include hamburger($hamburger-width, $hamburger-height, $hamburger-stroke-weight, $hamburger-color, $hamburger-color-active);
-            @include abstand($layout, padding, alle, 10, 10, 10, 10);
+            @include marginPadding($layout, padding, alle, 10, 10, 10, 10);
             background-color: transparent;
             position: fixed;
-            right: groesse($layout, 26 - 10);
-            top: groesse($layout, 26 - 10);
+            right: size($layout, 26 - 10);
+            top: size($layout, 26 - 10);
             z-index: 1001;
         }
 
         &__links {
-            @include abstand($layout, margin, top, 191);
-            @include schriftart($layout, 46, 52);
+            @include marginPadding($layout, margin, top, 191);
+            @include fontFamily($layout, 46, 52);
             display: flex;
             flex-direction: column;
         }
@@ -94,10 +94,10 @@
         width: 100%;
 
         &__logo-text {
-            @include schriftart($layout, 28, 32, 400);
+            @include fontFamily($layout, 28, 32, 400);
             position: absolute;
-            top: groesse($layout, 68);
-            right: groesse($layout, 576);
+            top: size($layout, 68);
+            right: size($layout, 576);
             z-index: 1;
             
             .body--startseite & {
@@ -106,11 +106,11 @@
         }
         
         &__logo {
-            @include schriftart($layout, 70, 59, 400);
+            @include fontFamily($layout, 70, 59, 400);
             text-decoration: none;
             position: absolute;
-            top: groesse($layout, 50);
-            right: groesse($layout, 92);
+            top: size($layout, 50);
+            right: size($layout, 92);
             z-index: 1;
             
             .body--startseite & {
@@ -119,14 +119,14 @@
         }
         
         &__links {
-            left: groesse($layout, 55);
+            left: size($layout, 55);
             position: fixed;
-            top: groesse($layout, 50);
+            top: size($layout, 50);
             z-index: 1;
         }
 
         &__link {
-            @include schriftart($layout, 34, 36);
+            @include fontFamily($layout, 34, 36);
             display: inherit;
             text-decoration: none;
 
