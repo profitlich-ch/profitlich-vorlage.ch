@@ -25,8 +25,8 @@ function debounce(func, wait, immediate) {
     };
 };
 
-// E-Mailadressen anzeigen
-function emailAdressen() {
+// reveal mail addresses
+function revealMailaddresses() {
     const emlArray = document.querySelectorAll('[data-eml-named]').forEach(adresse => {
         let emlName = adresse.getAttribute('data-eml-name');
         let emlDomain = adresse.getAttribute('data-eml-domain');
@@ -36,9 +36,9 @@ function emailAdressen() {
         adresse.innerHTML = emlText;
     });
 }
-emailAdressen();
+revealMailaddresses();
 
-// 100vh Problem
+// 100vh problem
 // https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
 
 function vh() {

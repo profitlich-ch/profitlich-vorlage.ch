@@ -7,10 +7,10 @@
                 {% block seitentitel %}{% endblock %}
                 —
             {% endif %}
-            PROJEKTNAME
+            PROJECT NAME
         </title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
-        {# Nummern werden nicht automatisch zu Telefon-Links unmgewandelt #}
+        {# prevent automatic conversion of numbers to telephone links #}
         <meta name="format-detection" content="telephone=no" />
         {% block metaDescription %}{% endblock %}
 
@@ -44,39 +44,39 @@
             .no-js {
                 visibility: visible;
             }
-            {# Transition erst nach dem Laden der Seite anwenden #}
+            {# prevent CSS transitions until page is loaded #}
             body[data-preloading="true"] * {
                 transition: transform 0s !important;
             }
-            /* Body bis zum Laden des ganzen HTML unsichtbar machen */
+            /* hide body until full html is loaded */
             body {
                 visibility: hidden;
             }
         </style>
     </head>
     {% if not craft.app.request.segment(1) %}
-        {% set seitenname = 'startseite' %}
+        {% set pagename = 'home' %}
     {% else %}
-        {% set seitenname = craft.app.request.segment(1) %}
+        {% set pagename = craft.app.request.segment(1) %}
         {% if craft.app.request.segment(2) %}
-            {% set seitenname = craft.app.request.segment(1) ~ '-entry' %}
+            {% set pagename = craft.app.request.segment(1) ~ '-entry' %}
         {% endif %}
     {% endif %}
     {% set bodyDataTags = {
         data: {
-            "menue-aktiv": 'false',
-            "menue-bewegt": 'false',
+            "menu-active": 'false',
+            "menu-moving": 'false',
             "body-scrolled": 'false',
             "preloading": 'true'
         },
     } %}
-    <body class="body body--{{ seitenname }}
+    <body class="body body--{{ pagename }}
      {% if entry is not defined or entry is null %}
         body--404
     {% endif %}
     no-js" {{ attr(bodyDataTags) }}>
 
-        {# Firefox Hack gegen FOUC: https://www.primative.net/blog/how-to-get-rid-of-the-flash-of-unstyled-content/ #}
+        {# Firefox hack against FOUC: https://www.primative.net/blog/how-to-get-rid-of-the-flash-of-unstyled-content/ #}
         <script nonce="{{ cspNonce('script-src') }}">0</script>
 
         {# FOUC #}
@@ -85,14 +85,14 @@
         </script>
         <div class="seite" id="seite">
              <header class="header" id="header">
-                {% include '/_bausteine/menue/_menue.twig' %}
+                {% include '/_modules/menu/_menu.twig' %}
             </header>
             <main class="main">{% block content %}{% endblock %}</main>
         </div>
         <script nonce="{{ cspNonce('script-src') }}">
             {{ source("/js/inline.js") }}
         </script>
-        <script src="/js/defer-bausteine.{{ staticAssetsVersion }}.js" defer nonce="{{ cspNonce('script-src') }}"></script>
+        {# <script src="/js/defer-bausteine.{{ staticAssetsVersion }}.js" defer nonce="{{ cspNonce('script-src') }}"></script> #}
         <script nonce="{{ cspNonce('script-src') }}">
             {# FOUC #}
             let domReady = (cb) => {
@@ -104,7 +104,7 @@
             domReady(() => {
                 document.body.style.visibility = 'visible';
             });
-            {# Preload beenden #}
+            {# finish preloading #}
             setTimeout(function(){
                 document.body.setAttribute('data-preloading', 'false');
             }, 500);

@@ -14,9 +14,9 @@ class Extension extends AbstractExtension
         return 'uniqueIds Twig Extension';
     }
 
-    // Alle Twig extension Funktionen müssen in der getFunctions() definiert werden
-    // Sie erhalten dabei einen Namen in snake case, über den sie in Twig angesprochen werden:
-    // {{ name_der_funktion() }}
+    // All twig extension functions have to be defined in getFunctions()
+    // The name is written in snake case, and this name is then used in twig to call them
+    // {{ name_of_function() }}
     public function getFunctions(): array
     {
         return [

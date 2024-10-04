@@ -1,7 +1,7 @@
 {
-    "REAMDME": {
-        "Berechnung": "layouts – Breite des layouts in XD / einheiten – Feste Grössen px / mitwachsend vw / mediaqueries – Viewportbreite in px ab dem das Layout angewendet wird",
-        "JS": "Die config wird zur JS Datei gewandelt und im gulpfile in der Variable dateien jsInline geladen"
+    "README": {
+        "calculation": "layouts – widt of the layouts in the XD/Figma design file / units – fixed units in px / growing vw / mediaqueries – viewport width in px from which on a breakpoint is set",
+        "JS": "config is transformed to a JS file and loaded in the gulpfile in the variable dateien jsInline"
     },
 
     "layouts": {
@@ -9,7 +9,7 @@
         "desktop": 1920
     },
     
-    "einheiten": {
+    "units": {
         "smartphone": "px",
         "desktop": "vw"
     },
@@ -19,12 +19,12 @@
         "desktop": 800
     },
 
-    "farben": {
-        "hintergrund": "white",
-        "rot": "#E61512"
+    "colors": {
+        "background": "white",
+        "red": "#E61512"
     },
 
-    "seitenraender": {
+    "margins": {
         "smartphone": {
             "top": 0,
             "right": 26,
@@ -39,12 +39,12 @@
         }
     },
 
-    "spalten": {
+    "columns": {
         "smartphone": 1,
         "desktop": 9
     },
 
-    "spaltenabstaende": {
+    "column-gap": {
         "smartphone": 1,
         "desktop": 16
     }

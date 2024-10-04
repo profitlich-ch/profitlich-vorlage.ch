@@ -1,0 +1,16 @@
+columnSuffix: null
+handle: seoMetaDescription
+instructions: 'Kurzer Text, den Suchmaschinen (wahrscheinlich) unter dem Namen der Seite anzeigt'
+name: 'SEO Meta Description'
+searchable: false
+settings:
+  byteLimit: null
+  charLimit: null
+  code: false
+  initialRows: 4
+  multiline: false
+  placeholder: null
+  uiMode: normal
+translationKeyFormat: null
+translationMethod: none
+type: craft\fields\PlainText

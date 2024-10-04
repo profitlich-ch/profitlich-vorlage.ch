@@ -1,0 +1,27 @@
+.MODULE {
+
+}
+
+
+@include mediaquery(smartphone) {
+
+    $layout: smartphone;
+
+    .MODULE {
+        
+   
+
+    }
+
+}
+
+
+@include mediaquery(desktop) {
+
+    $layout: desktop;
+
+    .MODULE {
+        
+    }
+
+}

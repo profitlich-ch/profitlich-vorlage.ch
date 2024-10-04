@@ -1,0 +1,83 @@
+// set box-sizing from content-box to border-box
+// padding and border become part of width/height definitions
+html {
+    box-sizing: border-box;
+}
+*, *:after, *:before { 
+	box-sizing: border-box;
+}
+
+body {
+
+    background-color: map-get($colors, background);
+    margin: 0 auto;
+
+    min-height: calc(var(--vh, 1vh) * 100);
+    overflow-x: hidden;
+
+    // skip underlines at descenders
+    text-decoration-skip-ink: auto;
+
+    // font smoothing
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased; 
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    list-style-type: none;
+    position: relative;
+    
+    &::before { 
+        content: "–";
+        left: 0;
+        position: absolute;      
+    }
+}
+
+sup {
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+    top: -0.5em;
+}
+
+
+// prevent cropping of SVGs on iOS
+svg {
+    padding: 1px 1px 1px 1px;
+}
+
+// remove focus outline when not set keyboard
+// https://css-tricks.com/keyboard-only-focus-styles/
+// focus set not by keyboard
+*:focus:not(:focus-visible) {
+    outline: none !important;
+}
+// focus set by keyboard
+*:focus-visible { 
+    outline: 2px solid black;
+}
+
+// hide alt text for the eye but keep visible for screen readers
+// show images as block instead of inline to prevent superfluos space below images
+img {
+    color: transparent;
+    display: block;
+    line-height: 1em;
+    text-indent: -9999px;
+}

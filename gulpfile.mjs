@@ -1,8 +1,9 @@
 // ESM gulpfile.mjs nach https://gist.github.com/noraj/007a943dc781dc8dd3198a29205bae04
 
-// dev oder staging oder production
-// staging lädt auf den Stagingserver
-// production lädt auf den Produktivserver, lässt alle dev Inhalte weg (JS, CSS), löscht console.log und komprimiert JS
+// dev / staging / production
+// dev runs on the local ddev machine
+// staging uploads to staging server
+// production uploads to live website, omits als dev content (JS, CSS), deletes console.log and compresses both CSS and JS
 
 const { src, dest, task, watch, series, parallel } = gulp;
 
@@ -49,10 +50,10 @@ const config = {
     }
 }
 
-// Dateipfade
-var dateien;
-function setDateien() {
-    dateien = { 
+// file paths
+var files;
+function setFiles() {
+    files = { 
         src: {
             src: 'src/**/*.*',
         },
@@ -61,7 +62,7 @@ function setDateien() {
             dest: 'web/css',
         },
         jsDefer: {
-            src: (modus != 'production') ? ['src/js/defer/**/*.js', 'src/macros-funktionen/**/*.js', 'src/dev/**/*.js'] : ['src/js/defer/**/*.js', 'src/macros-funktionen/**/*.js'],
+            src: (modus != 'production') ? ['src/js/defer/**/*.js', 'src/macros-functions/**/*.js', 'src/dev/**/*.js'] : ['src/js/defer/**/*.js', 'src/macros-functions/**/*.js'],
             dest: 'web/js',
         },
         jsDev: {
@@ -76,12 +77,12 @@ function setDateien() {
             src: 'src/js/inline/**/*.js',
             dest: 'templates/js',
         },
-        jsBausteine: {
-            src: ['src/bausteine/**/*.js', '!src/bausteine/**/_*.js'],
-            dest: 'web/bausteine',
+        jsModules: {
+            src: ['src/modules/**/*.js', '!src/modules/**/_*.js'],
+            dest: 'web/modules',
         },
-        jsBausteineDefer: {
-            src: ['src/bausteine/**/_*.js'],
+        jsModulesDefer: {
+            src: ['src/modules/**/_*.js'],
             dest: 'web/js',
         },
         // https://stackoverflow.com/questions/28876469/multiple-file-extensions-within-the-same-directory-using-gulp
@@ -89,30 +90,30 @@ function setDateien() {
             src: 'src/templates/**/*.twig',
             dest: 'templates',
         },
-        bausteineTwig: {
-            src: 'src/bausteine/**/*.+(twig|js)',
-            dest: 'templates/_bausteine',
+        modulesTwig: {
+            src: 'src/modules/**/*.+(twig|js)',
+            dest: 'templates/_modules',
         },
-        bausteineAssets: {
-            src: ['src/bausteine/**/*.+(svg|jpg|jpeg|gif|png|html)', '!src/bausteine/**/_*.*'],
-            dest: 'web/bausteine',
+        modulesAssets: {
+            src: ['src/modules/**/*.+(svg|jpg|jpeg|gif|png|html)', '!src/modules/**/_*.*'],
+            dest: 'web/modules',
         },
         // http://glivera-team.github.io/svg/2019/03/15/svg-sprites-2.en.html
         sprites: {
-            src: 'src/bausteine/**/_*.svg',
+            src: 'src/modules/**/_*.svg',
             dest: 'web/sprites',
         },
-        macrosFunktionen: {
-            src: 'src/macros-funktionen/**/*.twig',
-            dest: 'templates/_macros-funktionen',
+        macrosFunctions: {
+            src: 'src/macros-functions/**/*.twig',
+            dest: 'templates/_macros-functions',
         },
-        medien: {
-            src: 'src/medien/**/*.*',
-            dest: 'web/medien',
+        media: {
+            src: 'src/media/**/*.*',
+            dest: 'web/media',
         },
-        medienBackup: {
-            src: 'src/medien/**/*.*',
-            dest: 'backup/src/medien',
+        mediaBackup: {
+            src: 'src/media/**/*.*',
+            dest: 'backup/src/media',
         },
         mockup: {
             src: 'src/mockup/**/*.*',
@@ -141,10 +142,7 @@ function setDateien() {
     }
 }
 
-// Variable für Import aus Dotenv
-// var dotenv;
-
-// dotenv in JSON umwandeln
+// dotenv to JSON
 function dotenvTask() {
     return src('./.env')
     .pipe(dotenv())
@@ -152,7 +150,7 @@ function dotenvTask() {
     .pipe(gulp.dest('.'));
 }
 
-// Variablen aus config.json in SCSS umwandeln
+// config.json to SCSS
 function configToScssTask() {
     return src(config.configToScss.src)
 
@@ -165,7 +163,7 @@ function configToScssTask() {
     )   
 }
 
-// Variablen aus config.json in JS umwandeln
+// config.json to JS
 function configToJsTask() {
     return src(config.configToJs.src)
 
@@ -176,7 +174,7 @@ function configToJsTask() {
     )   
 }
 
-// Modus per prompt setzen
+// set modus through prompt
 var modus;
 function modusTask() {
     return src('.')
@@ -184,14 +182,14 @@ function modusTask() {
     .pipe(prompt.prompt({
         type: 'list',
 		name: 'modus',
-		message: 'Wohin sollen die Dateien?',
+		message: 'Please choose mode',
         choices: ['dev', 'staging', 'production']
 	}, function(res){
         modus = res.modus;
 	}))
 }
 
-var modusBestaetigt = false;
+var modusConfirmed = false;
 function modusConfirmTask() {
     if (modus == 'production') {
         return src('.')
@@ -199,241 +197,229 @@ function modusConfirmTask() {
             type: 'confirm',
             name: 'confirm',
             default: false,
-            message: 'Wirklich?'
+            message: 'Really?'
         }, function(res){
             if (res.confirm == true) {
-                modusBestaetigt = true;
-                setDateien();
+                modusConfirmed = true;
+                setFiles();
             } else {
                 
             }
         }));
     } else {
-        modusBestaetigt = true;
-        setDateien();
+        modusConfirmed = true;
+        setFiles();
         return src('.')
     }
 }
 
-// Variablendateien config.scss und .js löschen, env.json löschen
-function configLoeschenTask() {
+// delete config.scss, config.js löschen and env.json
+function deleteConfigTask() {
     return deleteAsync(['src/scss/config.scss', 'src/js/config.js', 'env.json']);
 }
 
-// SCSS kompilieren
+// compile SCSS
 function scssTask() {
-    return src(dateien.scss.src)
+    return src(files.scss.src)
 
-    // Globs lesen (wildcard)
+    // read globs (wildcard)
     .pipe(sassGlob())
     
-    // Sourcemaps initialisieren
+    // initialise sourcemaps
     .pipe(sourcemaps.init())
     
     .pipe(sass())
     
-    // Post CSS
+    // post-CSS
     .pipe(postcss([
         autoprefixer(),
         postcssEasingGradients()
     ]))
 
-    // Komprimieren mit Clean CSS
+    // compress with clean CSS
     .pipe(cleanCSS({
         mergeMediaQueries: true
     }))
     
-    // Sourcemaps schreiben
+    // write sourcemaps
     .pipe(sourcemaps.write('.'))
         
-    // Dateien(en) schreiben
+    // write files
     .pipe(dest
-        (dateien.scss.dest)
+        (files.scss.dest)
     )   
 }
 
-// JS Defer kompilieren
+// compile JS defer
 function jsDeferTask() {
-    return src(dateien.jsDefer.src)
+    return src(files.jsDefer.src)
 
-    // Sourcemaps initialisieren
+    // initialise sourcemaps
     .pipe(sourcemaps.init())
 
-    // Alle Dateien in einer zusammenfassen
+    // combine files into one file
     .pipe(concat('defer.js'))
 
     .pipe(dest
-        (dateien.jsDefer.dest)
+        (files.jsDefer.dest)
     )
 
-    // Komprimieren mit Terser wenn nicht im dev Modus
+    // compress with terser (if not in mode dev))
     .pipe(gulpif( modus != 'dev', terser() ))
 
-    // Sourcemaps schreiben
+    // write sourcemaps
     .pipe(sourcemaps.write('.'))
 
-    // Dateien(en) schreiben
+    // wrizte files
     .pipe(dest
-        (dateien.jsDefer.dest)
+        (files.jsDefer.dest)
     )
 }
 
-// JS dev kompilieren
+// compile JS dev
 function jsDevTask() {
-    return src(dateien.jsDev.src)
+    return src(files.jsDev.src)
 
-    // Sourcemaps initialisieren
+    // initialise sourcemaps
     .pipe(sourcemaps.init())
 
-    // Alle Dateien in einer zusammenfassen
+    // combine files into one file
     .pipe(concat('dev.js'))
 
     .pipe(dest
-        (dateien.jsDev.dest)
+        (files.jsDev.dest)
     )
 
-    // Sourcemaps schreiben
+    // write sourcemaps
     .pipe(sourcemaps.write('.'))
 
-    // Dateien(en) schreiben
+    // write files
     .pipe(dest
-        (dateien.jsDev.dest)
+        (files.jsDev.dest)
     )
 }
 
-// JS Bausteine Defer kompilieren
-function jsBausteineDeferTask() {
-    return src(dateien.jsBausteineDefer.src)
+// compile JS defer modules
+function jsModulesDeferTask() {
+    return src(files.jsModulesDefer.src)
 
-    // Sourcemaps initialisieren
+    // initialise sourcemaps
     .pipe(sourcemaps.init())
 
-    // Alle Dateien in einer zusammenfassen
-    .pipe(concat('defer-bausteine.js'))
+    // combine files into one file
+    .pipe(concat('defer-modules.js'))
 
     .pipe(dest
-        (dateien.jsBausteineDefer.dest)
+        (files.jsModulesDefer.dest)
     )
 
-    // Komprimieren mit Terser wenn nicht im dev Modus
+    // compress with terser (if not in mode dev))
     .pipe(gulpif( modus != 'dev', terser() ))
 
-    // Sourcemaps schreiben
+    // write sourcemaps
     .pipe(sourcemaps.write('.'))
 
-    // Dateien(en) schreiben
+    // write files
     .pipe(dest
-        (dateien.jsBausteineDefer.dest)
+        (files.jsModulesDefer.dest)
     )
 }
 
-// JS Config kompilieren
+// compile JS config
 function jsConfigTask() {
-    return src(dateien.jsConfig.src)
+    return src(files.jsConfig.src)
 
-    // Sourcemaps initialisieren
-    .pipe(sourcemaps.init())
-
-    // Alle Dateien in einer zusammenfassen
+    // combine files into one file
     .pipe(concat('config.js'))
 
     .pipe(dest
-        (dateien.jsConfig.dest)
+        (files.jsConfig.dest)
     )
 
-    // Komprimieren mit Terser wenn nicht im dev Modus
+    // compress with terser (if not in mode dev))
     .pipe(gulpif( modus != 'dev', terser() ))
 
-    // Sourcemaps schreiben
-    .pipe(sourcemaps.write('.'))
-
-    // Dateien(en) schreiben
+    // write files
     .pipe(dest
-        (dateien.jsConfig.dest)
+        (files.jsConfig.dest)
     )
 }
 
-// JS Inline kompilieren
+// compile inline JS
 function jsInlineTask() {
-    return src(dateien.jsInline.src)
+    return src(files.jsInline.src)
 
-    // Sourcemaps initialisieren
-    .pipe(sourcemaps.init())
-
-    // Alle Dateien in einer zusammenfassen
+    // combine files into one file
     .pipe(concat('inline.js'))
 
     .pipe(dest
-        (dateien.jsInline.dest)
+        (files.jsInline.dest)
     )
 
-    // Komprimieren mit Terser wenn nicht im dev Modus
+    // compress with terser (if not in mode dev))
     .pipe(gulpif( modus != 'dev', terser() ))
 
-    // Sourcemaps schreiben
-    .pipe(sourcemaps.write('.'))
-
-    // Dateien(en) schreiben
+    // write files
     .pipe(dest
-        (dateien.jsInline.dest)
+        (files.jsInline.dest)
     )
 }
 
-// JS Bausteine kompilieren
-function jsBausteineTask() {
-    return src(dateien.jsBausteine.src)
+// compile JS modules
+function jsModulesTask() {
+    return src(files.jsModules.src)
 
     // Sourcemaps initialisieren
     .pipe(sourcemaps.init())
 
     .pipe(dest
-        (dateien.jsBausteine.dest)
+        (files.jsModules.dest)
     )
 
     // Komprimieren mit Terser
     .pipe(gulpif( modus == 'production', terser() ))
 
-    // Sourcemaps schreiben
+    // write sourcemaps
     .pipe(sourcemaps.write('.'))
 
-    // Dateien(en) schreiben
+    // write files
     .pipe(dest
-        (dateien.jsBausteine.dest)
+        (files.jsModules.dest)
     )
 }
 
-// Templates Twig kopieren
+// copy twig templates
 function templatesTwigTask() {
-    return src(dateien.templatesTwig.src)
+    return src(files.templatesTwig.src)
 
     .pipe(dest
-        (dateien.templatesTwig.dest)
+        (files.templatesTwig.dest)
     );
 }
 
-// Bausteine Twig kopieren
-function bausteineTwigTask() {
-    return src(dateien.bausteineTwig.src)
+// copy twig modules
+function modulesTwigTask() {
+    return src(files.modulesTwig.src)
 
     .pipe(dest
-        (dateien.bausteineTwig.dest)
+        (files.modulesTwig.dest)
     );
 }
 
-// Bausteine Assets kopieren
-function bausteineAssetsTask() {
-    return src(dateien.bausteineAssets.src, { encoding: false })
+// copy module asstes
+function modulesAssetsTask() {
+    return src(files.modulesAssets.src, { encoding: false })
 
     .pipe(dest
-        (dateien.bausteineAssets.dest)
+        (files.modulesAssets.dest)
     );
 }
 
-// SVG Sprites bauen
+// buold SVG sprites
 function spritesTask() {
-    return src(dateien.sprites.src)
+    return src(files.sprites.src)
 
-    // SVG optimieren mit SVGO
+    // optimize SVG
     .pipe(svgo())
 
     // build svg sprite
@@ -441,7 +427,7 @@ function spritesTask() {
         mode: {
             symbol: {
                 sprite: "../sprite.svg"
-                // Die folgenden Zeilen sind dafür, SVG Eigenschaften einer SCSS Datei zu definieren
+                // The following lines take an SCSS file to define SVG properties
                 // ,
                 // render: {
                 //     scss: {
@@ -455,9 +441,9 @@ function spritesTask() {
             id: {
                 generator: function(name) {
                     separator: "--";
-                    // Der basename besteht aus dem Ordner, in dem das SVG ist, und dem Dateinamen, verbunden durch den separator.
-                    // Der basename wird zu einem Array gewandelt und nur der hintere Teil verwendet (Dateiname)
-                    // Der Unterstrich des Dateinamens wird entfernt
+                    // The basename comprises of the SVG’s folder and its filename, connected by a separator
+                    // The basename gets converted to an array and just the last part (filename) is used
+                    // The underscore of the filename is omitted
                     return path.basename(name.split(path.sep).pop().substring(1).replace(/\s+/g, this.whitespace), '.svg');
                 }
             }
@@ -465,43 +451,43 @@ function spritesTask() {
     }))
 
     .pipe(dest
-        (dateien.sprites.dest)
+        (files.sprites.dest)
     );
 }
 
-// Macros kopieren
-function macrosFunktionenTask() {
-    return src(dateien.macrosFunktionen.src)
+// copy macros
+function macrosFunctionsTask() {
+    return src(files.macrosFunctions.src)
 
     .pipe(dest
-        (dateien.macrosFunktionen.dest)
+        (files.macrosFunctions.dest)
     );
 }
 
-// Mockupmedien kopieren
+// copy mockup media
 function mockupTask() {
-    return src(dateien.mockup.src)
+    return src(files.mockup.src)
 
     .pipe(dest
-        (dateien.mockup.dest)
+        (files.mockup.dest)
     );
 }
 
-// Fonts kopieren
+// copy fonts
 function fontsTask() {
-    return src(dateien.fonts.src)
+    return src(files.fonts.src)
 
     .pipe(dest
-        (dateien.fonts.dest)
+        (files.fonts.dest)
     );
 }
 
-// Favicon kopieren
+// copy favicon
 function faviconTask() {
-    return src(dateien.favicon.src)
+    return src(files.favicon.src)
 
     .pipe(dest
-        (dateien.favicon.dest)
+        (files.favicon.dest)
     );
 }
 
@@ -513,7 +499,7 @@ async function uploadFilesToFTP(files, folder) {
     client.ftp.verbose = false;
 
     try {
-        // Verbindung einmal öffnen
+        // open FTP connection
         await client.access({
             host:env['FTP_HOST_' + ftpModus],
             user:env['FTP_USER_' + ftpModus],
@@ -521,9 +507,9 @@ async function uploadFilesToFTP(files, folder) {
             secure: false
         });
 
-        // Alle Dateien nacheinander hochladen
+        // copy file consecutively
         for (const file of files) {
-            // Den Buffer in einen Stream umwandeln
+            // convert buffer to stream
             const stream = streamifier.createReadStream(file.contents);
             await client.ensureDir(`${folder}/${path.dirname(file.relative)}`);
             await client.uploadFrom(stream, `${folder}/${file.relative}`);
@@ -531,7 +517,7 @@ async function uploadFilesToFTP(files, folder) {
     } catch (err) {
         console.error(err);
     } finally {
-        // Verbindung schließen
+        // close connection
         client.close();
     }
 }
@@ -540,81 +526,83 @@ function uploadTemplatesTask() {
     if (modus !='dev') {
         const filesToUpload = [];
 
-        return src(dateien.uploadTemplates.src)
+        return src(files.uploadTemplates.src)
         .pipe(through.obj(function (file, enc, cb) {
             if (file.isBuffer()) {
-                // Dateien sammeln
+                // push file to array
                 filesToUpload.push(file);
             }
-            cb(null, file);  // Datei für den nächsten Gulp-Schritt zurückgeben
+            // return file for next gulp step
+            cb(null, file);
         }))
         .on('end', async function () {
-            // Nachdem alle Dateien gesammelt wurden, Upload starten
-            await uploadFilesToFTP(filesToUpload, dateien.uploadTemplates.dest);
+            // start upload after all files are gathered
+            await uploadFilesToFTP(filesToUpload, files.uploadTemplates.dest);
         });
     } else {
-        return src( dateien.uploadTemplates.src, { buffer: false } )
+        return src( files.uploadTemplates.src, { buffer: false } )
     }
 };
 function uploadWebTask() {
     if (modus !='dev') {
         const filesToUpload = [];
 
-        return src(dateien.uploadWeb.src)
+        return src(files.uploadWeb.src)
         .pipe(through.obj(function (file, enc, cb) {
             if (file.isBuffer()) {
-                // Dateien sammeln
+                // push file to array
                 filesToUpload.push(file);
             }
-            cb(null, file);  // Datei für den nächsten Gulp-Schritt zurückgeben
+            // return file for next gulp step
+            cb(null, file);
         }))
         .on('end', async function () {
-            // Nachdem alle Dateien gesammelt wurden, Upload starten
-            await uploadFilesToFTP(filesToUpload, dateien.uploadWeb.dest);
+            // start upload after all files are gathered
+            await uploadFilesToFTP(filesToUpload, files.uploadWeb.dest);
         });
     } else {
-        return src( dateien.uploadWeb.src, { buffer: false } )
+        return src( files.uploadWeb.src, { buffer: false } )
     }
 };
 
 
-// CSS injizieren
+// inject CSS
 function injizierenTask() {
     return src('templates/**/*.{html,twig}')
     .pipe(injectCSS())
     .pipe(dest('dist'));
 }
 
-// Versionsnummer staticAssetsVersion setzen
+// set version number (staticAssetsVersion)
 function staticAssetsVersionTask() {
-    return src(dateien.craftCustomConfig.src)
+    return src(files.craftCustomConfig.src)
     .pipe(gulpif( modus == 'production', 
         replace(/'staticAssetsVersion' => (\d+),/g, function(match, p1, offset, string) {
-        var unixZeit = Math.floor(new Date().getTime() / 1000);
-        log('-> staticAssetsVersion geändert zu ' + unixZeit);
-        return "'staticAssetsVersion' => " + unixZeit + ",";
+        var unixTime = Math.floor(new Date().getTime() / 1000);
+        log('-> staticAssetsVersion updated to ' + unixTime);
+        return "'staticAssetsVersion' => " + unixTime + ",";
         }))
     )
     .pipe(dest
-        (dateien.craftCustomConfig.dest)
+        (files.craftCustomConfig.dest)
     );
 }
 
-// Änderungen beobachten
+// monitor changes
 function watchTask() {
     const watchVariable = gulp.watch(
-        [dateien.src.src, '!src/scss/config.scss', '!src/js/config.js'],
+        [files.src.src, '!src/scss/config.scss', '!src/js/config.js'],
         gulp.series(
             dotenvTask,
             configToScssTask,
             configToJsTask,
             gulp.parallel(
-                templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosFunktionenTask, scssTask, jsDeferTask, jsDevTask, jsBausteineDeferTask, jsConfigTask, jsInlineTask, mockupTask, fontsTask, faviconTask, spritesTask, staticAssetsVersionTask
+                templatesTwigTask, modulesTwigTask, modulesAssetsTask, jsModulesTask, macrosFunctionsTask, scssTask, jsDeferTask, jsDevTask, jsModulesDeferTask, jsConfigTask, jsInlineTask, mockupTask, fontsTask, faviconTask, spritesTask, staticAssetsVersionTask
             ),
             injizierenTask,
             uploadTemplatesTask,
             uploadWebTask,
-            configLoeschenTask
+            deleteConfigTask
         )
     );
 }
@@ -627,18 +615,18 @@ task('build',
         modusTask,
         modusConfirmTask,
         parallel(
-            templatesTwigTask, bausteineTwigTask, bausteineAssetsTask, jsBausteineTask, macrosFunktionenTask, scssTask, jsDeferTask, jsDevTask, jsBausteineDeferTask, jsConfigTask, jsInlineTask, mockupTask, fontsTask, faviconTask, spritesTask, staticAssetsVersionTask
+            templatesTwigTask, modulesTwigTask, modulesAssetsTask, jsModulesTask, macrosFunctionsTask, scssTask, jsDeferTask, jsDevTask, jsModulesDeferTask, jsConfigTask, jsInlineTask, mockupTask, fontsTask, faviconTask, spritesTask, staticAssetsVersionTask
         ),
         injizierenTask,
         uploadTemplatesTask,
         uploadWebTask,
-        configLoeschenTask,
+        deleteConfigTask,
         watchTask
     )
 );
 
-task('build').description = 'Dateien kompilieren';
+task('build').description = 'compile files';
 
-// Standardaufgabe anlegen
+// create default task
 task('default', series('build'));
-task('default').description = 'Standardaufgabe';
+task('default').description = 'default task';

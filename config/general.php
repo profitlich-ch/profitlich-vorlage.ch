@@ -33,16 +33,16 @@ return GeneralConfig::create()
     // Allow template chaching
     ->enableTemplateCaching(!$isDev)
 
-    // Slugs ohne Umlaute
+    // slugs without Umlaute
     ->limitAutoSlugsToAscii(true)
-    // Loginadresse des Redaktionssystems
+    // login adress of the cms
     ->cpTrigger('redaktion')
-    // Cookies auf lax stellen
+    // set cookies to lax
     ->sameSiteCookieValue('Lax')
     // https://craftcms.stackexchange.com/questions/23145/craft-not-loading-custom-404-template-for-errors
     ->errorTemplatePrefix('_errors/')
     
-    // Aliases _nicht_ mit getenv() aus Sicherheitsgründen
+    // aliases _without_ getenv() for security reasons
     // https://craftcms.stackexchange.com/questions/36986/use-of-appenv-compared-to-getenv-since-craft-3-4-18
     ->aliases([
         '@web' => craft\helpers\App::env('BASE_URL'),
