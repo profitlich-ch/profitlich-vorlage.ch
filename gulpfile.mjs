@@ -2,7 +2,7 @@
 
 // dev oder staging oder production
 // staging lädt auf den Stagingserver
-// production lädt auf den Produtivserver, lässt alle dev Inhalte weg (JS, CSS) und komprimiert JS
+// production lädt auf den Produktivserver, lässt alle dev Inhalte weg (JS, CSS), löscht console.log und komprimiert JS
 
 const { src, dest, task, watch, series, parallel } = gulp;
 
@@ -14,7 +14,7 @@ import concat from 'gulp-concat';
 import dartSass from 'sass';
 import dotenv from 'gulp-dotenv';
 import fs from 'fs';
-import ftp from 'vinyl-ftp';
+import ftp from 'basic-ftp';
 import gulp from 'gulp';
 import gulpif from 'gulp-if';
 import gulpSass from 'gulp-sass';
@@ -30,9 +30,11 @@ import rename from 'gulp-rename';
 import replace from 'gulp-replace';
 import sassGlob from 'gulp-sass-glob';
 import sourcemaps from 'gulp-sourcemaps';
+import streamifier from 'streamifier';
 import svgo from 'gulp-svgo';
 import svgSprite from 'gulp-svg-sprite';
 import terser from 'gulp-terser';
+import through from 'through2';
 
 const sass = gulpSass(dartSass);
 
@@ -504,55 +506,72 @@ function faviconTask() {
 }
 
 // FTP
-// https://medium.com/sliit-foss/automate-a-ftp-upload-with-gulp-js-4fde363cf9e8
-// https://www.riklewis.com/2019/09/saving-time-with-ftp-in-gulp/
-function uploadTemplatesTask() {
-    if (modus =='staging' || modus =='production') {
-        var env = JSON.parse(fs.readFileSync("env.json"));
-        var ftpModus = modus.toUpperCase();
-        var ftpVerbindung = ftp.create({
-            // Es darf kein Leerzeichen hinter dem Doppelpunkt stehen
+async function uploadFilesToFTP(files, folder) {
+    var env = JSON.parse(fs.readFileSync("env.json"));
+    var ftpModus = modus.toUpperCase();
+    const client = new ftp.Client();
+    client.ftp.verbose = false;
+
+    try {
+        // Verbindung einmal öffnen
+        await client.access({
             host:env['FTP_HOST_' + ftpModus],
             user:env['FTP_USER_' + ftpModus],
-            pass:env['FTP_PASSWORD_' + ftpModus],
-            parallel: 1
+            password:env['FTP_PASSWORD_' + ftpModus],
+            secure: false
         });
-        return src( dateien.uploadTemplates.src, {
-            buffer: false,
-            dot: true
-        } )
-    
-        .pipe(ftpVerbindung.newer
-            (dateien.uploadTemplates.dest)
-        ) 
-        .pipe(ftpVerbindung.dest
-            (dateien.uploadTemplates.dest)
-        )
+
+        // Alle Dateien nacheinander hochladen
+        for (const file of files) {
+            // Den Buffer in einen Stream umwandeln
+            const stream = streamifier.createReadStream(file.contents);
+            await client.ensureDir(`${folder}/${path.dirname(file.relative)}`);
+            await client.uploadFrom(stream, `${folder}/${file.relative}`);
+        }
+    } catch (err) {
+        console.error(err);
+    } finally {
+        // Verbindung schließen
+        client.close();
+    }
+}
+
+function uploadTemplatesTask() {
+    if (modus !='dev') {
+        const filesToUpload = [];
+
+        return src(dateien.uploadTemplates.src)
+        .pipe(through.obj(function (file, enc, cb) {
+            if (file.isBuffer()) {
+                // Dateien sammeln
+                filesToUpload.push(file);
+            }
+            cb(null, file);  // Datei für den nächsten Gulp-Schritt zurückgeben
+        }))
+        .on('end', async function () {
+            // Nachdem alle Dateien gesammelt wurden, Upload starten
+            await uploadFilesToFTP(filesToUpload, dateien.uploadTemplates.dest);
+        });
     } else {
         return src( dateien.uploadTemplates.src, { buffer: false } )
     }
 };
 function uploadWebTask() {
-    if (modus =='staging' || modus =='production') {
-        var env = JSON.parse(fs.readFileSync("env.json"));
-        var ftpModus = modus.toUpperCase();
-        var ftpVerbindung = ftp.create({
-            host:env['FTP_HOST_' + ftpModus],
-            user:env['FTP_USER_' + ftpModus],
-            pass:env['FTP_PASSWORD_' + ftpModus],
-            parallel: 1
+    if (modus !='dev') {
+        const filesToUpload = [];
+
+        return src(dateien.uploadWeb.src)
+        .pipe(through.obj(function (file, enc, cb) {
+            if (file.isBuffer()) {
+                // Dateien sammeln
+                filesToUpload.push(file);
+            }
+            cb(null, file);  // Datei für den nächsten Gulp-Schritt zurückgeben
+        }))
+        .on('end', async function () {
+            // Nachdem alle Dateien gesammelt wurden, Upload starten
+            await uploadFilesToFTP(filesToUpload, dateien.uploadWeb.dest);
         });
-        return src( dateien.uploadWeb.src, {
-            buffer: false,
-            dot: true
-        } )
-    
-        .pipe(ftpVerbindung.newer
-            (dateien.uploadWeb.dest)
-        ) 
-        .pipe(ftpVerbindung.dest
-            (dateien.uploadWeb.dest)
-        )
     } else {
         return src( dateien.uploadWeb.src, { buffer: false } )
     }

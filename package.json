@@ -12,6 +12,7 @@
     "devDependencies": {
         "@sayhellogmbh/gulp-sass-import-json": "github:SayHelloGmbH/gulp-sass-import-json",
         "autoprefixer": "^10.4.20",
+        "basic-ftp": "^5.0.5",
         "del": "^7.1.0",
         "fancy-log": "^2.0.0",
         "gulp": "^5.0.0",
@@ -36,7 +37,9 @@
         "gulp-terser": "^2.1.0",
         "postcss": "^8.4.47",
         "postcss-easing-gradients": "github:arturparkhisenko/postcss-easing-gradients#change-postcss-to-v8",
-        "sass": "^1.79.1",
+        "sass": "^1.79.4",
+        "streamifier": "^0.1.1",
+        "through2": "^4.0.2",
         "vinyl-ftp": "^0.6.1"
     }
 }
