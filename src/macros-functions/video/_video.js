@@ -2,14 +2,14 @@ const videos = document.querySelectorAll('.macro-video');
 
 let player = [];
 videos.forEach(function (video, i) {
-    // Vimeo-Player für jedes Video
+    // vimeo player for each video
     player[i] = new Vimeo.Player(video, {
         id: video.dataset.vimeoId
     });
 
     const observer = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
-            // Überprüfen Sie, ob das Video im Viewport sichtbar ist
+            // check whether video is visible in viewport
             if (entry.intersectionRatio > 0) {
                 player[i].play();
             } else {
@@ -18,6 +18,6 @@ videos.forEach(function (video, i) {
         });
     });
 
-    // 'video' wird überwacht
+    // 'video' gets observed
     observer.observe(video);
 });

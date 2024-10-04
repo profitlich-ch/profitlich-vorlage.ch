@@ -1,12 +1,12 @@
-{% macro bild (
-    bild,
+{% macro image (
+    image,
     class,
-    bildbeschreibung,
-    seitenverhaeltnis = false,
-    hintergrundfarbe = '#F2F2F2',
+    alt,
+    aspectRatio = false,
+    bgColor = '#F2F2F2',
     paddingBottomTrick = true,
     objectFit = false,
-    fokuspunkt = 5,
+    focalpoint = 5,
     lazyload = true,
     preload = false
 ) %}
@@ -15,14 +15,14 @@
     ['1400w']
 %}
 
-{% if bild is not defined %}
-    Macro bild: Kein Bild (bild) angegeben.
+{% if image is not defined %}
+    Macro image: no image given.
 {% endif %}
 {% if class is not defined %}
-    Macro bild: Keine Klasse (class) angegeben.
+    Macro image: no class given
 {% endif %}
-{% if bildbeschreibung is not defined %}
-    Macro bild: Keine Bildbeschreibung (bildbeschreibung) angegeben.
+{% if alt is not defined %}
+    No alt text given
 {% endif %}
 
 {% if lazyload == true %}
@@ -35,18 +35,18 @@
     {% set sizesAuto = false %}
 {% endif %}
 
-{% if seitenverhaeltnis == false %}
-    {% set hoehe = (bild.getHeight() / bild.getWidth()) | round(4) %}
-    {% set breite = (bild.getWidth() / bild.getHeight()) | round(4) %}
-    {% set paddingBottom = (bild.getHeight() / bild.getWidth() * 100) | round(4) ~ "%" %}
+{% if aspectRatio == false %}
+    {% set height = (image.getHeight() / image.getWidth()) | round(4) %}
+    {% set width = (image.getWidth() / image.getHeight()) | round(4) %}
+    {% set paddingBottom = (image.getHeight() / image.getWidth() * 100) | round(4) ~ "%" %}
 {% else %}
-    {% set seitenverhaeltnisArray = seitenverhaeltnis|split(':') %}
-    {% set hoehe = (seitenverhaeltnisArray[1] / seitenverhaeltnisArray[0]) | round(4) %}
-    {% set breite = (seitenverhaeltnisArray[0] / seitenverhaeltnisArray[1]) | round(4) %}
-    {% set paddingBottom = (seitenverhaeltnisArray[1] / seitenverhaeltnisArray[0] * 100) | round(4) ~ "%" %}
+    {% set aspectRatioArray = aspectRatio|split(':') %}
+    {% set height = (aspectRatioArray[1] / aspectRatioArray[0]) | round(4) %}
+    {% set width = (aspectRatioArray[0] / aspectRatioArray[1]) | round(4) %}
+    {% set paddingBottom = (aspectRatioArray[1] / aspectRatioArray[0] * 100) | round(4) ~ "%" %}
 {% endif %}
 
-{% switch fokuspunkt %}
+{% switch focalpoint %}
     {% case 1 %}
         {% set cssObjectPosition = 'left top' %}
     {% case 2 %}
@@ -69,45 +69,45 @@
         
 {# mit/ohne preload #}
 {% set style = [
-    hintergrundfarbe == 'blur' ? 'background-size: 100% 100%',
-    hintergrundfarbe != false and bild.getFormat() != 'svg' and hintergrundfarbe != 'blur' ? 'background-color:' ~ hintergrundfarbe,
+    bgColor == 'blur' ? 'background-size: 100% 100%',
+    bgColor != false and image.getFormat() != 'svg' and bgColor != 'blur' ? 'background-color:' ~ bgColor,
     paddingBottomTrick ? "padding-bottom:" ~ paddingBottom,
-    paddingBottomTrick == false ? "aspect-ratio:" ~ breite
+    paddingBottomTrick == false ? "aspect-ratio:" ~ width
 ] %}
 
 {% set uniqueId = uniqueid() %}
-<div class="{{ class ~ '-bild' ~ ' macro-bild' }}" id="macro-bild--{{ uniqueId }}">
+<div class="{{ class ~ '-image' ~ ' macro-image' }}" id="macro-image--{{ uniqueId }}">
     <style nonce="{{ cspNonce('style-src') }}">
-        #macro-bild--{{ uniqueId }} {
+        #macro-image--{{ uniqueId }} {
             {{ style | join(';') }}
         }
     </style>
-    {% if bild.getFormat() == 'svg' %}
+    {% if image.getFormat() == 'svg' %}
         {% set imgAttribute = {
-            src: bild.url,
-            alt: bildbeschreibung,
-            class: "#{class}-img macro-bild__img #{lazyloadVariable}",
-            id:  "macro-bild__img--#{ uniqueId }",
+            src: image.url,
+            alt: alt,
+            class: "#{class}-img macro-image__img #{lazyloadVariable}",
+            id:  "macro-image__img--#{ uniqueId }",
             data: {
                 sizes: sizesAuto
             }
         } %}
         <img {{ attr(imgAttribute) }}>
     {% else %}
-        <picture class="macro-bild__picture" data-hoehe="{{ hoehe }}">
+        <picture class="macro-image__picture" data-height="{{ height }}">
 
             {% if objectFit == 'cover' %}
-                {# Sources für objectfit: cover und landscape #}
-                {% do bild.setTransform({
+                {# sources for objectFit: cover and landscape #}
+                {% do image.setTransform({
                     format: 'webp',
                     quality: 75
                 }) %}
                 {{ tag('source', {
                     type: 'image/webp',
                     media: '(orientation: landscape)',
-                    srcset: bild.getSrcset(srcSet)
+                    srcset: image.getSrcset(srcSet)
                 }) }}
-                {% do bild.setTransform({
+                {% do image.setTransform({
                     format: 'jpg',
                     quality: 75
                 }) %}
@@ -115,10 +115,10 @@
                     format: 'jpg',
                     type: 'image/jpeg',
                     media: '(orientation: landscape)',
-                    srcset: bild.getSrcset(srcSet)
+                    srcset: image.getSrcset(srcSet)
                 }) }}
-                {# Sources für objectfit: cover und portrait #}
-                {% do bild.setTransform({
+                {# sources for objectFit: cover and portrait #}
+                {% do image.setTransform({
                     format: 'webp',
                     width: 100,
                     height: 150,
@@ -128,9 +128,9 @@
                 {{ tag('source', {
                     type: 'image/webp',
                     media: '(orientation: portrait)',
-                    srcset: bild.getSrcset(srcSet)
+                    srcset: image.getSrcset(srcSet)
                 }) }}
-                {% do bild.setTransform({
+                {% do image.setTransform({
                     format: 'jpg',
                     width: 100,
                     height: 150,
@@ -141,94 +141,93 @@
                     format: 'jpg',
                     type: 'image/jpeg',
                     media: '(orientation: portrait)',
-                    srcset: bild.getSrcset(srcSet)
+                    srcset: image.getSrcset(srcSet)
                 }) }}
-            {# Sources für Zuschneidung #}
-            {% elseif seitenverhaeltnis %}
-                {% do bild.setTransform({
+            {# sources for cropped images #}
+            {% elseif aspectRatio %}
+                {% do image.setTransform({
                     format: 'webp',
                     width: 100,
-                    height: (100 * hoehe) | round(0),
+                    height: (100 * height) | round(0),
                     mode: 'crop',
                     quality: 75
                 }) %}
                 {{ tag('source', {
                     type: 'image/webp',
-                    srcset: bild.getSrcset(srcSet)
+                    srcset: image.getSrcset(srcSet)
                 }) }}
-                {% do bild.setTransform({
+                {% do image.setTransform({
                     format: 'jpg',
                     width: 100,
-                    height: (100 * hoehe) | round(0),
+                    height: (100 * height) | round(0),
                     mode: 'crop',
                     quality: 75
                 }) %}
                 {{ tag('source', {
                     format: 'jpg',
                     type: 'image/jpeg',
-                    srcset: bild.getSrcset(srcSet)
+                    srcset: image.getSrcset(srcSet)
                 }) }}
-            {# Sources für Unbeschnitten #}
+            {# sources for uncropped images #}
             {% else %}
-                {% do bild.setTransform({
+                {% do image.setTransform({
                     format: 'webp',
                     quality: 75
                 }) %}
                 {{ tag('source', {
                     type: 'image/webp',
-                    srcset: bild.getSrcset(srcSet)
+                    srcset: image.getSrcset(srcSet)
                 }) }}
-                {% do bild.setTransform({
+                {% do image.setTransform({
                     format: 'jpg',
                     quality: 75
                 }) %}
                 {{ tag('source', {
                     format: 'jpg',
                     type: 'image/jpeg',
-                    srcset: bild.getSrcset(srcSet)
+                    srcset: image.getSrcset(srcSet)
                 }) }}
             {% endif %}
 
-            {# Image Tag vorbereiten #}
-            {# Sources für Zuschneidung #}
-            {% if seitenverhaeltnis %}
-                {% do bild.setTransform({
+            {# prepare image tag #}
+            {# sources for cropping #}
+            {% if aspectRatio %}
+                {% do image.setTransform({
                     width: 400,
-                    height: (400 * hoehe) | round(0),
+                    height: (400 * height) | round(0),
                     mode: 'crop',
                     quality: 75
                 }) %}
-            {# Sources für Unbeschnitten #}
+            {# sources for uncropped #}
             {% else %}
-                {% do bild.setTransform({
+                {% do image.setTransform({
                     width: 400,
                     quality: 75
                 }) %}
             {% endif %}
 
-            {# Image Tag #}
+            {# image tag #}
             {% set objectFitVariable = objectFit ? "object-fit:" ~ objectFit ~ ";" : "" %}
             {% set imgAttribute = {
-                src: bild.url,
-                width: bild.width,
-                height: bild.height,
-                alt: bildbeschreibung,
-                class: "#{class}-img macro-bild__img #{lazyloadVariable}",
+                src: image.url,
+                width: image.width,
+                height: image.height,
+                alt: alt,
+                class: "#{class}-img macro-image__img #{lazyloadVariable}",
                 'object-position': cssObjectPosition,
-                id:  "macro-bild__img--#{ uniqueId }",
+                id:  "macro-image__img--#{ uniqueId }",
                 data: {
                     sizes: sizesAuto
                 }
             } %}
             <img {{ attr(imgAttribute) }}>
             <style nonce="{{ cspNonce('style-src') }}">
-                #macro-bild__img--{{ uniqueId }} {
+                #macro-image__img--{{ uniqueId }} {
                     {{ objectFitVariable }}
                 }
             </style>
         </picture>
     {% endif %}
 </div>
-
 
 {% endmacro %}

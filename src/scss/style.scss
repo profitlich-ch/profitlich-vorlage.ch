@@ -1,21 +1,20 @@
-// Einstellungen
+// settings
 @import 'config';
 
-// Funktionen
-@import "funktionen/funktionen";
+// functions
+@import "functions/functions";
 
-// Breakpoints, Variablen, Mixins
-@import "grundlagen";
+// breakpoints, variables, mixins
+@import "basics";
 
-// Schriften
+// fonts
 @import "fonts";
 
-// Bausteine
-@import "../bausteine/**/*.scss";
+// modules
+@import "../modules/**/*.scss";
 
-// Macros
-@import "../macros-funktionen/**/*.scss";
+// macros
+@import "../macros-functions/**/*.scss";
 
-// Sonstiges
-@import "seite";
+// other
 @import "main";

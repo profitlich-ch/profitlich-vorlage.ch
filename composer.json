@@ -1,7 +1,6 @@
 {
   "require": {
     "born05/craft-csp": "3.0.0",
-    "cloudgrayau/csp": "^1.2.0",
     "craftcms/ckeditor": "^4.1.0",
     "craftcms/cms": "^5.0.0",
     "craftpulse/craft-password-policy": "^5.0.0-beta1",

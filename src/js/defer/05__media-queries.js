@@ -1,34 +1,34 @@
 // Media queries
 // https://kinsta.com/blog/javamediaqueryipt-media-query/
-// Option 3 auf der Seite
+// option 3 on the linked page
 
 // media query change events
-var layoutAktuell;
+var currentLayout;
 for (let [layout, minSize] of Object.entries(config.breakpoints)) {
     if (minSize) {
         var matchmedia = window.matchMedia('(min-width: ' + minSize + 'px)');
-        matchmedia.addEventListener('change', layoutAendern);
+        matchmedia.addEventListener('change', changeLayout);
     }
 }
 
 // media query handler function
-function layoutAendern() {
+function changeLayout() {
     // let size = null;
     for (let [layout, minSize] of Object.entries(config.breakpoints)) {
         var matchmedia = window.matchMedia('(min-width: ' + minSize + 'px)');
-        if (!matchmedia || matchmedia.matches) layoutAktuell = layout;
+        if (!matchmedia || matchmedia.matches) currentLayout = layout;
     }
-    document.body.setAttribute('data-layout', layoutAktuell);
+    document.body.setAttribute('data-layout', currentLayout);
 
-    // Event erstellen
-    let event = new CustomEvent('eventLayoutaenderung', {
+    // create event
+    let event = new CustomEvent('eventLayoutchange', {
         detail: {
-            layout: layoutAktuell
+            layout: currentLayout
         }
     });
     // dispatch the event
     document.dispatchEvent(event);
 }
 
-// Beim Laden der Seite initial aufrufen
-layoutAendern();
+// load initially when page loads
+changeLayout();

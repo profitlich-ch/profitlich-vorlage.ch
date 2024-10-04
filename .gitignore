@@ -135,14 +135,14 @@ package-lock.json
 /public/imager/
 /web/imager/
 
-# MEDIEN 
-/src/medien/
-/web/medien/
+# MOCKUP
+/src/mockup/
+/web/mockup/
 
 # Von Gulp bereitgestellte Dateien
 /web/css/
 /web/js/
-/web/bausteine/
+/web/modules/
 /web/sprites/
 /templates/
 

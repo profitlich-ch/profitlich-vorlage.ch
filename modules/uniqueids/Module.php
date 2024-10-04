@@ -7,8 +7,8 @@ namespace modules\uniqueids;
 use Craft;
 use yii\base\Module as BaseModule;
 
-// Services, Variablen und Twig Extensions müssen im Modul mit use geladen werden.
-// Controller aber nicht.
+// Services, variables and twig extensions need to be loaded into the module with 'use'
+// Controller do not need to be loaded
 use modules\uniqueids\twigextensions\Extension;
 
 use yii\base\Event;

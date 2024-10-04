@@ -13,7 +13,7 @@
             'staticAssetsVersion' => 1696361787,
         ),
 
-        // Staging environment
+        // staging environment
         'staging'  => array(
             'staticAssetsVersion' => time(),
         ),

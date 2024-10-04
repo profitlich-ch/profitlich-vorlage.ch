@@ -35,8 +35,8 @@ assignees: ''
 # Hosting
 [ ] SSL eingerichtet und 301 redirect von non-SSL auf SSL  
 [ ] 301 redirect von www auf non-www  
-[ ] HSTS ist aktiviert  
-[ ] OSCP-Anheftung ist aktiviert  
+[ ] HSTS ist activeiert  
+[ ] OSCP-Anheftung ist activeiert  
 [ ] PHP memory limit ist `1024M` oder höher
 
 # Semantik

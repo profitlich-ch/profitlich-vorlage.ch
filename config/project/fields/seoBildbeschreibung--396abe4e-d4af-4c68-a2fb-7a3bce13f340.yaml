@@ -1,14 +1,12 @@
-columnSuffix: munkpyzi
-contentColumnType: text
-handle: konflikt20MitBranch
+columnSuffix: dukgymih
+handle: seoBildbeschreibung
 instructions: null
-name: 'Konflikt 2'
+name: 'SEO Bildbeschreibung'
 searchable: false
 settings:
   byteLimit: null
   charLimit: null
   code: false
-  columnType: null
   initialRows: 4
   multiline: false
   placeholder: null

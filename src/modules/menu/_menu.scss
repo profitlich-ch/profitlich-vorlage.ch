@@ -1,4 +1,4 @@
-.menue {
+.menu {
     font-family: Filson Pro, sans-serif;
     font-weight: 400;
 
@@ -16,12 +16,12 @@
         cursor: pointer;
         
 
-        &[data-menue-aktiv="true"] {
-            color: map-get($farben, rot);
+        &[data-menu-active="true"] {
+            color: map-get($colorn, rot);
         }
 
         &:hover {
-            color: map-get($farben, rot);
+            color: map-get($colorn, rot);
         }
     }
 }
@@ -31,9 +31,9 @@
 
     $layout: smartphone;
 
-    .menue {
+    .menu {
         @include abstand($layout, padding, alle, 0, 26, 0, 26);
-        background-color: map-get($farben, hellbraun);
+        background-color: map-get($colorn, hellbraun);
         display: none;
         height: calc(var(--vh, 1vh) * 100);
         left: 0;
@@ -42,18 +42,18 @@
         width: 100%;
         z-index: 1000;
 
-        .body[data-menue-aktiv="true"] & {
+        .body[data-menu-active="true"] & {
             display: flex;
             flex-direction: column;
         }
 
         &__hamburger {
-            $hamburger-breite: 36px;
-            $hamburger-hoehe: 29px;
-            $hamburger-strichstaerke: 5px;
-            $hamburger-farbe: black;
-            $hamburger-farbe-aktiv: black;
-            @include hamburger($hamburger-breite, $hamburger-hoehe, $hamburger-strichstaerke, $hamburger-farbe, $hamburger-farbe-aktiv);
+            $hamburger-width: 36px;
+            $hamburger-height: 29px;
+            $hamburger-stroke-weight: 5px;
+            $hamburger-color: black;
+            $hamburger-color-active: black;
+            @include hamburger($hamburger-width, $hamburger-height, $hamburger-stroke-weight, $hamburger-color, $hamburger-color-active);
             @include abstand($layout, padding, alle, 10, 10, 10, 10);
             background-color: transparent;
             position: fixed;
@@ -89,7 +89,7 @@
 
     $layout: desktop;
 
-    .menue {
+    .menu {
         height: 100%;
         width: 100%;
 
@@ -130,7 +130,7 @@
             display: inherit;
             text-decoration: none;
 
-            &--aktiv {
+            &--active {
                 font-weight: 500;
             }
         }

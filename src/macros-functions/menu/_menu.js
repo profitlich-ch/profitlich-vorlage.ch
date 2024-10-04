@@ -1,25 +1,25 @@
 class MenuToggle {
-  constructor(hamburger, menue) {
+  constructor(hamburger, menu) {
     this.hamburger = hamburger;
-    this.menue = menue;
+    this.menu = menu;
     this.isActive = false;
 
-    // Add event listener zum hamburger
-    this.hamburger.addEventListener('click', this.toggleMenue.bind(this));
+    // ddd event listener to hamburger
+    this.hamburger.addEventListener('click', this.togglemenu.bind(this));
 
-    // Add event listener zum menue items
-    this.menue.querySelectorAll('.menue__link').forEach(link => {
+    // add event listener to menu items
+    this.menu.querySelectorAll('.menu__link').forEach(link => {
       link.addEventListener('click', () => {
-        this.toggleMenue();
+        this.togglemenu();
       });
     });
   }
 
-  toggleMenue() {
+  togglemenu() {
       if (this.isActive) {
         this.isActive = false;
         document.body.removeEventListener('click', this.onBodyClick.bind(this));
-        document.body.setAttribute('data-menue-aktiv', this.isActive);
+        document.body.setAttribute('data-menu-active', this.isActive);
         this.hamburger.style.marginRight = '';
         document.body.style.paddingRight = '';
         document.body.style.top = '';
@@ -29,7 +29,7 @@ class MenuToggle {
         document.body.addEventListener('click', this.onBodyClick.bind(this));
         this.scrollbar = window.innerWidth - document.documentElement.clientWidth;
         this.y = window.scrollY;
-        document.body.setAttribute('data-menue-aktiv', this.isActive);
+        document.body.setAttribute('data-menu-active', this.isActive);
         const marginOriginal = parseFloat(window.getComputedStyle(this.hamburger).marginRight);
         this.hamburger.style.marginRight = `${marginOriginal + this.scrollbar}px`;
         document.body.style.paddingRight = `${this.scrollbar}px`;
@@ -38,17 +38,17 @@ class MenuToggle {
     }
 
   onBodyClick(event) {
-    if (!event.target.closest('.header') && !event.target.closest('.menue__hamburger')) {
-      this.toggleMenue();
+    if (!event.target.closest('.header') && !event.target.closest('.menu__hamburger')) {
+      this.togglemenu();
     }
   }
 
-  onMenueItemClick(event) {
+  onmenuItemClick(event) {
     const target = event.target;
-    if (target.matches('.menue__link')) {
-      this.toggleMenue();
+    if (target.matches('.menu__link')) {
+      this.togglemenu();
     }
   }
 }
 
-const menuToggle = new MenuToggle(document.getElementById('hamburger'), document.getElementById('menue'));
+const menuToggle = new MenuToggle(document.getElementById('hamburger'), document.getElementById('menu'));

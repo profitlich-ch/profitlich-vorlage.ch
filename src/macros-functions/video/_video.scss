@@ -1,6 +1,6 @@
 .macro-video {
     position: relative;
-    // overflow: hidden, so dass Zoom (transform: scale) möglich ist
+    // overflow: hidden for making zoom possible (transform: scale)
     overflow: hidden;
     
     &__iframe,
