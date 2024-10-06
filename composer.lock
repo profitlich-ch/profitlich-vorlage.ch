@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "796f630f1154fa978133b72b07d7b999",
+    "content-hash": "e4305f45b62c7834b048b9c66253663a",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -1602,6 +1602,59 @@
                 "shell"
             ],
             "time": "2023-04-19T08:25:22+00:00"
+        },
+        {
+            "name": "miranj/craft-obfuscator",
+            "version": "1.2.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/miranj/craft-obfuscator/zipball/851c4b5b5ae0a0391e80a2d20421f2c17b757f4c",
+                "reference": "851c4b5b5ae0a0391e80a2d20421f2c17b757f4c",
+                "shasum": ""
+            },
+            "require": {
+                "craftcms/cms": "^3.0 || ^4.0 || ^5.0",
+                "php": "^7.2.5 || ^8.0"
+            },
+            "type": "craft-plugin",
+            "extra": {
+                "name": "Obfuscator",
+                "handle": "obfuscator",
+                "changelogUrl": "https://raw.githubusercontent.com/miranj/craft-obfuscator/v1/CHANGELOG.md",
+                "class": "miranj\\obfuscator\\Obfuscator"
+            },
+            "autoload": {
+                "classmap": [
+                    "lib/StandalonePHPEnkoder.php"
+                ],
+                "psr-4": {
+                    "miranj\\obfuscator\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Miranj",
+                    "homepage": "https://miranj.in"
+                }
+            ],
+            "description": "Adds a Twig filter to obfuscate emails using Hivelogic Enkoder.",
+            "keywords": [
+                "craft-plugin",
+                "craftcms",
+                "email",
+                "encode",
+                "enkoder",
+                "obfuscate"
+            ],
+            "support": {
+                "docs": "https://github.com/miranj/craft-obfuscator/blob/v1/README.md",
+                "issues": "https://github.com/miranj/craft-obfuscator/issues",
+                "source": "https://github.com/miranj/craft-obfuscator"
+            },
+            "time": "2024-04-13T06:38:41+00:00"
         },
         {
             "name": "ml/iri",
