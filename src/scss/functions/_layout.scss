@@ -25,7 +25,7 @@ $bigFrom: null;
     $bigFrom: 999999px;
 }
 
-$breakpointsVariablen: (
+$breakpointsVariables: (
     smartphoneTo:       map-get($breakpoints, $tabletPortrait) - 1px,
     tabletPortraitFrom: map-get($breakpoints, $tabletPortrait) + 0px,
     tabletPortraitTo:   map-get($breakpoints, tabletLandscape) - 1px,
@@ -39,25 +39,25 @@ $breakpointsVariablen: (
 // Gibt es kein Layout big, soll die media query desktop keine max-width haben
 $mediaqueryDesktop: null;
 @if map-get($layouts, big) {
-    $mediaqueryDesktop: (min-width: map-get($breakpointsVariablen, desktopFrom), max-width: map-get($breakpointsVariablen, desktopTo));
+    $mediaqueryDesktop: (min-width: map-get($breakpointsVariables, desktopFrom), max-width: map-get($breakpointsVariables, desktopTo));
 } @else {
-    $mediaqueryDesktop: (min-width: map-get($breakpointsVariablen, desktopFrom));
+    $mediaqueryDesktop: (min-width: map-get($breakpointsVariables, desktopFrom));
 }
 
 $mediaqueries: (
-	smartphone:     (max-width: map-get($breakpointsVariablen, smartphoneTo)),
-	tablet:         (min-width: map-get($breakpointsVariablen, tabletPortraitFrom), max-width: map-get($breakpointsVariablen, tabletLandscapeTo)),
-	tabletAb:       (min-width: map-get($breakpointsVariablen, tabletPortraitFrom)),
-	tabletPortraitFrom:   (max-width: map-get($breakpointsVariablen, tabletPortraitFrom)),
-	tabletPortrait:     (min-width: map-get($breakpointsVariablen, tabletPortraitFrom), max-width: map-get($breakpointsVariablen, tabletPortraitTo)),
-	tabletPortraitTo:  (max-width: map-get($breakpointsVariablen, tabletPortraitTo)),
-	tabletLandscapeFrom:   (max-width: map-get($breakpointsVariablen, tabletLandscapeFrom)),
-	tabletLandscape:     (min-width: map-get($breakpointsVariablen, tabletLandscapeFrom), max-width: map-get($breakpointsVariablen, tabletLandscapeTo)),
-	tabletLandscapeTo:  (max-width: map-get($breakpointsVariablen, tabletLandscapeTo)),
-	desktopFrom:      (min-width: map-get($breakpointsVariablen, desktopFrom)),
+	smartphone:     (max-width: map-get($breakpointsVariables, smartphoneTo)),
+	tablet:         (min-width: map-get($breakpointsVariables, tabletPortraitFrom), max-width: map-get($breakpointsVariables, tabletLandscapeTo)),
+	tabletAb:       (min-width: map-get($breakpointsVariables, tabletPortraitFrom)),
+	tabletPortraitFrom:   (max-width: map-get($breakpointsVariables, tabletPortraitFrom)),
+	tabletPortrait:     (min-width: map-get($breakpointsVariables, tabletPortraitFrom), max-width: map-get($breakpointsVariables, tabletPortraitTo)),
+	tabletPortraitTo:  (max-width: map-get($breakpointsVariables, tabletPortraitTo)),
+	tabletLandscapeFrom:   (max-width: map-get($breakpointsVariables, tabletLandscapeFrom)),
+	tabletLandscape:     (min-width: map-get($breakpointsVariables, tabletLandscapeFrom), max-width: map-get($breakpointsVariables, tabletLandscapeTo)),
+	tabletLandscapeTo:  (max-width: map-get($breakpointsVariables, tabletLandscapeTo)),
+	desktopFrom:      (min-width: map-get($breakpointsVariables, desktopFrom)),
 	desktop:        $mediaqueryDesktop,
-	desktopTo:     (max-width: map-get($breakpointsVariablen, desktopTo)),
-	big:          (min-width: map-get($breakpointsVariablen, bigFrom)),
+	desktopTo:     (max-width: map-get($breakpointsVariables, desktopTo)),
+	big:          (min-width: map-get($breakpointsVariables, bigFrom)),
 );
 
 
