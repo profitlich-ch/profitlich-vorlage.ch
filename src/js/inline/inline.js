@@ -25,19 +25,6 @@ function debounce(func, wait, immediate) {
     };
 };
 
-// reveal mail addresses
-function revealMailaddresses() {
-    const emlArray = document.querySelectorAll('[data-eml-named]').forEach(adresse => {
-        let emlName = adresse.getAttribute('data-eml-name');
-        let emlDomain = adresse.getAttribute('data-eml-domain');
-        let emlText = adresse.getAttribute('data-eml-text').replace('prefix-', '');
-        emlText = emlText.replace('@', '<span class="mail-at">@</span>');
-        adresse.setAttribute('href', emlName + '@' + emlDomain);
-        adresse.innerHTML = emlText;
-    });
-}
-revealMailaddresses();
-
 // 100vh problem
 // https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
 

@@ -1,4 +1,4 @@
-dateModified: 1728071975
+dateModified: 1728201839
 email:
   fromEmail: dev@profitlich.ch
   fromName: 'Profitlich DEV'
@@ -17,7 +17,6 @@ graphql:
     expiryDate: null
 meta:
   __names__:
-    0a064e6b-5fcd-4a2b-acb7-b46630ad5244: Farbe # Farbe
     0e793c4c-3298-4c14-a50e-fe050eeaee18: Startseite # Startseite
     44fec1ae-cc09-42b5-b6a8-1c301d066c04: Projektbilder # Projektbilder
     396abe4e-d4af-4c68-a2fb-7a3bce13f340: 'SEO Bildbeschreibung' # SEO Bildbeschreibung
@@ -33,6 +32,10 @@ plugins:
     enabled: true
     schemaVersion: 3.0.0.0
   content-security-policy:
+    edition: standard
+    enabled: true
+    schemaVersion: 1.0.0
+  obfuscator:
     edition: standard
     enabled: true
     schemaVersion: 1.0.0
