@@ -570,7 +570,7 @@ function uploadWebTask() {
 function injizierenTask() {
     return src('templates/**/*.{html,twig}')
     .pipe(injectCSS())
-    .pipe(dest('dist'));
+    .pipe(dest('templates'));
 }
 
 // set version number (staticAssetsVersion)
