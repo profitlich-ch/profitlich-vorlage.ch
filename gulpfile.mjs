@@ -576,12 +576,12 @@ function injizierenTask() {
 // set version number (staticAssetsVersion)
 function staticAssetsVersionTask() {
     return src(files.craftCustomConfig.src)
-    .pipe(gulpif( modus == 'production', 
+    .pipe(
         replace(/'staticAssetsVersion' => (\d+),/g, function(match, p1, offset, string) {
-        var unixTime = Math.floor(new Date().getTime() / 1000);
-        log('-> staticAssetsVersion updated to ' + unixTime);
-        return "'staticAssetsVersion' => " + unixTime + ",";
-        }))
+            var unixTime = Math.floor(new Date().getTime() / 1000);
+            log('-> staticAssetsVersion updated to ' + unixTime);
+            return "'staticAssetsVersion' => " + unixTime + ",";
+        })
     )
     .pipe(dest
         (files.craftCustomConfig.dest)
