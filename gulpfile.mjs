@@ -1,9 +1,17 @@
-// ESM gulpfile.mjs nach https://gist.github.com/noraj/007a943dc781dc8dd3198a29205bae04
+/**
+ * ESM gulpfile.mjs nach https://gist.github.com/noraj/007a943dc781dc8dd3198a29205bae04
+ * 
+ * DEV / STAGING/ PRODUCTION
+ * dev runs on the local ddev machine
+ * staging uploads to staging server
+ * production omits als dev content (JS, CSS), deletes console.log, compresses CSS and JS and uploads to live website
+ * 
+ * FILE NAMING CONVENTIONS
+ * _*.* files will become part of a higher level file (e. g. the overall style.css) and not saved as a stand-alone file
+ * files without underscore will be compiled to a single file (e. g. style.css or map.js)
+ * 
+ */
 
-// dev / staging / production
-// dev runs on the local ddev machine
-// staging uploads to staging server
-// production uploads to live website, omits als dev content (JS, CSS), deletes console.log and compresses both CSS and JS
 
 const { src, dest, task, watch, series, parallel } = gulp;
 
@@ -39,6 +47,9 @@ import through from 'through2';
 
 const sass = gulpSass(dartSass);
 
+/**
+ * CONFIGURATION
+ */
 const config = { 
     configToScss: {
         src: 'src/config.json',
@@ -50,21 +61,34 @@ const config = {
     }
 }
 
-// file paths
+/**
+ * FILE PATHS
+ * file paths need to set in a function as they are dependent on the modus
+ * the setFiles function is called after the modus is set
+ */
 var files;
 function setFiles() {
     files = { 
         src: {
             src: 'src/**/*.*',
         },
+        // The overall SCSS. Files with underscore are used through imports in non-underscore files automatically
         scss: {
             src: 'src/scss/**/*.scss',
             dest: 'web/css',
         },
+        // defer.js is loaded via layout.twig on all pages
+        // js files from: js/defer, macros-functions and modules (files with underscore)
         jsDefer: {
-            src: (modus != 'production') ? ['src/js/defer/**/*.js', 'src/macros-functions/**/*.js', 'src/dev/**/*.js'] : ['src/js/defer/**/*.js', 'src/macros-functions/**/*.js'],
+            src: ['src/js/defer/**/*.js', 'src/macros-functions/**/*.js', 'src/modules/**/_*.js'],
             dest: 'web/js',
         },
+        // inline JS is always inlined into layout.twig for making functions instantly available
+        jsInline: {
+            src: 'src/js/inline/**/*.js',
+            dest: 'templates/js',
+        },
+        // JS for development is always compiled but only included in layout.twig if modus is not production
         jsDev: {
             src: 'src/dev/**/*.js',
             dest: 'web/js',
@@ -73,19 +97,11 @@ function setFiles() {
             src: 'src/js/config.js',
             dest: 'templates/js',
         },
-        jsInline: {
-            src: 'src/js/inline/**/*.js',
-            dest: 'templates/js',
-        },
+        // standalone JS files for modules (e. g. map.js) that are only included on certain pages
         jsModules: {
             src: ['src/modules/**/*.js', '!src/modules/**/_*.js'],
             dest: 'web/modules',
         },
-        jsModulesDefer: {
-            src: ['src/modules/**/_*.js'],
-            dest: 'web/js',
-        },
-        // https://stackoverflow.com/questions/28876469/multiple-file-extensions-within-the-same-directory-using-gulp
         templatesTwig: {
             src: 'src/templates/**/*.twig',
             dest: 'templates',
@@ -107,14 +123,7 @@ function setFiles() {
             src: 'src/macros-functions/**/*.twig',
             dest: 'templates/_macros-functions',
         },
-        media: {
-            src: 'src/media/**/*.*',
-            dest: 'web/media',
-        },
-        mediaBackup: {
-            src: 'src/media/**/*.*',
-            dest: 'backup/src/media',
-        },
+        // Files used for development only, excluded from git but uploaded onto server
         mockup: {
             src: 'src/mockup/**/*.*',
             dest: 'web/mockup',
@@ -142,7 +151,11 @@ function setFiles() {
     }
 }
 
-// dotenv to JSON
+/**
+ * 
+ * Dotenv to JSON
+ * The Dotenv includes FTP logn data and is therefor emade available to Gulp as an JS file
+ */
 function dotenvTask() {
     return src('./.env')
     .pipe(dotenv())
@@ -150,7 +163,11 @@ function dotenvTask() {
     .pipe(gulp.dest('.'));
 }
 
-// config.json to SCSS
+/**
+ * 
+ * config.json to SCSS
+ * All website-specific settings from the config.json are made available as Sass maps
+ */
 function configToScssTask() {
     return src(config.configToScss.src)
 
@@ -163,7 +180,11 @@ function configToScssTask() {
     )   
 }
 
-// config.json to JS
+/**
+ * 
+ * config.json to JS
+ * breakpoints are set in the config.json and made available to JS-breakpoints via a config.js file
+ */
 function configToJsTask() {
     return src(config.configToJs.src)
 
@@ -174,7 +195,11 @@ function configToJsTask() {
     )   
 }
 
-// set modus through prompt
+/**
+ * set modus through prompt
+ * First the variable modus is set to dev/staging/production
+ * Then (through Gulp series task) the modusConfirmTask() is called
+ */
 var modus;
 function modusTask() {
     return src('.')
@@ -189,6 +214,10 @@ function modusTask() {
 	}))
 }
 
+/**
+ * If modus is production, a confirmation is prompted, then the setFiles() task is called
+ * otherwise the setFiles() taks is called directly
+ */
 var modusConfirmed = false;
 function modusConfirmTask() {
     if (modus == 'production') {
@@ -213,7 +242,11 @@ function modusConfirmTask() {
     }
 }
 
-// delete config.scss, config.js löschen and env.json
+/**
+ * 
+ * Delete config derivate files
+ * config.js and scss and env.json are temporary and will therefore be deleted
+ */
 function deleteConfigTask() {
     return deleteAsync(['src/scss/config.scss', 'src/js/config.js', 'env.json']);
 }
@@ -296,32 +329,6 @@ function jsDevTask() {
     // write files
     .pipe(dest
         (files.jsDev.dest)
-    )
-}
-
-// compile JS defer modules
-function jsModulesDeferTask() {
-    return src(files.jsModulesDefer.src)
-
-    // initialise sourcemaps
-    .pipe(sourcemaps.init())
-
-    // combine files into one file
-    .pipe(concat('defer-modules.js'))
-
-    .pipe(dest
-        (files.jsModulesDefer.dest)
-    )
-
-    // compress with terser (if not in mode dev))
-    .pipe(gulpif( modus != 'dev', terser() ))
-
-    // write sourcemaps
-    .pipe(sourcemaps.write('.'))
-
-    // write files
-    .pipe(dest
-        (files.jsModulesDefer.dest)
     )
 }
 
@@ -415,7 +422,7 @@ function modulesAssetsTask() {
     );
 }
 
-// buold SVG sprites
+// build SVG sprites
 function spritesTask() {
     return src(files.sprites.src)
 
@@ -597,7 +604,7 @@ function watchTask() {
             configToScssTask,
             configToJsTask,
             gulp.parallel(
-                templatesTwigTask, modulesTwigTask, modulesAssetsTask, jsModulesTask, macrosFunctionsTask, scssTask, jsDeferTask, jsDevTask, jsModulesDeferTask, jsConfigTask, jsInlineTask, mockupTask, fontsTask, faviconTask, spritesTask, staticAssetsVersionTask
+                templatesTwigTask, modulesTwigTask, modulesAssetsTask, jsModulesTask, macrosFunctionsTask, scssTask, jsDeferTask, jsDevTask, jsConfigTask, jsInlineTask, mockupTask, fontsTask, faviconTask, spritesTask, staticAssetsVersionTask
             ),
             injizierenTask,
             uploadTemplatesTask,
@@ -615,7 +622,7 @@ task('build',
         modusTask,
         modusConfirmTask,
         parallel(
-            templatesTwigTask, modulesTwigTask, modulesAssetsTask, jsModulesTask, macrosFunctionsTask, scssTask, jsDeferTask, jsDevTask, jsModulesDeferTask, jsConfigTask, jsInlineTask, mockupTask, fontsTask, faviconTask, spritesTask, staticAssetsVersionTask
+            templatesTwigTask, modulesTwigTask, modulesAssetsTask, jsModulesTask, macrosFunctionsTask, scssTask, jsDeferTask, jsDevTask, jsConfigTask, jsInlineTask, mockupTask, fontsTask, faviconTask, spritesTask, staticAssetsVersionTask
         ),
         injizierenTask,
         uploadTemplatesTask,
