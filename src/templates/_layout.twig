@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <title>
             {% if craft.app.request.segment(1) %}
-                {% block seitentitel %}{% endblock %}
+                {% block pageTitle %}{% endblock %}
                 —
             {% endif %}
             PROJECT NAME
@@ -12,7 +12,7 @@
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         {# prevent automatic conversion of numbers to telephone links #}
         <meta name="format-detection" content="telephone=no" />
-        {% block metaDescription %}{% endblock %}
+        {% block seoMetaDescription %}{% endblock %}
 
         {# 
             Alle CSS und JS Dateien erhalten eine Versionsnumern, damit sicher die neuste geladen wird, nicht die aus dem Cache.            
