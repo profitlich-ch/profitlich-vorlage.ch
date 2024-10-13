@@ -97,7 +97,6 @@
         <script nonce="{{ cspNonce('script-src') }}">
             {{ source("/js/inline.js") }}
         </script>
-        {# <script src="/js/defer-bausteine.{{ staticAssetsVersion }}.js" defer nonce="{{ cspNonce('script-src') }}"></script> #}
         <script nonce="{{ cspNonce('script-src') }}">
             {# FOUC #}
             let domReady = (cb) => {
