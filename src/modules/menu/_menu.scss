@@ -1,3 +1,5 @@
+@use "sass:map";
+
 .menu {
     font-family: Filson Pro, sans-serif;
     font-weight: 400;
@@ -17,11 +19,11 @@
         
 
         &[data-menu-active="true"] {
-            color: map-get($colors, rot);
+            color: map.get($colors, rot);
         }
 
         &:hover {
-            color: map-get($colors, rot);
+            color: map.get($colors, rot);
         }
     }
 }
@@ -33,7 +35,7 @@
 
     .menu {
         @include marginPadding($layout, padding, alle, 0, 26, 0, 26);
-        background-color: map-get($colors, hellbraun);
+        background-color: map.get($colors, hellbraun);
         display: none;
         height: calc(var(--vh, 1vh) * 100);
         left: 0;

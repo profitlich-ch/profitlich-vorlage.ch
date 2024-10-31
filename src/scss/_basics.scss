@@ -1,3 +1,5 @@
+@use "sass:map";
+
 // set box-sizing from content-box to border-box
 // padding and border become part of width/height definitions
 html {
@@ -9,7 +11,7 @@ html {
 
 body {
 
-    background-color: map-get($colors, background);
+    background-color: map.get($colors, background);
     margin: 0 auto;
 
     min-height: calc(var(--vh, 1vh) * 100);

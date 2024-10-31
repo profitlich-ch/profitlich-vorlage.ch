@@ -1,3 +1,5 @@
+@use "sass:map";
+
 // grid
 $color--dev-toolbar: rgba(0, 220, 30, 1.0);
 $color--dev-grid: rgba(0, 0, 255, 0.5);
@@ -90,6 +92,6 @@ $color--dev-grid-center: rgba(0, 0, 0, 0.2);
 
 @each $layout, $breite in $layouts {
     @include mediaquery($layout) {
-        @include dev-toolbar-grid($layout, map-get($columns, $layout), map-get($column-gap, $layout), map-deep-get($margins, $layout, 'left'), map-deep-get($margins, $layout, 'right'));
+        @include dev-toolbar-grid($layout, map.get($columns, $layout), map.get($column-gap, $layout), map-deep-get($margins, $layout, 'left'), map-deep-get($margins, $layout, 'right'));
     }
 }

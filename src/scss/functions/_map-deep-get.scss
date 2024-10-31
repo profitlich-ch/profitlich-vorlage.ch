@@ -1,3 +1,5 @@
+@use "sass:map";
+
 /// https://css-tricks.com/snippets/sass/deep-getset-maps/
 /// Map deep get
 /// @author Kitty Giraudel
@@ -7,7 +9,7 @@
 /// @return {*} - Desired value
 @function map-deep-get($map, $keys...) {
     @each $key in $keys {
-        $map: map-get($map, $key);
+        $map: map.get($map, $key);
     }
     @return $map;
 }
