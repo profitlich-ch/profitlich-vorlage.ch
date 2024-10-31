@@ -148,6 +148,10 @@ function setFiles() {
             src: 'config/custom.php',
             dest: 'config',
         },
+        uploadCraftConfig: {
+            src: 'config/*.php',
+            dest: '/config',
+        },
     }
 }
 
@@ -571,6 +575,27 @@ function uploadWebTask() {
         return src( files.uploadWeb.src, { buffer: false } )
     }
 };
+function uploadCraftConfigTask() {
+    if (modus !='dev') {
+        const filesToUpload = [];
+        
+        return src(files.uploadCraftConfig.src)
+        .pipe(through.obj(function (file, enc, cb) {
+            if (file.isBuffer()) {
+                // push file to array
+                filesToUpload.push(file);
+            }
+            // return file for next gulp step
+            cb(null, file);
+        }))
+        .on('end', async function () {
+            // start upload after all files are gathered
+            await uploadFilesToFTP(filesToUpload, files.uploadCraftConfig.dest);
+        });
+    } else {
+        return src( files.uploadCraftConfig.src, { buffer: false } )
+    }
+};
 
 
 // inject CSS
@@ -609,6 +634,7 @@ function watchTask() {
             injizierenTask,
             uploadTemplatesTask,
             uploadWebTask,
+            uploadCraftConfigTask,
             deleteConfigTask
         )
     );
@@ -627,6 +653,7 @@ task('build',
         injizierenTask,
         uploadTemplatesTask,
         uploadWebTask,
+        uploadCraftConfigTask,
         deleteConfigTask,
         watchTask
     )
