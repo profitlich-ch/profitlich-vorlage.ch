@@ -42,6 +42,7 @@ import streamifier from 'streamifier';
 import svgo from 'gulp-svgo';
 import svgSprite from 'gulp-svg-sprite';
 import terser from 'gulp-terser';
+import through from 'through2';
 
 // Configure gulp-sass with the current Sass version
 const sass = gulpSass(dartSass);
@@ -550,14 +551,14 @@ function uploadTemplatesTask() {
             await uploadFilesToFTP(filesToUpload, files.uploadTemplates.dest);
         });
     } else {
-        return src( files.uploadTemplates.src, { buffer: false } )
+        return src(files.uploadTemplates.src)
     }
 };
 function uploadWebTask() {
     if (modus !='dev') {
         const filesToUpload = [];
 
-        return src(files.uploadWeb.src)
+        return src(files.uploadWeb.src, { encoding: false })
         .pipe(through.obj(function (file, enc, cb) {
             if (file.isBuffer()) {
                 // push file to array
@@ -571,7 +572,7 @@ function uploadWebTask() {
             await uploadFilesToFTP(filesToUpload, files.uploadWeb.dest);
         });
     } else {
-        return src( files.uploadWeb.src, { buffer: false } )
+        return src(files.uploadWeb.src)
     }
 };
 function uploadCraftConfigTask() {
@@ -592,7 +593,7 @@ function uploadCraftConfigTask() {
             await uploadFilesToFTP(filesToUpload, files.uploadCraftConfig.dest);
         });
     } else {
-        return src( files.uploadCraftConfig.src, { buffer: false } )
+        return src(files.uploadCraftConfig.src )
     }
 };
 
