@@ -1,20 +1,20 @@
 // variables and settings
-@import 'config';
+@use 'config';
 
 // functions
-@import "functions/functions";
+@use "functions/functions";
 
 // basic formatting
-@import "basics";
+@use "basics";
 
 // fonts
-@import "fonts";
+@use "fonts";
 
 // modules
-@import "../modules/**/*.scss";
+// @import "../modules/**/*.scss";
 
 // macros
-@import "../macros-functions/**/*.scss";
+@use "../macros-functions/macros-functions";
 
 // other
-@import "main";
+@use "main";

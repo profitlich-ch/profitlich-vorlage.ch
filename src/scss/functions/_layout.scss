@@ -1,3 +1,9 @@
+@use "decimal";
+@use "sass:map";
+@use "sass:meta";
+
+@use "../config";
+
 // Media queries get the breakpoints
 // Breakpints get the layouts
 // Depending on the project, only a part of the layout names are used,
@@ -6,11 +12,11 @@
 // Then tabletPortrait must deliver the value of tablet
 
 $tabletPortrait: null;
-@if map-get($layouts, tabletPortrait) {
+@if map.get(config.$layouts, tabletPortrait) {
     $tabletPortrait: tabletPortrait;
 // no tabletPortrait size is defined
 } @else {
-    @if map-get($layouts, tablet) {
+    @if map.get(config.$layouts, tablet) {
         $tabletPortrait: tablet;
     // neither tablet size is defined
     } @else {
@@ -19,45 +25,45 @@ $tabletPortrait: null;
 }
 
 $bigFrom: null;
-@if map-get($layouts, big) {
+@if map.get(config.$layouts, big) {
     $bigFrom: big;
 } @else {
     $bigFrom: 999999px;
 }
 
 $breakpointsVariables: (
-    smartphoneTo:       map-get($breakpoints, $tabletPortrait) - 1px,
-    tabletPortraitFrom: map-get($breakpoints, $tabletPortrait) + 0px,
-    tabletPortraitTo:   map-get($breakpoints, tabletLandscape) - 1px,
-    tabletLandscapeFrom:map-get($breakpoints, tabletLandscape) + 0px,
-    tabletLandscapeTo:  map-get($breakpoints, desktop) - 1px,
-    desktopFrom:        map-get($breakpoints, desktop) + 0px,
-    desktopTo:          map-get($breakpoints, big) - 1px,
-    bigFrom:            map-get($breakpoints, big) + 0px,
+    smartphoneTo:       map.get(config.$breakpoints, $tabletPortrait) - 1px,
+    tabletPortraitFrom: map.get(config.$breakpoints, $tabletPortrait) + 0px,
+    tabletPortraitTo:   map.get(config.$breakpoints, tabletLandscape) - 1px,
+    tabletLandscapeFrom:map.get(config.$breakpoints, tabletLandscape) + 0px,
+    tabletLandscapeTo:  map.get(config.$breakpoints, desktop) - 1px,
+    desktopFrom:        map.get(config.$breakpoints, desktop) + 0px,
+    desktopTo:          map.get(config.$breakpoints, big) - 1px,
+    bigFrom:            map.get(config.$breakpoints, big) + 0px,
 );
 
 // Gibt es kein Layout big, soll die media query desktop keine max-width haben
 $mediaqueryDesktop: null;
-@if map-get($layouts, big) {
-    $mediaqueryDesktop: (min-width: map-get($breakpointsVariables, desktopFrom), max-width: map-get($breakpointsVariables, desktopTo));
+@if map.get(config.$layouts, big) {
+    $mediaqueryDesktop: (min-width: map.get($breakpointsVariables, desktopFrom), max-width: map.get($breakpointsVariables, desktopTo));
 } @else {
-    $mediaqueryDesktop: (min-width: map-get($breakpointsVariables, desktopFrom));
+    $mediaqueryDesktop: (min-width: map.get($breakpointsVariables, desktopFrom));
 }
 
 $mediaqueries: (
-	smartphone:     (max-width: map-get($breakpointsVariables, smartphoneTo)),
-	tablet:         (min-width: map-get($breakpointsVariables, tabletPortraitFrom), max-width: map-get($breakpointsVariables, tabletLandscapeTo)),
-	tabletAb:       (min-width: map-get($breakpointsVariables, tabletPortraitFrom)),
-	tabletPortraitFrom:   (max-width: map-get($breakpointsVariables, tabletPortraitFrom)),
-	tabletPortrait:     (min-width: map-get($breakpointsVariables, tabletPortraitFrom), max-width: map-get($breakpointsVariables, tabletPortraitTo)),
-	tabletPortraitTo:  (max-width: map-get($breakpointsVariables, tabletPortraitTo)),
-	tabletLandscapeFrom:   (max-width: map-get($breakpointsVariables, tabletLandscapeFrom)),
-	tabletLandscape:     (min-width: map-get($breakpointsVariables, tabletLandscapeFrom), max-width: map-get($breakpointsVariables, tabletLandscapeTo)),
-	tabletLandscapeTo:  (max-width: map-get($breakpointsVariables, tabletLandscapeTo)),
-	desktopFrom:      (min-width: map-get($breakpointsVariables, desktopFrom)),
+	smartphone:     (max-width: map.get($breakpointsVariables, smartphoneTo)),
+	tablet:         (min-width: map.get($breakpointsVariables, tabletPortraitFrom), max-width: map.get($breakpointsVariables, tabletLandscapeTo)),
+	tabletAb:       (min-width: map.get($breakpointsVariables, tabletPortraitFrom)),
+	tabletPortraitFrom:   (max-width: map.get($breakpointsVariables, tabletPortraitFrom)),
+	tabletPortrait:     (min-width: map.get($breakpointsVariables, tabletPortraitFrom), max-width: map.get($breakpointsVariables, tabletPortraitTo)),
+	tabletPortraitTo:  (max-width: map.get($breakpointsVariables, tabletPortraitTo)),
+	tabletLandscapeFrom:   (max-width: map.get($breakpointsVariables, tabletLandscapeFrom)),
+	tabletLandscape:     (min-width: map.get($breakpointsVariables, tabletLandscapeFrom), max-width: map.get($breakpointsVariables, tabletLandscapeTo)),
+	tabletLandscapeTo:  (max-width: map.get($breakpointsVariables, tabletLandscapeTo)),
+	desktopFrom:      (min-width: map.get($breakpointsVariables, desktopFrom)),
 	desktop:        $mediaqueryDesktop,
-	desktopTo:     (max-width: map-get($breakpointsVariables, desktopTo)),
-	big:          (min-width: map-get($breakpointsVariables, bigFrom)),
+	desktopTo:     (max-width: map.get($breakpointsVariables, desktopTo)),
+	big:          (min-width: map.get($breakpointsVariables, bigFrom)),
 );
 
 
@@ -89,7 +95,7 @@ $mediaqueries: (
 // $shift is for adding a value to the result, for example a margin
 // $inverse is for calculating the width as a negative number, for example for a negative shift in a stage system
 @function columns($layout, $columns, $columnsBasis, $columnGapsAddedBasis:0, $columnGapsAdditional:0, $margin:0, $shift:0, $invers:false) {
-    $columns: size($layout, map-get($columns, $layout) );
+    $columns: size($layout, map.get($columns, $layout) );
     $margin: size($layout, $margin);
     $shift: size($layout, $shift);
     @if ( $invers == false ) {
@@ -137,12 +143,12 @@ $mediaqueries: (
 @function size($layout, $number) {
     $number: $number;
     $width: false;
-    $width: map-get($layouts, $layout);
+    $width: map.get(config.$layouts, $layout);
 
-    @if ( map-get($units, $layout) == 'px' ) {
+    @if ( map.get(config.$units, $layout) == 'px' ) {
         @return $number * 1px;
     } @else {
-        @return decimal-round( calc($number / $width) * 100, 2) * 1vw;
+        @return decimal.decimal-round( calc($number / $width) * 100, 2) * 1vw;
     }
 
 }
@@ -153,23 +159,23 @@ $mediaqueries: (
 
     // @include mode($layout, padding/margin, alle/top/right/bottom/left, 0, 0, 0, 0) 
 
-    @if ( map-get($units, $layout) == 'px' ) {
+    @if ( map.get(config.$units, $layout) == 'px' ) {
         $top: $top + px;
         $right: $right + px;
         $bottom: $bottom + px;
         $left: $left + px;
     } @else {
 
-        @if type-of($top) == 'number'{
+        @if meta.type-of($top) == 'number'{
             $top: size($layout, $top);
         } 
-        @if type-of($right) == 'number'{
+        @if meta.type-of($right) == 'number'{
             $right: size($layout, $right);
         } 
-        @if type-of($bottom) == 'number'{
+        @if meta.type-of($bottom) == 'number'{
             $bottom: size($layout, $bottom);
         } 
-        @if type-of($left) == 'number'{
+        @if meta.type-of($left) == 'number'{
             $left: size($layout, $left);
         } 
     }
