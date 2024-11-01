@@ -1,8 +1,8 @@
 // settings
-@import 'config';
+@use 'config';
 
 // functions
-@import "functions/functions";
+@use "functions/functions";
 
 // dev
-@import "../dev/**/*.scss";
+@use "../dev/dev";

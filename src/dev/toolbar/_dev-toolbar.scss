@@ -1,4 +1,8 @@
 @use "sass:map";
+@use "../../scss/config";
+@use "../../scss/functions/mediaqueries";
+@use "../../scss/functions/map-deep-get";
+@use "../../scss/functions/layout";
 
 // grid
 $color--dev-toolbar: rgba(0, 220, 30, 1.0);
@@ -9,9 +13,9 @@ $color--dev-grid-center: rgba(0, 0, 0, 0.2);
 
 @mixin dev-toolbar-grid($layout, $columns, $column-gap, $margin-left, $margin-right) {
 
-    $column-gap: size($layout, $column-gap);
-    $margin-left: size($layout, $margin-left);
-    $margin-right: size($layout, $margin-right);
+    $column-gap: layout.size($layout, $column-gap);
+    $margin-left: layout.size($layout, $margin-left);
+    $margin-right: layout.size($layout, $margin-right);
     
     body[data-dev='true'] {
         .dev-toolbar__grid::after {
@@ -90,8 +94,8 @@ $color--dev-grid-center: rgba(0, 0, 0, 0.2);
     }
 }
 
-@each $layout, $breite in $layouts {
-    @include mediaquery($layout) {
-        @include dev-toolbar-grid($layout, map.get($columns, $layout), map.get($column-gap, $layout), map-deep-get($margins, $layout, 'left'), map-deep-get($margins, $layout, 'right'));
+@each $layout, $breite in config.$layouts {
+    @include mediaqueries.mediaquery($layout) {
+        @include dev-toolbar-grid($layout, map.get(config.$columns, $layout), map.get(config.$column-gap, $layout), map-deep-get.map-deep-get(config.$margins, $layout, 'left'), map-deep-get.map-deep-get(config.$margins, $layout, 'right'));
     }
 }

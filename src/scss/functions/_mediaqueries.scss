@@ -1,3 +1,5 @@
+@use "layout";
+
 @use "sass:map";
 @use "sass:list";
 
@@ -6,7 +8,7 @@
 
 @mixin mediaquery($mediaquery) {
     // Hole die map $mediaquery aus der map $mediaqueries
-    $queries: map.get($mediaqueries, $mediaquery);
+    $queries: map.get(layout.$mediaqueries, $mediaquery);
 
     // Wenn es keine $mediaquery in der map gibt, gebe einen Fehler aus
     @if not $queries {
