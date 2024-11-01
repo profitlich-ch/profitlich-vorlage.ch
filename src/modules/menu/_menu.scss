@@ -1,3 +1,7 @@
+@use "../../scss/config";
+@use "../../scss/functions/mediaqueries";
+@use "../../scss/functions/layout";
+@use "../../scss/functions/hamburger";
 @use "sass:map";
 
 .menu {
@@ -19,23 +23,23 @@
         
 
         &[data-menu-active="true"] {
-            color: map.get($colors, rot);
+            color: map.get(config.$colors, rot);
         }
 
         &:hover {
-            color: map.get($colors, rot);
+            color: map.get(config.$colors, rot);
         }
     }
 }
 
 
-@include mediaquery(smartphone) {
+@include mediaqueries.mediaquery(smartphone) {
 
     $layout: smartphone;
 
     .menu {
-        @include marginPadding($layout, padding, alle, 0, 26, 0, 26);
-        background-color: map.get($colors, hellbraun);
+        @include layout.marginPadding($layout, padding, alle, 0, 26, 0, 26);
+        background-color: map.get(config.$colors, hellbraun);
         display: none;
         height: calc(var(--vh, 1vh) * 100);
         left: 0;
@@ -55,8 +59,8 @@
             $hamburger-stroke-weight: 5px;
             $hamburger-color: black;
             $hamburger-color-active: black;
-            @include hamburger($hamburger-width, $hamburger-height, $hamburger-stroke-weight, $hamburger-color, $hamburger-color-active);
-            @include marginPadding($layout, padding, alle, 10, 10, 10, 10);
+            @include hamburger.hamburger($hamburger-width, $hamburger-height, $hamburger-stroke-weight, $hamburger-color, $hamburger-color-active);
+            @include layout.marginPadding($layout, padding, alle, 10, 10, 10, 10);
             background-color: transparent;
             position: fixed;
             right: size($layout, 26 - 10);
@@ -65,8 +69,8 @@
         }
 
         &__links {
-            @include marginPadding($layout, margin, top, 191);
-            @include fontFamily($layout, 46, 52);
+            @include layout.marginPadding($layout, margin, top, 191);
+            @include layout.fontFamily($layout, 46, 52);
             display: flex;
             flex-direction: column;
         }
@@ -87,7 +91,7 @@
 }
 
 
-@include mediaquery(desktop) {
+@include mediaqueries.mediaquery(desktop) {
 
     $layout: desktop;
 
@@ -96,7 +100,7 @@
         width: 100%;
 
         &__logo-text {
-            @include fontFamily($layout, 28, 32, 400);
+            @include layout.fontFamily($layout, 28, 32, 400);
             position: absolute;
             top: size($layout, 68);
             right: size($layout, 576);
@@ -108,7 +112,7 @@
         }
         
         &__logo {
-            @include fontFamily($layout, 70, 59, 400);
+            @include layout.fontFamily($layout, 70, 59, 400);
             text-decoration: none;
             position: absolute;
             top: size($layout, 50);
@@ -128,7 +132,7 @@
         }
 
         &__link {
-            @include fontFamily($layout, 34, 36);
+            @include layout.fontFamily($layout, 34, 36);
             display: inherit;
             text-decoration: none;
 
