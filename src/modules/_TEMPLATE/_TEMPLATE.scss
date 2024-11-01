@@ -1,9 +1,14 @@
+@use "../../scss/config";
+@use "../../scss/functions/mediaqueries";
+@use "../../scss/functions/layout";
+@use "sass:map";
+
 .MODULE {
 
 }
 
 
-@include mediaquery(smartphone) {
+@include mediaqueries.mediaquery(smartphone) {
 
     $layout: smartphone;
 
@@ -16,7 +21,7 @@
 }
 
 
-@include mediaquery(desktop) {
+@include mediaqueries.mediaquery(desktop) {
 
     $layout: desktop;
 

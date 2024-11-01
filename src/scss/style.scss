@@ -11,7 +11,7 @@
 @use "fonts";
 
 // modules
-// @import "../modules/**/*.scss";
+@use "../modules/modules";
 
 // macros
 @use "../macros-functions/macros-functions";
