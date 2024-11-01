@@ -13,20 +13,20 @@
  */
 
 
-const { src, dest, task, watch, series, parallel } = gulp;
+const { src, dest, task, series, parallel } = gulp;
 
 import { deleteAsync } from 'del';
 
-import * as dartSass from 'sass';
 import autoprefixer from 'autoprefixer';
 import cleanCSS from 'gulp-clean-css';
 import concat from 'gulp-concat';
+import dartSass from 'sass';
 import dotenv from 'gulp-dotenv';
 import fs from 'fs';
 import ftp from 'basic-ftp';
 import gulp from 'gulp';
-import gulpDartSass from 'gulp-dart-sass';
 import gulpif from 'gulp-if';
+import gulpSass from '@sequencemedia/gulp-sass';
 import injectCSS from 'gulp-inject-css';
 import jsonCss from 'gulp-json-css';
 import jsonToJs from 'gulp-json-to-js';
@@ -42,7 +42,9 @@ import streamifier from 'streamifier';
 import svgo from 'gulp-svgo';
 import svgSprite from 'gulp-svg-sprite';
 import terser from 'gulp-terser';
-import through from 'through2';
+
+// Configure gulp-sass with the current Sass version
+const sass = gulpSass(dartSass);
 
 /**
  * CONFIGURATION
@@ -259,8 +261,10 @@ function scssTask() {
     // initialise sourcemaps
     .pipe(sourcemaps.init())
     
-    .pipe(gulpDartSass(dartSass)
-    .on('error', gulpDartSass.logError))
+    .pipe(
+        sass.sync()
+        .on('error', sass.logError)
+    )
     
     // post-CSS
     .pipe(postcss([

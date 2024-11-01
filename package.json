@@ -11,6 +11,7 @@
     "license": "ISC",
     "devDependencies": {
         "@sayhellogmbh/gulp-sass-import-json": "github:SayHelloGmbH/gulp-sass-import-json",
+        "@sequencemedia/gulp-sass": "^1.0.181",
         "autoprefixer": "^10.4.20",
         "basic-ftp": "^5.0.5",
         "del": "^8.0.0",
@@ -18,7 +19,6 @@
         "gulp": "^5.0.0",
         "gulp-clean-css": "^4.3.0",
         "gulp-concat": "^2.6.1",
-        "gulp-dart-sass": "^1.1.0",
         "gulp-dotenv": "^0.2.2",
         "gulp-flatten": "^0.4.0",
         "gulp-fs": "^0.0.2",
