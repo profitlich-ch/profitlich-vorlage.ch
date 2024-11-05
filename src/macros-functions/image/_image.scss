@@ -1,5 +1,5 @@
 // padding-bottom trick for images
-.macro-bild {
+.macro-image {
     position: relative;
     display: block;
     height: 0;
@@ -20,8 +20,8 @@
     }
 }
 
-.macro-bild__img,
-.macro-bild__picture {
+.macro-image__img,
+.macro-image__picture {
     position: absolute;
     top: 0;
     left: 0;
