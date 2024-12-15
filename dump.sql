@@ -2097,8 +2097,8 @@ INSERT INTO `imagetransformindex` VALUES
 (31,50,'craft\\imagetransforms\\ImageTransformer','Ts_paralax_191_Ts_a.jpg',NULL,'_300x300_crop_center-center_none',1,0,0,'2022-10-03 21:38:29','2022-10-03 21:38:29','2022-10-03 21:41:49','5cf06df9-c1f8-4ba2-b0be-780e228832ba'),
 (32,50,'craft\\imagetransforms\\ImageTransformer','Ts_paralax_191_Ts_a.jpg',NULL,'_666x1000_crop_center-center_none',1,0,0,'2022-10-04 15:15:09','2022-10-04 15:15:09','2022-10-04 15:15:09','1795a88d-e2cd-44f4-aaaf-4deaa8dc22f1'),
 (33,50,'craft\\imagetransforms\\ImageTransformer','Ts_paralax_191_Ts_a.jpg',NULL,'_300xAUTO_crop_center-center_none',1,0,0,'2022-10-04 15:49:41','2022-10-04 15:49:41','2022-10-04 15:49:41','e5bc1e1d-09dc-4e1b-be58-8385286f0a26'),
-(34,50,'craft\\imagetransforms\\ImageTransformer','Ts_paralax_191_Ts_a.jpg',NULL,'_20x30_crop_center-center_none',0,0,1,'2024-07-17 17:01:57','2024-07-17 17:01:57','2024-11-02 09:16:41','36b1d84c-39d1-42c3-88df-3a6d4a46e7a3'),
-(35,50,'craft\\imagetransforms\\ImageTransformer','Ts_paralax_191_Ts_a.jpg',NULL,'_40x60_crop_center-center_none',0,0,1,'2024-07-17 17:01:57','2024-07-17 17:01:57','2024-12-10 22:38:43','502eeba7-2b68-4938-97dc-7cdc7de98593');
+(34,50,'craft\\imagetransforms\\ImageTransformer','Ts_paralax_191_Ts_a.jpg',NULL,'_20x30_crop_center-center_none',0,0,1,'2024-07-17 17:01:57','2024-07-17 17:01:57','2024-12-15 16:08:39','36b1d84c-39d1-42c3-88df-3a6d4a46e7a3'),
+(35,50,'craft\\imagetransforms\\ImageTransformer','Ts_paralax_191_Ts_a.jpg',NULL,'_40x60_crop_center-center_none',0,0,1,'2024-07-17 17:01:57','2024-07-17 17:01:57','2024-12-15 16:08:39','502eeba7-2b68-4938-97dc-7cdc7de98593');
 /*!40000 ALTER TABLE `imagetransformindex` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2169,7 +2169,7 @@ CREATE TABLE `info` (
 LOCK TABLES `info` WRITE;
 /*!40000 ALTER TABLE `info` DISABLE KEYS */;
 INSERT INTO `info` VALUES
-(1,'5.5.6','5.5.0.0',0,'nwbcbclyzuhz','3@qcgnfgfxgn','2022-09-28 08:08:17','2024-12-10 22:38:27','7e6daab9-2991-4d5f-bb87-ffbee2fc0cc5');
+(1,'5.5.6.1','5.5.0.0',0,'nwbcbclyzuhz','3@qcgnfgfxgn','2022-09-28 08:08:17','2024-12-15 16:08:30','7e6daab9-2991-4d5f-bb87-ffbee2fc0cc5');
 /*!40000 ALTER TABLE `info` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2653,9 +2653,6 @@ CREATE TABLE `queue` (
 
 LOCK TABLES `queue` WRITE;
 /*!40000 ALTER TABLE `queue` DISABLE KEYS */;
-INSERT INTO `queue` VALUES
-(371,'queue','O:39:\"craft\\queue\\jobs\\GenerateImageTransform\":4:{s:11:\"description\";N;s:30:\"\0craft\\queue\\BaseJob\0_progress\";i:0;s:35:\"\0craft\\queue\\BaseJob\0_progressLabel\";N;s:11:\"transformId\";i:34;}','t9n:[\"app\",\"Generating image transform\"]',1733870322,300,0,2048,NULL,NULL,0,NULL,NULL,0,NULL,NULL),
-(372,'queue','O:39:\"craft\\queue\\jobs\\GenerateImageTransform\":4:{s:11:\"description\";N;s:30:\"\0craft\\queue\\BaseJob\0_progress\";i:0;s:35:\"\0craft\\queue\\BaseJob\0_progressLabel\";N;s:11:\"transformId\";i:35;}','t9n:[\"app\",\"Generating image transform\"]',1733870322,300,0,2048,NULL,NULL,0,NULL,NULL,0,NULL,NULL);
 /*!40000 ALTER TABLE `queue` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2768,6 +2765,7 @@ INSERT INTO `resourcepaths` VALUES
 ('12111b52','@craft/web/assets/datepickeri18n/dist'),
 ('1246b350','@craft/web/assets/cp/dist'),
 ('12c7352f','@craft/web/assets/datepickeri18n/dist'),
+('12f43057','@bower/jquery/dist'),
 ('13231297','@craft/web/assets/tailwindreset/dist'),
 ('136939d1','@craft/web/assets/datepickeri18n/dist'),
 ('1436a8b5','@craft/web/assets/selectize/dist'),
@@ -2780,6 +2778,7 @@ INSERT INTO `resourcepaths` VALUES
 ('1687fc70','@craft/web/assets/edittransform/dist'),
 ('16881fcb','@craft/web/assets/feed/dist'),
 ('168ca9a6','@craft/web/assets/utilities/dist'),
+('1813a041','@craft/web/assets/jqueryui/dist'),
 ('187e0afd','@craft/web/assets/cp/dist'),
 ('18f5b2a1','@craft/web/assets/velocity/dist'),
 ('191bab3a','@craft/web/assets/tailwindreset/dist'),
@@ -2836,6 +2835,7 @@ INSERT INTO `resourcepaths` VALUES
 ('371787c9','@craft/web/assets/jquerypayment/dist'),
 ('374458ab','@craft/web/assets/jquerytouchevents/dist'),
 ('3767c8f8','@craftpulse/passwordpolicy/assetbundles/PasswordPolicy/dist'),
+('378b300a','@craft/web/assets/dashboard/dist'),
 ('38f8b835','@craft/web/assets/axios/dist'),
 ('391c0e0e','@craft/web/assets/datepickeri18n/dist'),
 ('3c4620f7','@craft/web/assets/jqueryui/dist'),
@@ -2847,14 +2847,18 @@ INSERT INTO `resourcepaths` VALUES
 ('4053a94b','@craft/web/assets/jqueryui/dist'),
 ('40858736','@craft/web/assets/jqueryui/dist'),
 ('412b8bc8','@craft/web/assets/jqueryui/dist'),
+('41cd9928','@craft/web/assets/velocity/dist'),
 ('42821758','@craft/web/assets/jquerytouchevents/dist'),
 ('42d1c83a','@craft/web/assets/jquerypayment/dist'),
+('440944fd','@craft/web/assets/jquerytouchevents/dist'),
+('445a9b9f','@craft/web/assets/jquerypayment/dist'),
 ('44c62c5c','@craft/web/assets/dashboard/dist'),
 ('47238906','@craft/web/assets/tailwindreset/dist'),
 ('4746ca8d','@craft/web/assets/velocity/dist'),
 ('478ddd89','@craft/web/assets/jqueryui/dist'),
 ('48434564','@craft/web/assets/feed/dist'),
 ('488a5277','@craft/web/assets/elementresizedetector/dist'),
+('4a511258','@craft/web/assets/datepickeri18n/dist'),
 ('4a621720','@bower/jquery/dist'),
 ('4ab4395d','@bower/jquery/dist'),
 ('4bcc1bde','@bower/jquery/dist'),
@@ -2865,6 +2869,7 @@ INSERT INTO `resourcepaths` VALUES
 ('4df744c8','@craft/web/assets/vue/dist'),
 ('4e111867','@craft/web/assets/fabric/dist'),
 ('4e2c0436','@craft/web/assets/elementresizedetector/dist'),
+('4ec816c1','@craft/web/assets/feed/dist'),
 ('4f5426b5','@craft/web/assets/elementresizedetector/dist'),
 ('51c41294','@craft/web/assets/updates/dist'),
 ('524b17e3','@craft/web/assets/datepickeri18n/dist'),
@@ -2897,6 +2902,7 @@ INSERT INTO `resourcepaths` VALUES
 ('61b92c01','@bower/jquery/dist'),
 ('645933e9','@craft/web/assets/elementresizedetector/dist'),
 ('6598199e','@craft/web/assets/velocity/dist'),
+('66876ea','@craft/web/assets/fileupload/dist'),
 ('66a32f70','@craft/web/assets/garnish/dist'),
 ('67a3b498','@craft/web/assets/utilities/dist'),
 ('69c72e3e','@craft/web/assets/craftsupport/dist'),
@@ -2909,11 +2915,14 @@ INSERT INTO `resourcepaths` VALUES
 ('6fcb3900','@craft/web/assets/dashboard/dist'),
 ('702c2ab3','@craft/web/assets/garnish/dist'),
 ('704f9fca','@craft/web/assets/axios/dist'),
+('71dd2b85','@craft/web/assets/craftsupport/dist'),
+('73b9fc41','@craft/web/assets/xregexp/dist'),
 ('74cc3a73','@craft/web/assets/edituser/dist'),
 ('75256abc','@craft/web/assets/fileupload/dist'),
 ('7532afe4','@craft/web/assets/xregexp/dist'),
 ('77567820','@craft/web/assets/craftsupport/dist'),
 ('778922a6','@craft/web/assets/fabric/dist'),
+('78014141','@craft/web/assets/picturefill/dist'),
 ('7a14931e','@craft/web/assets/garnish/dist'),
 ('7b1dbb8f','@craft/web/assets/htmx/dist'),
 ('7e8a12e4','@craft/web/assets/picturefill/dist'),
@@ -2931,6 +2940,7 @@ INSERT INTO `resourcepaths` VALUES
 ('851b22e9','@craft/web/assets/iframeresizer/dist'),
 ('85cd0c94','@craft/web/assets/iframeresizer/dist'),
 ('8619e39b','@craft/web/assets/fileupload/dist'),
+('86d7aae9','@craft/web/assets/fabric/dist'),
 ('8739519','@craft/web/assets/d3/dist'),
 ('88114db','@craft/web/assets/selectize/dist'),
 ('88851407','@craft/web/assets/login/dist'),
@@ -2967,6 +2977,7 @@ INSERT INTO `resourcepaths` VALUES
 ('95bc97c8','@craft/web/assets/velocity/dist'),
 ('96b4be8c','@craft/web/assets/focusvisible/dist'),
 ('96d1b769','@spicyweb/embeddedassets/resources'),
+('96fd3cd7','@craft/web/assets/utilities/dist'),
 ('9807af5f','@craft/web/assets/selectize/dist'),
 ('98623530','@craft/web/assets/jqueryui/dist'),
 ('98cc61bf','@craft/web/assets/tailwindreset/dist'),
@@ -3005,6 +3016,7 @@ INSERT INTO `resourcepaths` VALUES
 ('ac704fa1','@craft/web/assets/picturefill/dist'),
 ('adf04b0c','@craft/web/assets/xregexp/dist'),
 ('ae1637b5','@craft/web/assets/iframeresizer/dist'),
+('ae659dfe','@craft/web/assets/garnish/dist'),
 ('aee35ec','@bower/jquery/dist'),
 ('afa07773','@craft/web/assets/axios/dist'),
 ('b05db895','@craft/web/assets/recententries/dist'),
@@ -3030,6 +3042,7 @@ INSERT INTO `resourcepaths` VALUES
 ('bb7f4ecf','@craft/web/assets/xregexp/dist'),
 ('bc598eb0','@craft/ckeditor/web/assets/ckeconfig/dist'),
 ('bf42184b','@craft/web/assets/cp/dist'),
+('c047a655','@craft/web/assets/selectize/dist'),
 ('c1bc0c59','@craft/web/assets/velocity/dist'),
 ('c1d94fd2','@craft/web/assets/tailwindreset/dist'),
 ('c40ecd47','@percipiolondon/passwordpolicy/assetbundles/PasswordPolicy/dist'),
@@ -3042,9 +3055,11 @@ INSERT INTO `resourcepaths` VALUES
 ('c69cddd2','@craft/web/assets/updates/dist'),
 ('c6ccf5f0','@craft/web/assets/selectize/dist'),
 ('c7448c6c','@craft/web/assets/generalsettings/dist'),
+('c7521c77','@craft/web/assets/tailwindreset/dist'),
 ('c963411f','@craft/web/assets/utilities/dist'),
 ('ca208729','@craft/web/assets/datepickeri18n/dist'),
 ('ca8457b8','@craft/web/assets/cp/dist'),
+('cc0f041d','@craft/web/assets/cp/dist'),
 ('cc62aea1','@craft/web/assets/jqueryui/dist'),
 ('cca6c257','@craft/web/assets/admintable/dist'),
 ('ccbd871a','@bower/jquery/dist'),
@@ -3066,6 +3081,8 @@ INSERT INTO `resourcepaths` VALUES
 ('d46b8a0d','@craft/web/assets/axios/dist'),
 ('d59cd402','@craft/web/assets/vue/dist'),
 ('d5c4245d','@craft/web/assets/editsection/dist'),
+('d63a2254','@craft/web/assets/d3/dist'),
+('d671dd8c','@craft/web/assets/updateswidget/dist'),
 ('d6eeb23d','@craft/web/assets/focusvisible/dist'),
 ('d7b6604','@craft/web/assets/vue/dist'),
 ('d821c1a7','@craft/web/assets/fileupload/dist'),
@@ -3075,6 +3092,7 @@ INSERT INTO `resourcepaths` VALUES
 ('dad4879','@craft/web/assets/vue/dist'),
 ('dbd07846','@craft/web/assets/iframeresizer/dist'),
 ('dd2881a8','@craft/web/assets/garnish/dist'),
+('dd5b2be3','@craft/web/assets/iframeresizer/dist'),
 ('dd6e31db','@craft/web/assets/pluginstore/dist'),
 ('de418d9e','@craft/web/assets/fabric/dist'),
 ('de97a3e3','@craft/web/assets/fabric/dist'),
@@ -3088,14 +3106,17 @@ INSERT INTO `resourcepaths` VALUES
 ('e3aab818','@bower/jquery/dist'),
 ('e3fa3eea','@craft/web/assets/dashboard/dist'),
 ('e41226e3','@craft/web/assets/selectize/dist'),
+('e5a6f5c','@craft/web/assets/updates/dist'),
 ('e64aa7f0','@craft/web/assets/elementresizedetector/dist'),
 ('e77df976','@craft/web/assets/admintable/dist'),
 ('e8240f00','@craft/web/assets/axios/dist'),
 ('e85a84ab','@craft/web/assets/cp/dist'),
+('e8cb9fe2','@craft/web/assets/recententries/dist'),
 ('e94d280e','@craft/web/assets/jqueryui/dist'),
 ('eaa13730','@craft/web/assets/focusvisible/dist'),
 ('ee40cc47','@craft/web/assets/recententries/dist'),
 ('efa52c10','@craftpulse/passwordpolicy/assetbundles/PasswordPolicy/dist'),
+('f03e0abb','@craft/web/assets/axios/dist'),
 ('f0d19a59','@craft/web/assets/recententries/dist'),
 ('f0e2a04','@craft/web/assets/elementresizedetector/dist'),
 ('f1fbe036','@craft/web/assets/garnish/dist'),
@@ -3433,7 +3454,7 @@ CREATE TABLE `sessions` (
   KEY `idx_cslgbqqcglkcjkvoqwyagkwzmuyibtyozqsu` (`dateUpdated`),
   KEY `idx_elfaknonyntxharvevkxelqijvgawxsfbezy` (`userId`),
   CONSTRAINT `fk_oevoxpcummfcdwyqehbkqpmiynnxmilnpcjt` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -3452,7 +3473,8 @@ INSERT INTO `sessions` VALUES
 (16,1,'UBm-r4Gp42JuI9Zp0M6Mriww18feHdeGtHg-Vieuf2oKp7L9AWoYQDBETUrKzxpEuX0BM0EcVUGBOGBd4kDXOeA3UEWNW-Ftg28L','2024-07-18 10:35:36','2024-07-18 10:43:28','2b43427b-202d-46f7-acd1-5f4e795d0eda'),
 (19,1,'bCmzgGdMwx38MY7lFat9pC4vKwg-IedET1qu0x-qA9QdcCioALkD_yWk2nKnIQVV2jphqlqXVckOSTZCq9Ka2clQ8H5il186PbP-','2024-10-06 07:56:00','2024-10-06 09:07:29','63cfb4b4-16f9-4cbf-82a9-976f2670150d'),
 (20,1,'huZlzf7QZ2GNZh7QKWT0vgHQfp5d-KCQ1oRF1k2ci19uew_43F0tIzzcbtFR_EVbuKn_tlZDU7L6e7r2GSIyi_VWHOcH834ScArr','2024-10-06 09:07:29','2024-10-06 09:11:01','c30972e5-7098-42cf-869e-fce090414b93'),
-(23,1,'Cn_LHLddehUvOZhzRJk3O0leksp_a-qEguig1mtKcvv3G-pppffJCXHzHVZW2NHpryZmulE_yfyafPKNSciKKKWtcdH3Hmg8yV00','2024-12-10 22:37:30','2024-12-10 22:39:43','a3d398fe-bc7b-4057-9d27-45179ea05c9c');
+(23,1,'Cn_LHLddehUvOZhzRJk3O0leksp_a-qEguig1mtKcvv3G-pppffJCXHzHVZW2NHpryZmulE_yfyafPKNSciKKKWtcdH3Hmg8yV00','2024-12-10 22:37:30','2024-12-10 22:39:43','a3d398fe-bc7b-4057-9d27-45179ea05c9c'),
+(24,1,'UmjBDS8JB1x0Eg8HkIHskfVna-abKCHm4zr3Nrx5CDYKp0Rut9V5Yj7EaNa_3OS_A8UEsA3SOERhdPaB5iRgKI3IugaGaCvU_h8V','2024-12-15 16:08:38','2024-12-15 16:08:46','bd75d024-19e3-4fb0-bfa8-0706212b3e99');
 /*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -4010,7 +4032,7 @@ CREATE TABLE `users` (
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` VALUES
-(1,NULL,1,0,0,0,1,'pro-dev-admin','',NULL,NULL,'dev@profitlich.ch','$2y$13$oBBJ1H9/Py3nN6/0EVDZd.FEgoTk4mQLApI5iqR2ISdlY1Af5j7f2','2024-12-10 22:37:30',NULL,NULL,NULL,'2022-09-28 12:08:05',NULL,1,NULL,NULL,NULL,0,'2022-09-28 08:08:18','2022-09-28 08:08:18','2024-12-10 22:37:30');
+(1,NULL,1,0,0,0,1,'pro-dev-admin','',NULL,NULL,'dev@profitlich.ch','$2y$13$oBBJ1H9/Py3nN6/0EVDZd.FEgoTk4mQLApI5iqR2ISdlY1Af5j7f2','2024-12-15 16:08:38',NULL,NULL,NULL,'2022-09-28 12:08:05',NULL,1,NULL,NULL,NULL,0,'2022-09-28 08:08:18','2022-09-28 08:08:18','2024-12-15 16:08:38');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -4178,4 +4200,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-12-15 17:08:20
+-- Dump completed on 2024-12-15 17:09:02
