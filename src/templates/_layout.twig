@@ -14,6 +14,15 @@
         <meta name="format-detection" content="telephone=no" />
         {% block seoMetaDescription %}{% endblock %}
 
+        {# Favicon #}
+        <link rel="icon" type="image/png" href="/favicon/favicon-96x96.{{ staticAssetsVersion }}.png" sizes="96x96">
+        <link rel="icon" type="image/svg+xml" href="/favicon/favicon.{{ staticAssetsVersion }}.svg">
+        <link rel="shortcut icon" href="/favicon/favicon.{{ staticAssetsVersion }}.ico">
+        <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.{{ staticAssetsVersion }}.png">
+        {# TODO: Website Kurzname anpassen #}
+        <meta name="apple-mobile-web-app-title" content="siaa">
+        <link rel="manifest" href="/favicon/site.webmanifest">
+
         {# 
             Alle CSS und JS Dateien erhalten eine Versionsnumern, damit sicher die neuste geladen wird, nicht die aus dem Cache.            
             Die Variable staticAssetsVersion wird bei allen CSS und JS Dateien vor die Dateiendung gesetzt:

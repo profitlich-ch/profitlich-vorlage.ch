@@ -134,7 +134,7 @@ function setFiles() {
         },
         favicon: {
             src: 'src/favicon/**/*.*',
-            dest: 'web',
+            dest: 'web/favicon',
         },
         uploadWeb: {
             src: ['web/**/**.*', '!web/assets/**/**.*', '!web/cpresources/**/**.*', '!web/index.php'],
