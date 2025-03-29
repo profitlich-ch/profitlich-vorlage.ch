@@ -4,7 +4,7 @@
 
 import config from '../config.json' with { type: "json" };
 
-export class mediaQueries {
+export class MediaQueries {
     private layout: keyof typeof config.layouts = 'desktop';
 
     constructor() {

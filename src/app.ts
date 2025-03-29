@@ -1,16 +1,16 @@
 import 'lazysizes';
-import { mediaQueries } from './utils/media-queries.ts';
-import { bodyScrolled } from './utils/body-scrolled.ts';
+import { MediaQueries } from './utils/MediaQueries.ts';
+import { BodyScrolled } from './utils/BodyScrolled.ts';
 import { MenuToggle } from './macros-functions/menu/menu.ts';
 
 class App {
-    public mediaQuery: mediaQueries;
-    public bodyScrolledEvent: bodyScrolled;
+    public mediaQuery: MediaQueries;
+    public bodyScrolledEvent: BodyScrolled;
     public menuToggle: MenuToggle;
 
     constructor() {
-        this.mediaQuery = new mediaQueries();
-        this.bodyScrolledEvent = new bodyScrolled();
+        this.mediaQuery = new MediaQueries();
+        this.bodyScrolledEvent = new BodyScrolled();
         
         const hamburger = document.getElementById('hamburger') as HTMLElement;
         const menu = document.getElementById('menu') as HTMLElement;
