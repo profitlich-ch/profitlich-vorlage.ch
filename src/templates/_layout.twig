@@ -14,6 +14,13 @@
         <meta name="format-detection" content="telephone=no" />
         {% block seoMetaDescription %}{% endblock %}
 
+        {# 
+            Alle CSS und JS Dateien erhalten eine Versionsnummer, damit sicher die neuste geladen wird, nicht die aus dem Cache.            
+            Die Variable staticAssetsVersion wird bei allen CSS und JS Dateien vor die Dateiendung gesetzt:
+            <link rel="stylesheet" href="/css/xxx.{{ staticAssetsVersion }}.css" nonce="{{ cspNonce('style-src') }}">
+         #}
+        {% set staticAssetsVersion = craft.app.config.custom.staticAssetsVersion %}
+
         {# Favicon #}
         <link rel="icon" type="image/png" href="/favicon/favicon-96x96.{{ staticAssetsVersion }}.png" sizes="96x96">
         <link rel="icon" type="image/svg+xml" href="/favicon/favicon.{{ staticAssetsVersion }}.svg">
@@ -22,14 +29,6 @@
         {# TODO: Website Kurzname anpassen #}
         <meta name="apple-mobile-web-app-title" content="siaa">
         <link rel="manifest" href="/favicon/site.webmanifest">
-
-        {# 
-            Alle CSS und JS Dateien erhalten eine Versionsnumern, damit sicher die neuste geladen wird, nicht die aus dem Cache.            
-            Die Variable staticAssetsVersion wird bei allen CSS und JS Dateien vor die Dateiendung gesetzt:
-            <link rel="stylesheet" href="/css/xxx.{{ staticAssetsVersion }}.css" nonce="{{ cspNonce('style-src') }}">
-         #}
-        {% set staticAssetsVersion = craft.app.config.custom.staticAssetsVersion %}
-
         
         {# https://web.dev/defer-non-critical-css/ #}
         <link rel="preload" href="/css/style.{{ staticAssetsVersion }}.css" as="style" nonce="{{ cspNonce('style-src') }}">
@@ -42,10 +41,9 @@
         </script>
         <noscript><link rel="stylesheet" href="/css/style.{{ staticAssetsVersion }}.css" nonce="{{ cspNonce('style-src') }}"></noscript>
 
-        <script nonce="{{ cspNonce('script-src') }}">
-            {{ source("/js/config.js") }}
-        </script>
-        <script src="/js/defer.{{ staticAssetsVersion }}.js" defer nonce="{{ cspNonce('script-src') }}"></script>
+        {# JS #}
+        {{ craft.vite.script("src/app.ts") }}        
+        
         {# dev Mode CSS und JS #}
         {% if devMode %}
             <link rel="stylesheet" href="/css/dev.{{ staticAssetsVersion }}.css" nonce="{{ cspNonce('style-src') }}">

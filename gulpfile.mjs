@@ -12,7 +12,6 @@
  * 
  */
 
-
 const { src, dest, task, series, parallel } = gulp;
 
 import { deleteAsync } from 'del';
@@ -26,14 +25,13 @@ import fs from 'fs';
 import ftp from 'basic-ftp';
 import gulp from 'gulp';
 import gulpif from 'gulp-if';
-import gulpSass from '@sequencemedia/gulp-sass';
+import gulpSass from 'gulp-sass';
 import injectCSS from 'gulp-inject-css';
 import jsonCss from 'gulp-json-css';
 import jsonToJs from 'gulp-json-to-js';
 import log from 'fancy-log';
 import path from 'path';
 import postcss from 'gulp-postcss';
-import postcssEasingGradients from 'postcss-easing-gradients';
 import prompt from 'gulp-prompt';
 import rename from 'gulp-rename';
 import replace from 'gulp-replace';
@@ -77,17 +75,6 @@ function setFiles() {
             src: 'src/scss/**/*.scss',
             dest: 'web/css',
         },
-        // defer.js is loaded via layout.twig on all pages
-        // js files from: js/defer, macros-functions and modules (files with underscore)
-        jsDefer: {
-            src: ['src/js/defer/**/*.js', 'src/macros-functions/**/*.js', 'src/modules/**/_*.js'],
-            dest: 'web/js',
-        },
-        // inline JS is always inlined into layout.twig for making functions instantly available
-        jsInline: {
-            src: 'src/js/inline/**/*.js',
-            dest: 'templates/js',
-        },
         // JS for development is always compiled but only included in layout.twig if modus is not production
         jsDev: {
             src: 'src/dev/**/*.js',
@@ -95,6 +82,11 @@ function setFiles() {
         },
         jsConfig: {
             src: 'src/js/config.js',
+            dest: 'templates/js',
+        },
+        // inline JS is always inlined into layout.twig for making functions instantly available
+        jsInline: {
+            src: 'src/js/inline/**/*.js',
             dest: 'templates/js',
         },
         // standalone JS files for modules (e. g. map.js) that are only included on certain pages
@@ -160,7 +152,7 @@ function setFiles() {
  * Dotenv to JSON
  * The Dotenv includes FTP logn data and is therefor emade available to Gulp as an JS file
  */
-function dotenvTask() {
+function dotenvToJsonTask() {
     return src('./.env')
     .pipe(dotenv())
     .pipe(rename('env.json'))
@@ -269,8 +261,7 @@ function scssTask() {
     
     // post-CSS
     .pipe(postcss([
-        autoprefixer(),
-        postcssEasingGradients()
+        autoprefixer()
     ]))
 
     // compress with clean CSS
@@ -285,32 +276,6 @@ function scssTask() {
     .pipe(dest
         (files.scss.dest)
     )   
-}
-
-// compile JS defer
-function jsDeferTask() {
-    return src(files.jsDefer.src)
-
-    // initialise sourcemaps
-    .pipe(sourcemaps.init())
-
-    // combine files into one file
-    .pipe(concat('defer.js'))
-
-    .pipe(dest
-        (files.jsDefer.dest)
-    )
-
-    // compress with terser (if not in mode dev))
-    .pipe(gulpif( modus != 'dev', terser() ))
-
-    // write sourcemaps
-    .pipe(sourcemaps.write('.'))
-
-    // wrizte files
-    .pipe(dest
-        (files.jsDefer.dest)
-    )
 }
 
 // compile JS dev
@@ -346,10 +311,7 @@ function jsConfigTask() {
     .pipe(dest
         (files.jsConfig.dest)
     )
-
-    // compress with terser (if not in mode dev))
-    .pipe(gulpif( modus != 'dev', terser() ))
-
+    
     // write files
     .pipe(dest
         (files.jsConfig.dest)
@@ -625,11 +587,11 @@ function watchTask() {
     const watchVariable = gulp.watch(
         [files.src.src, '!src/scss/config.scss', '!src/js/config.js'],
         gulp.series(
-            dotenvTask,
+            dotenvToJsonTask,
             configToScssTask,
             configToJsTask,
             gulp.parallel(
-                templatesTwigTask, modulesTwigTask, modulesAssetsTask, jsModulesTask, macrosFunctionsTask, scssTask, jsDeferTask, jsDevTask, jsConfigTask, jsInlineTask, mockupTask, fontsTask, faviconTask, spritesTask, staticAssetsVersionTask
+                templatesTwigTask, modulesTwigTask, modulesAssetsTask, jsModulesTask, macrosFunctionsTask, scssTask, jsDevTask, jsConfigTask, jsInlineTask, mockupTask, fontsTask, faviconTask, spritesTask, staticAssetsVersionTask
             ),
             injizierenTask,
             uploadTemplatesTask,
@@ -642,13 +604,13 @@ function watchTask() {
 
 task('build',
     series(
-        dotenvTask,
+        dotenvToJsonTask,
         configToScssTask,
         configToJsTask,
         modusTask,
         modusConfirmTask,
         parallel(
-            templatesTwigTask, modulesTwigTask, modulesAssetsTask, jsModulesTask, macrosFunctionsTask, scssTask, jsDeferTask, jsDevTask, jsConfigTask, jsInlineTask, mockupTask, fontsTask, faviconTask, spritesTask, staticAssetsVersionTask
+            templatesTwigTask, modulesTwigTask, modulesAssetsTask, jsModulesTask, macrosFunctionsTask, scssTask, jsDevTask, jsConfigTask, jsInlineTask, mockupTask, fontsTask, faviconTask, spritesTask, staticAssetsVersionTask
         ),
         injizierenTask,
         uploadTemplatesTask,
