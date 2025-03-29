@@ -9,15 +9,24 @@ xdebug_enabled: false
 additional_hostnames: []
 additional_fqdns: []
 database:
-    type: mariadb
-    version: "10.4"
+  type: mariadb
+  version: "10.4"
 upload_dirs:
-    - web/assets
+- web/assets
 use_dns_when_possible: true
 composer_version: "2"
 web_environment: []
-nodejs_version: "16"
 corepack_enable: false
+nodejs_version: '20'
+web_extra_exposed_ports:
+- name: vite
+  container_port: 3000
+  http_port: 3000
+  https_port: 3001
+web_extra_daemons:
+- name: 'vite'
+  command: 'npm install && npm run dev'
+  directory: /var/www/html
 
 # Key features of DDEV's config.yaml:
 

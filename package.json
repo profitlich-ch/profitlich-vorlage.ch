@@ -5,16 +5,22 @@
     "type": "module",
     "main": "gulpfile.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "vite": "vite",
+        "build": "vite build",
+        "watch": "tsc --watch",
+        "serve": "browser-sync start --proxy $DDEV_HOST --files 'web/**/*.*'",
+        "dev": "npm-run-all --parallel watch",
+        "watch-and-build": "tsc --watch & vite build --watch 2>&1 | tee logs/build.log"
     },
     "author": "Moritz Profitlich",
     "license": "ISC",
     "devDependencies": {
         "@sayhellogmbh/gulp-sass-import-json": "github:SayHelloGmbH/gulp-sass-import-json",
-        "@sequencemedia/gulp-sass": "^1.0.181",
-        "autoprefixer": "^10.4.20",
+        "autoprefixer": "^10.4.21",
         "basic-ftp": "^5.0.5",
-        "del": "^8.0.0",
+        "browser-sync": "^3.0.3",
+        "del": "^7.1.0",
         "fancy-log": "^2.0.0",
         "gulp": "^5.0.0",
         "gulp-clean-css": "^4.3.0",
@@ -30,14 +36,25 @@
         "gulp-prompt": "^1.2.0",
         "gulp-rename": "^2.0.0",
         "gulp-replace": "^1.1.4",
+        "gulp-sass": "^5.1.0",
         "gulp-sourcemaps": "^3.0.0",
         "gulp-svg-sprite": "^2.0.3",
         "gulp-svgo": "^2.2.1",
         "gulp-terser": "^2.1.0",
-        "postcss": "^8.4.47",
-        "postcss-easing-gradients": "github:arturparkhisenko/postcss-easing-gradients#change-postcss-to-v8",
-        "sass": "^1.80.5",
+        "npm-run-all": "^4.1.5",
+        "postcss": "^8.5.3",
+        "sass": "^1.79.4",
         "streamifier": "^0.1.1",
-        "through2": "^4.0.2"
+        "through2": "^4.0.2",
+        "vite": "^5.4.9"
+    },
+    "dependencies": {
+        "dotenv": "^16.4.7",
+        "gulp-typescript": "^6.0.0-alpha.1",
+        "lazysizes": "^5.3.2",
+        "pathe": "^1.1.2",
+        "typescript": "^5.8.2",
+        "vite-plugin-imagemin": "^0.6.1",
+        "vite-plugin-mkcert": "^1.17.8"
     }
 }
