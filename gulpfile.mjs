@@ -84,11 +84,6 @@ function setFiles() {
             src: 'src/js/config.js',
             dest: 'templates/js',
         },
-        // inline JS is always inlined into layout.twig for making functions instantly available
-        jsInline: {
-            src: 'src/js/inline/**/*.js',
-            dest: 'templates/js',
-        },
         // standalone JS files for modules (e. g. map.js) that are only included on certain pages
         jsModules: {
             src: ['src/modules/**/*.js', '!src/modules/**/_*.js'],
@@ -315,26 +310,6 @@ function jsConfigTask() {
     // write files
     .pipe(dest
         (files.jsConfig.dest)
-    )
-}
-
-// compile inline JS
-function jsInlineTask() {
-    return src(files.jsInline.src)
-
-    // combine files into one file
-    .pipe(concat('inline.js'))
-
-    .pipe(dest
-        (files.jsInline.dest)
-    )
-
-    // compress with terser (if not in mode dev))
-    .pipe(gulpif( modus != 'dev', terser() ))
-
-    // write files
-    .pipe(dest
-        (files.jsInline.dest)
     )
 }
 
@@ -591,7 +566,7 @@ function watchTask() {
             configToScssTask,
             configToJsTask,
             gulp.parallel(
-                templatesTwigTask, modulesTwigTask, modulesAssetsTask, jsModulesTask, macrosFunctionsTask, scssTask, jsDevTask, jsConfigTask, jsInlineTask, mockupTask, fontsTask, faviconTask, spritesTask, staticAssetsVersionTask
+                templatesTwigTask, modulesTwigTask, modulesAssetsTask, jsModulesTask, macrosFunctionsTask, scssTask, jsDevTask, jsConfigTask, mockupTask, fontsTask, faviconTask, spritesTask, staticAssetsVersionTask
             ),
             injizierenTask,
             uploadTemplatesTask,
@@ -610,7 +585,7 @@ task('build',
         modusTask,
         modusConfirmTask,
         parallel(
-            templatesTwigTask, modulesTwigTask, modulesAssetsTask, jsModulesTask, macrosFunctionsTask, scssTask, jsDevTask, jsConfigTask, jsInlineTask, mockupTask, fontsTask, faviconTask, spritesTask, staticAssetsVersionTask
+            templatesTwigTask, modulesTwigTask, modulesAssetsTask, jsModulesTask, macrosFunctionsTask, scssTask, jsDevTask, jsConfigTask, mockupTask, fontsTask, faviconTask, spritesTask, staticAssetsVersionTask
         ),
         injizierenTask,
         uploadTemplatesTask,
