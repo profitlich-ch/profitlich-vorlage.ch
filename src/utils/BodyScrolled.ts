@@ -1,4 +1,6 @@
-// after scroll set body attribute data-scrolled to true
+/**
+ * after scroll set body attribute data-scrolled to true
+ */
 
 export class BodyScrolled {
     constructor() {

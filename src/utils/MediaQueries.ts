@@ -1,6 +1,7 @@
-// Media queries
-// https://kinsta.com/blog/javamediaqueryipt-media-query/
-// option 3 on the linked page
+/**Media queries
+ * https://kinsta.com/blog/javamediaqueryipt-media-query/
+ * option 3 on the linked page
+ */ 
 
 import config from '../config.json' with { type: "json" };
 
