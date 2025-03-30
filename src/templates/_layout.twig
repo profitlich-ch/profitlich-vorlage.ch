@@ -102,9 +102,6 @@
             <main class="main">{% block content %}{% endblock %}</main>
         </div>
         <script nonce="{{ cspNonce('script-src') }}">
-            {{ source("/js/inline.js") }}
-        </script>
-        <script nonce="{{ cspNonce('script-src') }}">
             {# FOUC #}
             let domReady = (cb) => {
             document.readyState === 'interactive' || document.readyState === 'complete'
