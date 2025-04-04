@@ -23,7 +23,7 @@ class App {
     }
 
     private initialize() {
-        console.log('App initialized');
+        console.log('App initialized!');
     }
 }
 
