@@ -9,8 +9,9 @@ $host = Craft::$app->getRequest()->getIsConsoleRequest()
 
 return [
     'checkDevServer' => true,
-    'devServerInternal' => 'http://localhost:3000',
-    'devServerPublic' => App::env('PRIMARY_SITE_URL') . ':3000',
+    'devServerInternal' => 'http://localhost:5173',
+    // 'devServerPublic' => App::env('PRIMARY_SITE_URL') . ':5173',
+    'devServerPublic' => preg_replace('/:\d+$/', '', App::env('PRIMARY_SITE_URL')) . ':5173',
     'serverPublic' => App::env('PRIMARY_SITE_URL') . '/dist/',
     'useDevServer' => App::env('CRAFT_ENVIRONMENT') === 'dev',
     'manifestPath' => '@webroot/dist/.vite/manifest.json',

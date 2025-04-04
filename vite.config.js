@@ -1,8 +1,9 @@
 import { defineConfig, loadEnv } from 'vite';
+import mkcert from'vite-plugin-mkcert'
+import ViteRestart from 'vite-plugin-restart';
 
 // Match ports in .ddev/config.yaml and config/vite.php
-const HTTP_PORT = 3000;
-const HTTPS_PORT = 3001;
+const PORT = 5173;
 
 export default defineConfig(({ command, mode }) => {
     const env = loadEnv(mode, process.cwd(), '');
@@ -27,11 +28,24 @@ export default defineConfig(({ command, mode }) => {
             strictPort: true,
             // This is the port running "inside" the Web container
             // It's the same as continer_port in .ddev/config.yaml
-            port: HTTP_PORT,
+            port: PORT,
             // Setting a specific origin ensures that your fonts & images load
             // correctly. Assumes you're accessing the front-end over https
-            origin: env.PRIMARY_SITE_URL + ':' + HTTPS_PORT,
-            cors: true, // Aktivieren Sie CORS
+            // origin: `${env.PRIMARY_SITE_URL.replace(/:\d+$/, "")}:${PORT}`,
+            cors: {
+                // origin: /https?:\/\/([A-Za-z0-9\-\.]+)?(\.ddev\.site)(?::\d+)?$/,
+                cors: {
+                    origin: [/https?:\/\/([A-Za-z0-9\-\.]+)?(\.ddev\.site)(?::\d+)?$/, /https?:\/\/localhost(?::\d+)?$/],
+                },
+            },
         },
+        plugins: [
+            ViteRestart({
+                restart: [
+                './templates/**/*',
+                ],
+            }),
+            mkcert()
+        ]
     };
 });
