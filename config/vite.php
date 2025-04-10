@@ -8,7 +8,7 @@ $host = Craft::$app->getRequest()->getIsConsoleRequest()
     : Craft::$app->getRequest()->getHostInfo();
 
 return [
-    'checkDevServer' => true,
+    'checkDevServer' => false,
     'devServerInternal' => 'http://localhost:5173',
     // 'devServerPublic' => App::env('PRIMARY_SITE_URL') . ':5173',
     'devServerPublic' => preg_replace('/:\d+$/', '', App::env('PRIMARY_SITE_URL')) . ':5173',
