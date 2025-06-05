@@ -50,4 +50,10 @@ return GeneralConfig::create()
         '@assetBaseUrl' => craft\helpers\App::env('ASSETS_BASE_URL'),
         '@assetBasePath' => craft\helpers\App::env('ASSETS_BASE_PATH'),
     ])
+
+    // Craft will always return a successful response in the "forgot password" flow, making it difficult to enumerate users
+    ->preventUserEnumeration(true)
+
+    // For security do no send CMS information in the HTTP header
+    ->sendPoweredByHeader(false)
 ;
