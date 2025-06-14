@@ -495,7 +495,8 @@ function uploadWebTask() {
     if (modus !='dev') {
         const filesToUpload = [];
 
-        return src(files.uploadWeb.src, { encoding: false })
+        // dot.true uploads hidden files and folder, this is necessary for the Vite manifest file
+        return src(files.uploadWeb.src, { encoding: false, dot: true })
         .pipe(through.obj(function (file, enc, cb) {
             if (file.isBuffer()) {
                 // push file to array
