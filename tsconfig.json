@@ -4,7 +4,7 @@
         "module": "NodeNext",
         "moduleResolution": "NodeNext",
         "resolveJsonModule": true,
-        "outDir": "./dist",
+        "outDir": "./web/dist",
         "rootDir": "./src",
         "strict": true,
         "esModuleInterop": true,

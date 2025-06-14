@@ -42,7 +42,7 @@
         <noscript><link rel="stylesheet" href="/css/style.{{ staticAssetsVersion }}.css" nonce="{{ cspNonce('style-src') }}"></noscript>
 
         {# JS #}
-        {{ craft.vite.script("src/app.ts") }}        
+        {{ craft.vite.script("src/app.ts") }}     
         
         {# dev Mode CSS und JS #}
         {% if devMode %}
@@ -76,9 +76,6 @@
     {% endif %}
     {% set bodyDataTags = {
         data: {
-            "menu-active": 'false',
-            "menu-moving": 'false',
-            "body-scrolled": 'false',
             "preloading": 'true'
         },
     } %}
