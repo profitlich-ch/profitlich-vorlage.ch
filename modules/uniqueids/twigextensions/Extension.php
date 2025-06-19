@@ -32,13 +32,13 @@ class Extension extends AbstractExtension
     public function getUniqueId(): string 
     {
         // generate a random string
-        $id = StringHelper::randomString('12');
+        $id = \Ramsey\Uuid\Uuid::uuid4()->toString();
 
         // check if it's already set
         if (isset($uniqueIds)) { 
             while (\in_array($id, $this->uniqueIds, true)){
                 // if so, use another one
-                $id = StringHelper::randomString('12');
+                $id = \Ramsey\Uuid\Uuid::uuid4()->toString();
             }
         }
         // set it as "used"
