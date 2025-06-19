@@ -414,6 +414,10 @@ function macrosFunctionsTask() {
 
 // copy mockup media
 function mockupTask() {
+    if (!fs.existsSync(files.mockup.src)) {
+        return Promise.resolve();
+    }
+
     return src(files.mockup.src)
 
     .pipe(dest
@@ -423,6 +427,10 @@ function mockupTask() {
 
 // copy fonts
 function fontsTask() {
+    if (!fs.existsSync(files.fonts.src)) {
+        return Promise.resolve();
+    }
+
     return src(files.fonts.src)
 
     .pipe(dest
@@ -432,6 +440,10 @@ function fontsTask() {
 
 // copy favicon
 function faviconTask() {
+    if (!fs.existsSync(files.favicon.src)) {
+        return Promise.resolve();
+    }
+
     return src(files.favicon.src)
 
     .pipe(dest
