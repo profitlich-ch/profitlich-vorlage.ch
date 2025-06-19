@@ -16,7 +16,7 @@
         
         // production environment
         'production'  => array(
-            'staticAssetsVersion' => 1750337905,
+            'staticAssetsVersion' => 1750338020,
         ),
 
         // staging environment
