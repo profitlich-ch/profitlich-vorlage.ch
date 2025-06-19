@@ -51,19 +51,20 @@ $mediaqueryDesktop: null;
 }
 
 $mediaqueries: (
-	smartphone:     (max-width: map.get($breakpointsVariables, smartphoneTo)),
-	tablet:         (min-width: map.get($breakpointsVariables, tabletPortraitFrom), max-width: map.get($breakpointsVariables, tabletLandscapeTo)),
-	tabletAb:       (min-width: map.get($breakpointsVariables, tabletPortraitFrom)),
-	tabletPortraitFrom:   (max-width: map.get($breakpointsVariables, tabletPortraitFrom)),
+	smartphone:         (max-width: map.get($breakpointsVariables, smartphoneTo)),
+	tablet:             (min-width: map.get($breakpointsVariables, tabletPortraitFrom), max-width: map.get($breakpointsVariables, tabletLandscapeTo)),
+	tabletFrom:         (min-width: map.get($breakpointsVariables, tabletPortraitFrom)),
+    tabletTo:           (max-width: map.get($breakpointsVariables, tabletLandscapeTo)),
+	tabletPortraitFrom: (max-width: map.get($breakpointsVariables, tabletPortraitFrom)),
 	tabletPortrait:     (min-width: map.get($breakpointsVariables, tabletPortraitFrom), max-width: map.get($breakpointsVariables, tabletPortraitTo)),
-	tabletPortraitTo:  (max-width: map.get($breakpointsVariables, tabletPortraitTo)),
-	tabletLandscapeFrom:   (max-width: map.get($breakpointsVariables, tabletLandscapeFrom)),
-	tabletLandscape:     (min-width: map.get($breakpointsVariables, tabletLandscapeFrom), max-width: map.get($breakpointsVariables, tabletLandscapeTo)),
+	tabletPortraitTo:   (max-width: map.get($breakpointsVariables, tabletPortraitTo)),
+	tabletLandscapeFrom:(max-width: map.get($breakpointsVariables, tabletLandscapeFrom)),
+	tabletLandscape:    (min-width: map.get($breakpointsVariables, tabletLandscapeFrom), max-width: map.get($breakpointsVariables, tabletLandscapeTo)),
 	tabletLandscapeTo:  (max-width: map.get($breakpointsVariables, tabletLandscapeTo)),
-	desktopFrom:      (min-width: map.get($breakpointsVariables, desktopFrom)),
-	desktop:        $mediaqueryDesktop,
-	desktopTo:     (max-width: map.get($breakpointsVariables, desktopTo)),
-	big:          (min-width: map.get($breakpointsVariables, bigFrom)),
+	desktopFrom:        (min-width: map.get($breakpointsVariables, desktopFrom)),
+	desktop:            $mediaqueryDesktop,
+	desktopTo:          (max-width: map.get($breakpointsVariables, desktopTo)),
+	big:                (min-width: map.get($breakpointsVariables, bigFrom)),
 );
 
 
