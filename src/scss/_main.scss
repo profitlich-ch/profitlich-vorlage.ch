@@ -1,25 +1,25 @@
-@use "functions/layout";
-@use "functions/mediaqueries";
+@use "./forward" as *;
+@use "sass:map";
 
 .main {
     position: relative;
 }
 
 
-@include mediaqueries.mediaquery(smartphone) {
+@include mediaquery(smartphone) {
 
     $layout: smartphone;
 
     .main {
-        @include layout.marginPadding($layout, padding, alle, 90, 0, 0, 0);
+        @include marginPadding($layout, padding, alle, 90, 0, 0, 0);
     }
 }
 
-@include mediaqueries.mediaquery(desktop) {
+@include mediaquery(desktop) {
     
     $layout: desktop;
 
     .main {
-        @include layout.marginPadding($layout, padding, alle, 0, 0, 0, 0);
+        @include marginPadding($layout, padding, alle, 0, 0, 0, 0);
     }
 }

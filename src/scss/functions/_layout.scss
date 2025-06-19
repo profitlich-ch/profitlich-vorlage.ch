@@ -74,8 +74,8 @@ $mediaqueries: (
 }
 
 
-// Font family
-@mixin fontFamily($layout, $fontSize, $lineHeight, $bold:'false') {
+// Font
+@mixin font($layout, $fontSize, $lineHeight, $bold:'false') {
 
     font-size: size($layout, $fontSize);
     line-height: size($layout, $lineHeight);

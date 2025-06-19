@@ -96,6 +96,6 @@ $color--dev-grid-center: rgba(0, 0, 0, 0.2);
 
 @each $layout, $breite in config.$layouts {
     @include mediaqueries.mediaquery($layout) {
-        @include dev-toolbar-grid($layout, map.get(config.$columns, $layout), map.get(config.$column-gap, $layout), map-deep-get.map-deep-get(config.$margins, $layout, 'left'), map-deep-get.map-deep-get(config.$margins, $layout, 'right'));
+        @include dev-toolbar-grid($layout, map.get($columns, $layout), map.get($column-gap, $layout), map-deep-get.map-deep-get(config.$margins, $layout, 'left'), map-deep-get.map-deep-get(config.$margins, $layout, 'right'));
     }
 }
