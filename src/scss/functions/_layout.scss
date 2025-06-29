@@ -96,7 +96,7 @@ $mediaqueries: (
 // $shift is for adding a value to the result, for example a margin
 // $inverse is for calculating the width as a negative number, for example for a negative shift in a stage system
 @function columns($layout, $columns, $columnsBasis, $columnGapsAddedBasis:0, $columnGapsAdditional:0, $margin:0, $shift:0, $invers:false) {
-    $columns: size($layout, map.get($columns, $layout) );
+    $columnGap: size($layout, map.get(config.$column-gaps, $layout) );
     $margin: size($layout, $margin);
     $shift: size($layout, $shift);
     @if ( $invers == false ) {
@@ -121,7 +121,7 @@ $mediaqueries: (
                 // available space
                 100%
                 // all column gaps in the given space
-                - $margin - $columns * ($columnsBasis + $columnGapsAddedBasis - 1)
+                - $margin - $columnGap * ($columnsBasis + $columnGapsAddedBasis - 1)
             )
             // number of columns in the given space
             / $columnsBasis
@@ -129,7 +129,7 @@ $mediaqueries: (
             * ($columns * $invers)
             // columns gaps between desired columns plus additional column gaps
             // inverse to get a negative value
-            + ($columns * ($columns - 1 + $columnGapsAdditional) * $invers)
+            + ($columnGap * ($columns - 1 + $columnGapsAdditional) * $invers)
             // Shift
             + ($shift * $invers)
         )
