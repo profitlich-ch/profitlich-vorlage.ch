@@ -84,11 +84,6 @@ function setFiles() {
             src: 'src/js/config.js',
             dest: 'templates/js',
         },
-        // standalone JS files for modules (e. g. map.js) that are only included on certain pages
-        jsModules: {
-            src: ['src/modules/**/*.js', '!src/modules/**/_*.js'],
-            dest: 'web/modules',
-        },
         templatesTwig: {
             src: 'src/templates/**/*.twig',
             dest: 'templates',
@@ -310,29 +305,6 @@ function jsConfigTask() {
     // write files
     .pipe(dest
         (files.jsConfig.dest)
-    )
-}
-
-// compile JS modules
-function jsModulesTask() {
-    return src(files.jsModules.src)
-
-    // Sourcemaps initialisieren
-    .pipe(sourcemaps.init())
-
-    .pipe(dest
-        (files.jsModules.dest)
-    )
-
-    // Komprimieren mit Terser
-    .pipe(gulpif( modus == 'production', terser() ))
-
-    // write sourcemaps
-    .pipe(sourcemaps.write('.'))
-
-    // write files
-    .pipe(dest
-        (files.jsModules.dest)
     )
 }
 
@@ -579,7 +551,7 @@ function watchTask() {
             configToScssTask,
             configToJsTask,
             gulp.parallel(
-                templatesTwigTask, modulesTwigTask, modulesAssetsTask, jsModulesTask, macrosFunctionsTask, scssTask, jsDevTask, jsConfigTask, mockupTask, fontsTask, faviconTask, spritesTask, staticAssetsVersionTask
+                templatesTwigTask, modulesTwigTask, modulesAssetsTask, macrosFunctionsTask, scssTask, jsDevTask, jsConfigTask, mockupTask, fontsTask, faviconTask, spritesTask, staticAssetsVersionTask
             ),
             injizierenTask,
             uploadTemplatesTask,
@@ -598,7 +570,7 @@ task('build',
         modusTask,
         modusConfirmTask,
         parallel(
-            templatesTwigTask, modulesTwigTask, modulesAssetsTask, jsModulesTask, macrosFunctionsTask, scssTask, jsDevTask, jsConfigTask, mockupTask, fontsTask, faviconTask, spritesTask, staticAssetsVersionTask
+            templatesTwigTask, modulesTwigTask, modulesAssetsTask, macrosFunctionsTask, scssTask, jsDevTask, jsConfigTask, mockupTask, fontsTask, faviconTask, spritesTask, staticAssetsVersionTask
         ),
         injizierenTask,
         uploadTemplatesTask,
